@@ -7,16 +7,22 @@ import edit from '@/assets/icons/edit.svg'
 import Style from './DashboardTitle.module.scss'
 
 export const DashboardTitle = () => {
-  const { dashboardTitle, setDashboardTitle } = useContext(DashboardTitleContext)
-  const [editing, setEditing] = useState(false)
+  const dashboardTitleContext = useContext(DashboardTitleContext)
+  const [editing, setEditing] = useState<boolean>(false)
+
+  if (!dashboardTitleContext) {
+    throw new Error('dashboardTitle must be used in Provider')
+  }
+
+  const { dashboardTitle, setDashboardTitle } = dashboardTitleContext
 
   const ref = useOutsideClick(() => {
     setEditing(false)
-  });
+  })
 
   const handleClick = () => {
     setEditing(true)
-  };
+  }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDashboardTitle(e.target.value)

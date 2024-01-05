@@ -4,11 +4,20 @@
  *
  **********/
 
-import { useState, createContext } from 'react'
+import { useState, createContext, ReactNode } from 'react'
 
-export const DashboardTitleContext = createContext('Default dashboard')
+export interface DashboardTitleContextProps {
+  dashboardTitle: string
+  setDashboardTitle: React.Dispatch<React.SetStateAction<string>>
+}
 
-export function DashboardTitleProvider({ children }) {
+export const DashboardTitleContext = createContext<DashboardTitleContextProps | undefined>(undefined)
+
+interface DashboardTitleProviderProps {
+  children: ReactNode
+}
+
+export function DashboardTitleProvider({ children }: DashboardTitleProviderProps) {
   const [dashboardTitle, setDashboardTitle] = useState('Default dashboard')
 
   return (

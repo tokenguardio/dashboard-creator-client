@@ -1,14 +1,12 @@
 import Style from './AddNewElement.module.css'
 import visualization from '@/assets/icons/visualization-icon.svg'
 import text from '@/assets/icons/text-icon.svg'
-import markdown from '@/assets/icons/markdown-icon.svg'
 import button from '@/assets/icons/button-icon.svg'
 
 
 const elements = [
   { type: 'visualization', name: 'Visualization', path: '/add-visualization', icon: visualization },
   { type: 'text', name: 'Text', path: '/add-text', icon: text },
-  { type: 'markdown', name: 'Markdown', path: '/add-markdown', icon: markdown },
   { type: 'button', name: 'Button', path: '/add-button', icon: button },
 ]
 
