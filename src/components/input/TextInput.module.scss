@@ -1,0 +1,18 @@
+
+.input {
+  position: relative;
+  margin: 0;
+  padding: 0 0.5rem;
+  border-radius: 0.6rem;
+  height: 3.2rem;
+
+  border: 1px solid #cbcbcb;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0.6rem;
+
+  &:focus {
+    outline: none;
+    border: 1.2px solid #818181;
+    box-shadow: 0px 2px 3px 0px #1018200D;
+  }
+}
