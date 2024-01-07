@@ -2,16 +2,32 @@ html {
   font-size: 62.5%; /* 1rem = 10px */
 }
 
-body {
-  min-height: 300px;
-  margin: 0;
-  padding: 0;
-}
-
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background-color: #ffffff;
+
+  
+  --breakpoint-mobile: 102.4rem;
+  --main-bg-color: #ffffff;
+
+  --icon-fill: #ffffff;
+  --icon-stroke: #ffffff;
+
+  --color-secondary500: #48bd98;
+
+  --color-primary800: #062434;
+  --color-primary600: #093c56;
+
+  --color-gray900: #3c3c3c;
+  --color-white: #ffffff;
 }
+
+body {
+  min-height: 30rem;
+  margin: 0;
+  padding: 0;
+  background-color: var(--main-bg-color);
+}
+
 
 /* TODO 
 /* @media (prefers-color-scheme: light) {

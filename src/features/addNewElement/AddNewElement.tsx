@@ -1,7 +1,7 @@
 import Style from './AddNewElement.module.css'
-import visualization from '@/assets/icons/visualization-icon.svg'
-import text from '@/assets/icons/text-icon.svg'
-import button from '@/assets/icons/button-icon.svg'
+import visualization from './assets/icons/visualization.svg'
+import text from './assets/icons/text.svg'
+import button from './assets/icons/button.svg'
 
 
 const elements = [

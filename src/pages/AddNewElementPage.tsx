@@ -12,9 +12,9 @@ import Style from '@/pages/AddNewElementPage.module.scss'
 export function AddNewElementPage() {
 
   return (
-    <div className={Style['page-container']}>
+    <main className={Style['page-container']}>
       <DashboardTitle />
       <AddNewElement />
-    </div>
+    </main>
   )
 }

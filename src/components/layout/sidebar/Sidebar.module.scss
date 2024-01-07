@@ -1,0 +1,14 @@
+.sidebar-container {
+
+  @media (min-width: 1024px) {
+    width: 18rem;
+    height: 100vh;
+    z-index: 1;
+    padding: 2.4rem;
+    text-align: center;
+    margin: auto;
+    overflow: hidden;
+    background-color: var(--color-primary800);
+    transition: all 0.2s ease-out;
+  }
+}
