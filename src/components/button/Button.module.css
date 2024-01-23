@@ -1,0 +1,9 @@
+.button {
+  background-color: var(--color-secondary500);
+  border-radius: 0.6rem;
+  border: 0;
+  color: var(--color-white);
+  height: 3.2rem;
+  cursor: pointer;
+  padding: 0.8rem 1.6rem;
+}

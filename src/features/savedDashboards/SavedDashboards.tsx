@@ -1,8 +1,13 @@
+import { TopSection } from './components/TopSection'
+import { DashboardsGrid } from './components/DashboardsGrid'
+import Style from './SavedDashboards.module.css'
+
 export const SavedDashboards = () => {
 
   return (
-    <div>
-      saved dashboards feature
-    </div>
+    <main className={Style['saved-dashboards']}>
+      <TopSection />
+      <DashboardsGrid />
+    </main>
   )
 }

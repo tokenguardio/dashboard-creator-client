@@ -20,7 +20,7 @@ type NavItem = {
 
 const navItems: Array<NavItem> = [
   {
-    link: '/add-new-element',
+    link: '/create-dashboard',
     icon: 'block',
     name: 'Dashboard Builder',
     related: ['/add-text', '/add-visualization', '/add-button', '/add-new-element'],
@@ -28,10 +28,10 @@ const navItems: Array<NavItem> = [
     disabled: false,
   },
   {
-    link: '/saved-dashboards',
+    link: '/',
     icon: 'chart',
     name: 'Saved Dashboards',
-    related: ['/saved-dashboards'],
+    related: ['/saved-dashboards', '/'],
     label: 'Saved Dashboards',
     disabled: false,
   },

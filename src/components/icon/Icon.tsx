@@ -14,8 +14,9 @@ export function Icon({
   ...props
 }: SVGProps<SVGSVGElement> & {
   name: string,
-  active: boolean
+  active?: boolean
 }) {
+
   return (
     <svg className={active ? Style['icon-active'] : Style['icon']} {...props}>
       <use href={`${spriteHref}#${name}`} />

@@ -1,0 +1,52 @@
+.customize-window {
+  position: absolute;
+  left: 2.4rem;
+  top: 7.2rem;
+  width: 37.8rem;
+  bottom: 8.8rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray100);
+  box-shadow: 0px 8px 8px -4px #10182008;
+  box-shadow: 0px 20px 24px -4px #10182014;
+  border-radius: var(--radius);
+  padding: 2.4rem;
+  overflow-y: scroll;
+}
+
+.customize-title {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-weight: 600;
+  color: var(--color-primary900);
+  margin: 0;
+}
+
+.customize-container-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
+}
+
+.customize-colors {
+  margin-top: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.option-badge-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 0.8rem;
+}
+
+.advanced-options-container {
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}

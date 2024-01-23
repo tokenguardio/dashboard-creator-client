@@ -1,0 +1,71 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.editor__container {
+  margin: 0 auto;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+.toolbar {
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  font-family: "Georgia", serif;
+}
+
+.toolbar__controls {
+  font-family: "Helvetica", sans-serif;
+  font-size: 14px;
+  margin-bottom: 5px;
+  user-select: none;
+}
+
+.toolbar__button {
+  color: #999;
+  cursor: pointer;
+  margin-right: 16px;
+  padding: 2px 0;
+  display: inline-block;
+}
+
+.toolbar__button--active {
+  color: #5890ff;
+}
+
+.editor {
+  padding: 10px;
+  box-sizing: border-box;
+  cursor: text;
+  font-size: 16px;
+}
+
+.editor .public-DraftEditorPlaceholder-root,
+.editor .public-DraftEditor-content {
+  margin: 0 -15px -15px;
+  padding: 15px;
+}
+
+.editor .public-DraftEditor-content {
+  min-height: 100px;
+}
+
+.editor--hidePlaceholder .public-DraftEditorPlaceholder-root {
+  display: none;
+}
+
+.editor .RichEditor-blockquote {
+  border-left: 5px solid #eee;
+  color: #666;
+  font-family: "Hoefler Text", "Georgia", serif;
+  font-style: italic;
+  margin: 16px 0;
+}
+
+.editor .public-DraftStyleDefault-pre {
+  background-color: rgba(0, 0, 0, 0.05);
+  font-family: "Inconsolata", "Menlo", "Consolas", monospace;
+  font-size: 16px;
+  padding: 20px;
+}
