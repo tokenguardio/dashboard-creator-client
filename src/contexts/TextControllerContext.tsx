@@ -26,4 +26,3 @@ export function TextControllerProvider({ children }: TextControllerProviderProps
     </TextControllerContext.Provider>
   )
 }
-  

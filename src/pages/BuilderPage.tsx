@@ -4,6 +4,6 @@
  *
  **********/
 
-import { Builder } from "@/features/builder/Builder";
+import { Builder } from "@/features/builder/Builder"
 
 export const BuilderPage = () => <Builder />

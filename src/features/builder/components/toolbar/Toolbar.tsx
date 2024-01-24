@@ -1,11 +1,11 @@
 import { useState } from 'react'
 
-import Style from './Toolbar.module.css'
 import { Icon } from '@/components/icon/Icon'
 import { IconButton } from '@/components/button/IconButton'
+
+import Style from './Toolbar.module.css'
 import { AddNewElement } from '../addNewElement/AddNewElement'
 import { Customize } from '../customize/Customize'
-
 
 export const Toolbar = () => {
   const [isShowingCustomizeOptions, setIsShowingCustomizeOptions] = useState(false)

@@ -7,25 +7,21 @@ import { Dropdown } from '@/components/dropdown/Dropdown'
 import Style from './Slide.module.css'
 import imagePreview from '../assets/images/chart-prev.svg'
 
-export const Slide = ({
+interface SlideProps {
+  id: string,
+  title: string,
+  options: Array<() => void>
+}
+
+export const Slide: React.FC<SlideProps> = ({
   id,
-  image,
   title,
   options,
 }) => (
   <section className={Style['slide']}>
-
     <Card key={id}>
       <NavLink to={`/dashboard/${id}`}>
-        {image ? (
-          <img
-            src={image.props.src}
-            alt={title}
-            className={Style['image']}
-          />
-        ) : (
-          <img className={Style['image']} src={imagePreview} alt="image preview" />
-        )}
+        <img className={Style['image']} src={imagePreview} alt="image preview" />
       </NavLink>
       <div className={Style['info-container']}>
         <NavLink to={`/dashboard/${id}`}>

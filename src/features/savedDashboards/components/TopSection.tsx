@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom'
-import Style from './TopSection.module.css'
+
 import { Title } from '@/components/title/Title'
 import { Subtitle } from '@/components/subtitle/Subtitle'
 import { Button } from '@/components/button/Button'
 
+import Style from './TopSection.module.css'
 
 export const TopSection = () => {
   const navigate = useNavigate()
@@ -14,8 +15,7 @@ export const TopSection = () => {
         <Title text="My Dashboards" />
         <Subtitle text="A list of Dashboards that you have created" />
       </div>
-      <Button onClick={() => navigate('/add-new-element')}>Create dashboard</Button>
-      {/* <ButtonIcon /> */}
+      <Button onClick={() => navigate('/create-dashboard')}>Create dashboard</Button>
     </header>
   )
 }

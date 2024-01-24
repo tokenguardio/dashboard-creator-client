@@ -55,7 +55,7 @@ export const AddNewElement = ({ closeToolbar }) => {
   return (
     <>
       <div className={Style['add-new-element']}>
-        {/* <p className={Style['text']}>Add an element to get started</p> */}
+        <p className={Style['text']}>Add an element to get started</p>
         <ul className={Style['elements-list']}>
           {elements.map(element => (
             <li className={Style['element-list']} key={element.type} onClick={() => addElement(element.type)}>

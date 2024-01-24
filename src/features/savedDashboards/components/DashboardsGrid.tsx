@@ -1,8 +1,22 @@
+import { useEffect } from 'react'
+import axios from 'axios'
+
 import Style from './DashboardsGrid.module.css'
 import { Slide } from './Slide'
-import { ButtonSlide } from './ButtonSlide'
+import { SlideButton } from './SlideButton'
 
 export const DashboardsGrid = () => {
+
+  useEffect(() => {
+    try {                                                     
+      const response = axios.get(`${process.env.API_BASE_URL}/api/dashboard/all`)
+      console.log('response', response)
+    } catch (err) {
+      console.log('err')
+    }
+  }, [])
+    console.log('test env1', import.meta.env.VITE_API_BASE_URL)
+    console.log('test env2', process.env.API_BASE_URL)
 
   const dashboards = [
     {
@@ -22,58 +36,15 @@ export const DashboardsGrid = () => {
     },
   ]
 
-  // const options = [
-  //   {
-  //     name: 'share',
-  //     action: (id) => {
-  //       viewContext.modal.show({
-  //         title: 'Share dashboard',
-  //         shareContent: { contentId: id, contentType: 'dashboard' },
-  //       })
-  //     },
-  //   },
-  //   {
-  //     name: 'delete',
-  //     action: (id) => {
-  //       viewContext.modal.show(
-  //         {
-  //           title: 'Delete dashboard',
-  //           text: 'Are you sure you want to delete this dashboard?',
-  //           form: {},
-  //           destructive: true,
-  //           buttonText: 'Delete',
-  //           url: `/api/dashboard/${id}`,
-  //           method: 'DELETE',
-  //         },
-  //         () => {
-  //           viewContext.notification.show(
-  //             'Dashboard was deleted',
-  //             'success',
-  //             true
-  //           )
-  //           const updatedUserDashboards = userDashboards.data.filter(
-  //             (dashboard) => dashboard.id !== id
-  //           )
-  //           setUserDashboards((prevState) => ({
-  //             ...prevState,
-  //             data: updatedUserDashboards,
-  //           }))
-  //         }
-  //       )
-  //     },
-  //     type: 'danger',
-  //   },
-  // ]
-
   const options = [
-    {
-      name: 'delete',
-      action: (id) => console.log(`'test delete' ${id}`),
-    },
     {
       name: 'edit',
       action: (id) => console.log(`'test edit' ${id}`),
     },
+    {
+      name: 'delete',
+      action: (id) => console.log(`'test delete' ${id}`),
+    }
   ]
 
   return (
@@ -89,7 +60,7 @@ export const DashboardsGrid = () => {
           />
         )
       })}
-      <ButtonSlide />
+      <SlideButton />
     </section>
   )
 }

@@ -1,5 +1,6 @@
-import Style from './ActionBar.module.css'
 import { Button } from '@/components/button/Button'
+
+import Style from './ActionBar.module.css'
 
 export const ActionBar = () => (
   <div className={Style['action-bar']}>
