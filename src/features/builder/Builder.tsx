@@ -7,8 +7,8 @@
 import { useContext } from 'react'
 
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
-import { ButtonControllerContext } from '@/contexts/ButtonControllerContext'
-import { TextControllerContext } from '@/contexts/TextControllerContext'
+import { BlockButtonContext } from '@/contexts/BlockButtonContext'
+import { BlockTextContext } from '@/contexts/BlockTextContext'
 
 import { DesignContainer } from './components/designContainer/DesignContainer'
 import { DesignContent } from './components/designContent/DesignContent'
@@ -16,22 +16,24 @@ import { ActionBar } from './components/actionBar/ActionBar'
 import { Toolbar } from './components/toolbar/Toolbar'
 import { AddNewElement } from './components/addNewElement/AddNewElement'
 import { DashboardTitle } from './components/dashboardTitle/DashboardTitle'
-import { ButtonController } from './components/buttonController/ButtonController'
-import { TextController } from './components/textController/TextController'
+import { BlockButtonModifier } from './components/blockButtonModifier/BlockButtonModifier'
+import { BlockTextModifier } from './components/blockTextModifier/BlockTextModifier'
 import Style from './Builder.module.css'
 
 export function Builder() {
   const dashboardContent = useContext(DashboardContentContext)
-  const { buttonId } = useContext(ButtonControllerContext)
-  const { textId } = useContext(TextControllerContext)
+  const { blockButtonId } = useContext(BlockButtonContext)
+  const { blockTextId } = useContext(BlockTextContext)
 
-  // if (dashboardContent?.dashboardElements) {
-  //   return (
-  //     <main className={Style['builder-container']}>
-  //       <AddNewElement />
-  //     </main>
-  //   )
-  // }
+  if (dashboardContent?.dashboardElements?.length === 0) {
+    return (
+      <main className={Style['builder-container']}>
+        <AddNewElement />
+        {blockButtonId && <BlockButtonModifier />}
+        {blockTextId && <BlockTextModifier />}
+      </main>
+    )
+  }
 
   return (
     <main className={Style['builder-container']}>
@@ -41,8 +43,8 @@ export function Builder() {
       </DesignContainer>
       <ActionBar />
       <Toolbar />
-      {buttonId && <ButtonController />}
-      {textId && <TextController />}
+      {blockButtonId && <BlockButtonModifier />}
+      {blockTextId && <BlockTextModifier />}
     </main>
   )
 }

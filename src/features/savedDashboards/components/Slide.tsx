@@ -8,7 +8,7 @@ import Style from './Slide.module.css'
 import imagePreview from '../assets/images/chart-prev.svg'
 
 interface SlideProps {
-  id: string,
+  id: number,
   title: string,
   options: Array<() => void>
 }

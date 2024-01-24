@@ -3,16 +3,16 @@ import { useState, useEffect, useContext } from 'react'
 import { Modal } from '@/components/modal/Modal'
 import { TextInput } from '@/components/input/TextInput'
 import { Button } from '@/components/button/Button'
-import { ButtonControllerContext } from '@/contexts/ButtonControllerContext'
+import { BlockButtonContext } from '@/contexts/BlockButtonContext'
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
 
-import Style from './ButtonController.module.css'
+import Style from './BlockButtonModifier.module.css'
 
-export const ButtonController = () => {
+export const BlockButtonModifier = () => {
   const [buttonText, setButtonText] = useState('')
   const [buttonLink, setButtonLink] = useState('')
-  const buttonController = useContext(ButtonControllerContext)
-  const { buttonId, setButtonId } = buttonController
+  const buttonContext = useContext(BlockButtonContext)
+  const { blockButtonId, setBlockButtonId } = buttonContext
   const {
     dashboardElements,
     setDashboardElements,
@@ -21,28 +21,28 @@ export const ButtonController = () => {
   } = useContext(DashboardContentContext)
 
   useEffect(() => {
-    const buttonData = dashboardElements.filter(element => element.i === buttonId)
+    const buttonData = dashboardElements.filter(element => element.i === blockButtonId)
 
     if (buttonData.length > 0) {
       setButtonText(buttonData[0].text)
       setButtonLink(buttonData[0].link)
     }
 
-  }, [buttonId])
+  }, [blockButtonId])
 
 
   const saveButton = () => {
-    const buttonData = dashboardElements.filter(element => element.i === buttonId)
+    const buttonData = dashboardElements.filter(element => element.i === blockButtonId)
 
     if (buttonData.length > 0) {
       const updatedDashboardElements = dashboardElements.map(element => {
-        if (element.i === buttonId) {
+        if (element.i === blockButtonId) {
           return (
             {
               link: buttonLink,
               text: buttonText,
               type: 'button',
-              i: buttonId
+              i: blockButtonId
             }
           )
         } else {
@@ -54,7 +54,7 @@ export const ButtonController = () => {
         return item
       })
       setDashboardLayout(updatedDashboardLayout)
-      setButtonId(undefined)
+      setBlockButtonId(undefined)
     } else {
       setDashboardElements([
         ...dashboardElements,
@@ -62,24 +62,24 @@ export const ButtonController = () => {
           link: buttonLink,
           text: buttonText,
           type: 'button',
-          i: buttonId
+          i: blockButtonId
         }
       ])
       setDashboardLayout([
         ...dashboardLayout,
-        { i: buttonId, x: 0, y: 0, w: 1, h: 2, minH: 2 },
+        { i: blockButtonId, x: 0, y: 0, w: 1, h: 2, minH: 2 },
       ])
-      setButtonId(undefined)
+      setBlockButtonId(undefined)
     }
   }
 
   return (
     <>
-      {buttonId && (
+      {blockButtonId && (
         <Modal
           title="Button Settings"
           hasCloseButton
-          isOpen={() => setButtonId(undefined)}
+          isOpen={() => setBlockButtonId(undefined)}
         >
           <div className={Style['container']}>
             <TextInput

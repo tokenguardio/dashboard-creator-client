@@ -9,7 +9,8 @@ export const DashboardsGrid = () => {
 
   useEffect(() => {
     try {                                                     
-      const response = axios.get(`${process.env.API_BASE_URL}/api/dashboard/all`)
+      // const response = axios.get(`${process.env.API_BASE_URL}/api/dashboard/all`)
+      const response = axios.get(`http://localhost:8080/api/dashboard/all`)
       console.log('response', response)
     } catch (err) {
       console.log('err')
@@ -36,14 +37,15 @@ export const DashboardsGrid = () => {
     },
   ]
 
+  
   const options = [
     {
       name: 'edit',
-      action: (id) => console.log(`'test edit' ${id}`),
+      action: (id: number) => console.log(`'test edit' ${id}`),
     },
     {
       name: 'delete',
-      action: (id) => console.log(`'test delete' ${id}`),
+      action: (id: number) => console.log(`'test delete' ${id}`),
     }
   ]
 

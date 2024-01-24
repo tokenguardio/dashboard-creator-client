@@ -26,39 +26,13 @@ export const Customize = () => {
       ...prevTheme,
       [selectData.name]: option.value,
     }))
-
-    // if (selectData.name === 'font') {
-    //   setBlockchainChoice(option.value)
-    //   setFrom(0)
-    //   setSize(5)
-    // }
-
-    // if (selectData.name === 'activity') {
-    //   setActivityChoice(option.value)
-    //   setFrom(0)
-    //   setSize(5)
-    // }
   }
-  // const handleChange = (name, value) => {
-  //   setSearchValue(value)
-  //   setFrom(0)
-  //   setSize(5)
-  // }
 
   return (
     <div className={Style['customize-window']}>
       <h3 className={Style['customize-title']}>Customize</h3>
       <div className={Style['customize-container-options']}>
         <CustomSelect
-          // label="Blockchain"
-          // name="blockchain"
-          // value={blockchainChoice}
-          // options={filters.blockchains}
-          // placeholder={blockchainChoice || 'Select'}
-          // change={handleFilters}
-          // isSearchable
-          // isClearable
-          // classNamePrefix="react-select-with-icon"
           value={dashboardTheme.fontFamily}
           name="font"
           label="Font"
@@ -107,8 +81,6 @@ export const Customize = () => {
                 gradient: true,
               }))
             }}
-            // className={Style.box}
-            // selected={networkChoice === singleNetwork.value}
           >
             <p>Yes</p>
           </OptionBadge>
@@ -120,8 +92,6 @@ export const Customize = () => {
                 gradient: false,
               }))
             }}
-            // className={Style.box}
-            // selected={networkChoice === singleNetwork.value}
           >
             <p>No</p>
           </OptionBadge>
@@ -131,15 +101,12 @@ export const Customize = () => {
           <OptionBadge
             selected={dashboardTheme.dataZoom}
             action={() => {
-                // setNetworkChoice('')
                 console.log('test 13')
                 setDashboardTheme(prevTheme => ({
                   ...prevTheme,
                   dataZoom: true,
                 }))
             }}
-            // className={Style.box}
-            // selected={networkChoice === singleNetwork.value}
           >
             <p>Yes</p>
           </OptionBadge>
@@ -151,8 +118,6 @@ export const Customize = () => {
                 dataZoom: false,
               }))
             }}
-            // className={Style.box}
-            // selected={networkChoice === singleNetwork.value}
           >
             <p>No</p>
           </OptionBadge>

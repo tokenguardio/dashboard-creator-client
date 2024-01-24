@@ -1,7 +1,9 @@
 import { useContext } from 'react'
+
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
-import { ButtonControllerContext } from '@/contexts/ButtonControllerContext'
-import { TextControllerContext } from '@/contexts/TextControllerContext'
+import { BlockButtonContext } from '@/contexts/BlockButtonContext'
+import { BlockTextContext } from '@/contexts/BlockTextContext'
+
 import Style from './AddNewElement.module.css'
 import visualization from './assets/icons/visualization.svg'
 import text from './assets/icons/text.svg'
@@ -15,8 +17,12 @@ const elements = [
   { type: 'button', name: 'Button', path: '/add-button', icon: button },
 ]
 
+interface AddNewElementProps {
+  closeToolbar?: () => void
+}
 
-export const AddNewElement = ({ closeToolbar }) => {
+
+export const AddNewElement: React.FC<AddNewElementProps> = ({ closeToolbar }) => {
   const {
     dashboardElements,
     setDashboardElements,
@@ -24,29 +30,29 @@ export const AddNewElement = ({ closeToolbar }) => {
     dashboardLayout,
   } = useContext(DashboardContentContext)
 
-  const buttonControllerContext = useContext(ButtonControllerContext)
-  const textControllerContext = useContext(TextControllerContext)
+  const blockButtonContext = useContext(BlockButtonContext)
+  const blockTextContext = useContext(BlockTextContext)
 
-  if (!buttonControllerContext) {
-    throw new Error('buttonControllerContext must be used in Provider')
+  if (!blockButtonContext) {
+    throw new Error('Button controller context must be used in Provider')
   }
 
-  if (!textControllerContext) {
-    throw new Error('textControllerContext must be used in Provider')
+  if (!blockTextContext) {
+    throw new Error('Block text context must be used in Provider')
   }
 
-  const { buttonId, setButtonId } = buttonControllerContext
-  const { textId, setTextId } = textControllerContext
+  const { blockButtonId, setBlockButtonId } = blockButtonContext
+  const { blockTextId, setBlockTextId } = blockTextContext
 
   const addElement = (elementType) => {
   
     if (elementType === 'button') {
       const elementId = generateUniqueString(dashboardElements)
-      setButtonId(elementId)
+      setBlockButtonId(elementId)
       closeToolbar(false)
     } else if (elementType === 'text') {
       const elementId = generateUniqueString(dashboardElements)
-      setTextId(elementId)
+      setBlockTextId(elementId)
       closeToolbar(false)
     }
   }
@@ -55,7 +61,7 @@ export const AddNewElement = ({ closeToolbar }) => {
   return (
     <>
       <div className={Style['add-new-element']}>
-        <p className={Style['text']}>Add an element to get started</p>
+        {/* <p className={Style['text']}>Add an element to get started</p> */}
         <ul className={Style['elements-list']}>
           {elements.map(element => (
             <li className={Style['element-list']} key={element.type} onClick={() => addElement(element.type)}>

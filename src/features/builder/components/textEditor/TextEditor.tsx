@@ -11,7 +11,7 @@ import 'draft-js/dist/Draft.css'
 
 const imagePlugin = createImagePlugin()
 
-export const TextEditor = ({ data, modifyData }) => {
+export const TextEditor = ({ data, saveDataFn }) => {
   const [editorState, setEditorState] = useState(
     () => EditorState.createEmpty(),
   )
@@ -41,7 +41,7 @@ export const TextEditor = ({ data, modifyData }) => {
       // directional, 
       // customEntityTransform
     );
-    modifyData(markup)
+    saveDataFn(markup)
   }
   
 

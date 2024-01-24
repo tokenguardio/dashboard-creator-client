@@ -12,8 +12,8 @@ const ResponsiveGridLayout = WidthProvider(Responsive)
 import "/node_modules/react-grid-layout/css/styles.css"
 import "/node_modules/react-resizable/css/styles.css"
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
-import { ButtonControllerContext } from '@/contexts/ButtonControllerContext'
-import { TextControllerContext } from '@/contexts/TextControllerContext'
+import {BlockButtonContext } from '@/contexts/BlockButtonContext'
+import { BlockTextContext } from '@/contexts/BlockTextContext'
 
 
 export const DesignContent = () => {
@@ -25,19 +25,19 @@ export const DesignContent = () => {
     dashboardTheme
   } = useContext(DashboardContentContext)
 
-  const buttonControllerContext = useContext(ButtonControllerContext)
-  const textControllerContext = useContext(TextControllerContext)
+  const blockButtonContext = useContext(BlockButtonContext)
+  const blockTextContext = useContext(BlockTextContext)
 
-  if (!buttonControllerContext) {
-    throw new Error('buttonControllerContext must be used in Provider')
+  if (!blockButtonContext) {
+    throw new Error('Block button context must be used in Provider')
   }
 
-  if (!textControllerContext) {
-    throw new Error('textControllerContext must be used in Provider')
+  if (!blockTextContext) {
+    throw new Error('Block text context must be used in Provider')
   }
 
-  const { buttonId, setButtonId } = buttonControllerContext
-  const { textId, setTextId } = textControllerContext
+  const { blockButtonId, setBlockButtonId } = blockButtonContext
+  const { blockTextId, setBlockTextId } = blockTextContext
 
   const removeElement = (elementId) => {
     const test = dashboardLayout.filter(item => item.i !== elementId)
@@ -51,7 +51,7 @@ export const DesignContent = () => {
   const options = [
     {
       name: 'edit',
-      action: (id) => setButtonId(id)
+      action: (id) => setBlockButtonId(id)
     },
     {
       name: 'delete',
@@ -62,7 +62,7 @@ export const DesignContent = () => {
   const optionsText = [
     {
       name: 'edit',
-      action: (id) => setTextId(id)
+      action: (id) => setBlockTextId(id)
     },
     {
       name: 'delete',

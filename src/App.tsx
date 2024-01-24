@@ -2,8 +2,8 @@ import { Routes, Route } from 'react-router-dom'
 
 import { DashboardTitleProvider } from '@/contexts/DashboardTitleContext'
 import { DashboardContentProvider } from '@/contexts/DashboardContentContext'
-import { ButtonControllerProvider } from '@/contexts/ButtonControllerContext'
-import { TextControllerProvider } from '@/contexts/TextControllerContext'
+import { BlockButtonProvider } from '@/contexts/BlockButtonContext'
+import { BlockTextProvider } from '@/contexts/BlockTextContext'
 import { DashboardPage } from '@/pages/DashboardPage'
 import { BuilderPage } from '@/pages/BuilderPage'
 import { SavedDashboardsPage } from '@/pages/SavedDashboardsPage'
@@ -25,8 +25,8 @@ export default function App() {
   return (
     <DashboardTitleProvider>
       <DashboardContentProvider>
-        <ButtonControllerProvider>
-          <TextControllerProvider>
+        <BlockButtonProvider>
+          <BlockTextProvider>
             <Routes>
               <Route element={<Layout />}>
                 <Route path="/create-dashboard" element={<BuilderPage />} />
@@ -35,8 +35,8 @@ export default function App() {
               <Route path="*" element={<NotFoundPage />} />
               <Route path="/dashboard/:id" element={<DashboardPage />} />
             </Routes>
-          </TextControllerProvider>
-        </ButtonControllerProvider>
+          </BlockTextProvider>
+        </BlockButtonProvider>
       </DashboardContentProvider>
     </DashboardTitleProvider>
   )
