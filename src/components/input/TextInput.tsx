@@ -11,7 +11,7 @@ interface TextInputProps {
   defaultValue?: string,
   placeholder?: string,
   change: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  blur: () => void,
+  blur?: () => void,
   ref?: Ref<HTMLInputElement>,
 }
 

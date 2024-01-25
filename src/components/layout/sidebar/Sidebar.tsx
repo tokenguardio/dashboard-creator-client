@@ -5,6 +5,7 @@
  **********/
 
 import { Menu } from '@/components/navigation/menu/Menu'
+
 import Style from './Sidebar.module.scss'
 
 export function Sidebar() {

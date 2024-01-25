@@ -5,14 +5,14 @@ import { Label } from '@/components/label/Label'
 import Style from './ColorTextInput.module.scss'
 
 interface TextInputProps {
-  value: string,
-  name: string,
-  label?: string,
-  defaultValue?: string,
-  placeholder?: string,
-  change: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  blur: () => void,
-  ref?: Ref<HTMLInputElement>,
+  value: string;
+  name: string;
+  label?: string;
+  defaultValue?: string;
+  placeholder?: string;
+  change: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  blur: () => void;
+  ref?: Ref<HTMLInputElement>;
 }
 
 export const ColorTextInput: React.FC<TextInputProps> = forwardRef(function MyInput(props, ref) {

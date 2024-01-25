@@ -84,6 +84,7 @@ export const BlockButtonModifier = () => {
           <div className={Style['container']}>
             <TextInput
               label="Button Text"
+              name="button-text"
               defaultValue={buttonText}
               value={buttonText}
               placeholder={buttonText || 'Example Button'}
@@ -91,8 +92,9 @@ export const BlockButtonModifier = () => {
             />
             <TextInput
               label="Link"
-              value={buttonLink}
+              name="link"
               defaultValue={buttonLink}
+              value={buttonLink}
               placeholder={buttonLink || "Enter button link"}
               change={(e) => setButtonLink(e.target.value)}
             />

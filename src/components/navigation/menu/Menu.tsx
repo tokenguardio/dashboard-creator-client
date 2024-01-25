@@ -13,7 +13,7 @@ type NavItem = {
   link: string;
   icon: string;
   name: string;
-  related: string[];
+  related: Array<string>;
   label: string;
   disabled: boolean;
 };
@@ -23,7 +23,7 @@ const navItems: Array<NavItem> = [
     link: '/create-dashboard',
     icon: 'block',
     name: 'Dashboard Builder',
-    related: ['/add-text', '/add-visualization', '/add-button', '/add-new-element'],
+    related: ['/create-dashboard','/add-text', '/add-visualization', '/add-button', '/add-new-element'],
     label: 'Dashboard Builder',
     disabled: false,
   },
@@ -44,7 +44,6 @@ const verifyLinkClasses = (isDisabled: boolean, relatedArr: Array<string>, pathn
 
   if (relatedArr?.length > 0 && relatedArr?.some((path) => matchPath(path, pathname))) {
     return 'menu-item-active'
-
   }
 
   return 'menu-item'

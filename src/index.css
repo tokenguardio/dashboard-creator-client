@@ -26,6 +26,7 @@ html {
   --color-gray200: #cbcbcb;
   --color-gray100: #dcdcdc;
   --color-gray75: #ececec;
+  --color-gray50: #f4f4f4;
   --color-white: #ffffff;
 }
 
@@ -41,18 +42,3 @@ body {
   margin: 0;
   padding: 0;
 }
-
-
-/* TODO 
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */

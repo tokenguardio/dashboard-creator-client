@@ -1,3 +1,7 @@
 import Style from './Subtitle.module.css'
 
-export const Subtitle = ({ text }) => <h2 className={Style['subtitle']}>{text}</h2>
+type SubtitlePropsType = {
+    text: string;
+}
+
+export const Subtitle = ({ text }: SubtitlePropsType) => <h2 className={Style['subtitle']}>{text}</h2>

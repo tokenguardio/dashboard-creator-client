@@ -16,8 +16,8 @@ export const DashboardsGrid = () => {
       console.log('err')
     }
   }, [])
-    console.log('test env1', import.meta.env.VITE_API_BASE_URL)
-    console.log('test env2', process.env.API_BASE_URL)
+    // console.log('test env1', import.meta.env.VITE_API_BASE_URL)
+    // console.log('test env2', process.env.API_BASE_URL)
 
   const dashboards = [
     {

@@ -28,7 +28,7 @@ export const BlockTextModifier = () => {
 
   }, [blockTextId])
 
-  const updateTextBlock = (modifiedText) => {
+  const updateTextBlock = (modifiedText: string) => {
     setContentText(modifiedText)
     const textData = dashboardElements.filter(element => element.i === blockTextId)
 

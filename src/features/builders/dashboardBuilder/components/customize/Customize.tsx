@@ -1,19 +1,19 @@
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
+
 import { Label } from '@/components/label/Label'
 import { CustomSelect } from '@/components/select/Select'
 import { Line } from '@/components/line/Line'
 import { TextInput } from '@/components/input/TextInput'
 import { ColorTextInput } from '@/components/input/ColorTextInput'
-import { OptionBadge } from '../optionBadge/OptionBadge'
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
 
+import { OptionBadge } from '../optionBadge/OptionBadge'
 import Style from './Customize.module.css'
 
 export const Customize = () => {
   const { dashboardTheme, setDashboardTheme } = useContext(DashboardContentContext)
-  const [color, setColor] = useState()
   
-  const updateTheme = (e, name) => {
+  const updateTheme = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
     const value = e.target.value
     setDashboardTheme(prevTheme => ({
       ...prevTheme,
@@ -49,7 +49,7 @@ export const Customize = () => {
         />
         <CustomSelect
           label="Color Palette"
-          name="colour-palette"
+          name="color-palette"
           options={[
             { value: 0, label: 'test1'},
             { value: 1, label: 'test2'},
@@ -101,7 +101,6 @@ export const Customize = () => {
           <OptionBadge
             selected={dashboardTheme.dataZoom}
             action={() => {
-                console.log('test 13')
                 setDashboardTheme(prevTheme => ({
                   ...prevTheme,
                   dataZoom: true,

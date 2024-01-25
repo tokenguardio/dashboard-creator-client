@@ -1,0 +1,8 @@
+.design-container {
+  position: relative;
+  flex-grow: 1;
+  overflow: auto;
+  height: calc(100vh - 6.4rem);
+  padding: 2.4rem;
+  background-color: var(--color-gray200);
+}

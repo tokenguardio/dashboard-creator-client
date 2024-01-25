@@ -1,0 +1,46 @@
+.builder-container {
+  position: relative;
+  flex-grow: 1;
+  overflow: auto;
+  height: 100vh;
+  padding: 2.4rem;
+  background-color: var(--color-gray200);
+}
+
+.top-bar {
+  background-color: var(--color-gray50);
+  display: flex;
+  justify-content: space-between;
+  height: 4rem;
+  padding: 0.8rem 1.6rem;
+  color: var(--color-primary900);
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+}
+
+.container {
+  height: calc(100vh - 12.8rem);
+  display: flex;
+}
+
+.list {
+  width: 28.8rem;
+  padding: 1.6rem;
+  border-right: 1px solid var(--color-gray100);
+}
+
+.preview {
+  position: relative;
+  width: 100%;
+}
+
+.preview-paragraph {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  font-size: 2rem;
+  line-height: 3rem;
+  color: var(--color-primary900);
+  font-weight: 500;
+}

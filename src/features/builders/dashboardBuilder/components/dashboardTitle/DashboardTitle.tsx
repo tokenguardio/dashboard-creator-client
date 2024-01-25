@@ -38,6 +38,7 @@ export const DashboardTitle = () => {
     <div className={Style['dashboard-title-container']}>
       {editing ? (
         <TextInput
+          name="dashboard-title"
           value={dashboardTitle}
           change={handleChange}
           blur={handleBlur}

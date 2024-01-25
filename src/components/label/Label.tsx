@@ -1,6 +1,11 @@
 import Style from './Label.module.css'
 
-export const Label = ({ text, forInput }) => {
+interface LabelProps {
+  text: string;
+  forInput: string;
+}
+
+export const Label: React.FC<LabelProps> = ({ text, forInput }) => {
   return (
     <label className={Style['label']} htmlFor={forInput}>
       {text}

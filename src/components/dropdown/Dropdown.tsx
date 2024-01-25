@@ -8,7 +8,7 @@ export const Dropdown = ({ options, id, children }) => {
   const myRef = useRef(null)
   // const ref = useOutsideClick()
 
-  const handleClickOutside = (e) => {
+  const handleClickOutside = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (
       e.target instanceof HTMLElement &&
       !myRef?.current?.contains(e.target)

@@ -1,9 +1,18 @@
+import { ReactNode } from 'react'
+
 import { IconButton } from '@/components/button/IconButton'
 import { Icon } from '@/components/icon/Icon'
 
 import Style from './Modal.module.css'
 
-export const Modal = ({
+interface ModalProps {
+  children: ReactNode;
+  title: string;
+  hasCloseButton: boolean;
+  isOpen: (value: boolean) => void
+}
+
+export const Modal: React.FC<ModalProps> = ({
   children,
   title,
   hasCloseButton,
