@@ -35,8 +35,6 @@ export const AreaChart = ({
   locked,
   theme
 }) => {
-  console.log('theme', theme)
-  console.log('tokenguard', tokenguard)
   // theme.chartTheme = {
   //   font,
   //   3 colors,

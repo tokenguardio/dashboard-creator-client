@@ -1,5 +1,5 @@
 html {
-  font-size: 62.5%; /* 1rem = 10px */
+  font-size: 62.5% !important; /* 1rem = 10px */
 }
 
 :root {
@@ -12,12 +12,12 @@ html {
   --icon-fill: #ffffff;
   --icon-stroke: #ffffff;
 
-  --color-secondary500: #48bd98;
-  --color-secondary50: #edf8f5;
+  --color-primary500: #48bd98;
+  --color-primary50: #edf8f5;
 
-  --color-primary900: #041c27;
-  --color-primary800: #062434;
-  --color-primary600: #093c56;
+  --color-secondary900: #041c27;
+  --color-secondary800: #062434;
+  --color-secondary600: #093c56;
 
   --color-text: #222222;
 

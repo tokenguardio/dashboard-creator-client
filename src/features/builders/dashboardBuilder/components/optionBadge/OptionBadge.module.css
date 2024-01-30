@@ -19,6 +19,6 @@
 
 .selected-option-badge {
   composes: option-badge;
-  border: 1px solid var(--color-secondary500);
-  background-color: var(--color-secondary50);
+  border: 1px solid var(--color-primary500);
+  background-color: var(--color-primary50);
 }

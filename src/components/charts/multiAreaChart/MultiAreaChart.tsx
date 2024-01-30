@@ -57,11 +57,14 @@ export const MultiAreaChart = ({
   let xAxisLabelColor = palette.gray700
   let xAxisLineColor = palette.gray100
   let xAxisSplitLineColor = palette.gray100
+  let xAxisLabelFont = 'sans-serif'
 
   // yAxis variables
   let yAxisLabelColor = palette.gray700
   let yAxisLineColor = palette.gray100
   let yAxisSplitLineColor = palette.gray100
+  let yAxisLabelFont = 'sans-serif'
+
 
   // toolbox
   let toolboxZoomIcon = zoom
@@ -186,8 +189,11 @@ export const MultiAreaChart = ({
   ]
 
   if (theme) {
-    firstItemStyle.color = theme.strokeColor
-    toolboxTextFillColor = theme.textColor
+    toolboxTextFillColor = theme.fontColor
+    yAxisLabelColor = theme.fontColor
+    xAxisLabelColor = theme.fontColor
+    xAxisLabelFont = theme.fontFamily
+    yAxisLabelFont = theme.fontFamily
     tokenguard.color = [ theme.primaryColor, theme.secondaryColor, theme.primaryColor ]
     areaStyleFirstObj.color = theme.gradient ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
       {
@@ -343,6 +349,7 @@ export const MultiAreaChart = ({
         axisLabel: {
           color: xAxisLabelColor,
           fontSize: 12,
+          fontFamily: xAxisLabelFont
         },
         axisTick: {
           show: false,
@@ -371,6 +378,7 @@ export const MultiAreaChart = ({
         axisLabel: {
           color: yAxisLabelColor,
           fontSize: 12,
+          fontFamily: yAxisLabelFont
         },
         axisLine: {
           onZero: true,

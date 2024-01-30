@@ -4,7 +4,7 @@
  *
  **********/
 
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
 import { BlockButtonContext } from '@/contexts/BlockButtonContext'
@@ -29,6 +29,10 @@ export function DashboardBuilder() {
   const { blockTextId } = useContext(BlockTextContext)
   const { blockChartId } = useContext(BlockChartContext)
 
+  // useEffect(() => {
+  //   console.log('dashboardId', dashboardId)
+  // }, [dashboardId])
+
   if (blockChartId) {
     return (
       <main className={Style['content-container']}>
@@ -40,9 +44,9 @@ export function DashboardBuilder() {
 
   if (dashboardContent?.dashboardElements?.length === 0) {
     return (
-      <main className={Style['builder-container']}>
+      <main className={Style['content-container']}>
         <DashboardTitle />
-        <AddNewElement />
+        <AddNewElement title />
         {blockButtonId && <BlockButtonModifier />}
         {blockTextId && <BlockTextModifier />}
       </main>

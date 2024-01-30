@@ -2,13 +2,14 @@
 
   @media (min-width: 1024px) {
     width: 22.8rem;
-    height: 100vh;
+    height: 100%;
+    min-height: 100vh;
     z-index: 1;
     padding: 2.4rem;
     text-align: center;
     margin: auto;
     overflow: hidden;
-    background-color: var(--color-primary800);
+    background-color: var(--color-secondary800);
     transition: all 0.2s ease-out;
   }
 }

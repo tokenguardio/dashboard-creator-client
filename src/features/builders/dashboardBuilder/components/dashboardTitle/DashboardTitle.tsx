@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react'
 
-import { DashboardTitleContext } from '@/contexts/DashboardTitleContext'
+import { DashboardContentContext } from '@/contexts/DashboardContentContext'
 import { useOutsideClick } from '@/hooks/useOutsideClick'
 import { TextInput } from '@/components/input/TextInput'
 import { IconButton } from '@/components/button/IconButton'
@@ -9,14 +9,14 @@ import { Icon } from '@/components/icon/Icon'
 import Style from './DashboardTitle.module.scss'
 
 export const DashboardTitle = () => {
-  const dashboardTitleContext = useContext(DashboardTitleContext)
+  const dashboardContentContext = useContext(DashboardContentContext)
   const [editing, setEditing] = useState<boolean>(false)
 
-  if (!dashboardTitleContext) {
-    throw new Error('dashboardTitle must be used in Provider')
+  if (!dashboardContentContext) {
+    throw new Error('Dashboard title must be used in Provider')
   }
 
-  const { dashboardTitle, setDashboardTitle } = dashboardTitleContext
+  const { dashboardTitle, setDashboardTitle } = dashboardContentContext
 
   const ref = useOutsideClick(() => {
     setEditing(false)
@@ -35,14 +35,16 @@ export const DashboardTitle = () => {
   }
 
   return (
-    <div className={Style['dashboard-title-container']}>
+    <div
+      className={Style['dashboard-title-container']}
+      ref={ref}
+    >
       {editing ? (
         <TextInput
           name="dashboard-title"
           value={dashboardTitle}
           change={handleChange}
           blur={handleBlur}
-          ref={ref}
         />
       ) : (
         <p className={Style['title']}>{dashboardTitle}</p>
@@ -53,4 +55,4 @@ export const DashboardTitle = () => {
       />
     </div>
   )
-  }
+}

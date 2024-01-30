@@ -8,6 +8,7 @@ import htmlToDraft from 'html-to-draftjs'
 import createImagePlugin from "@draft-js-plugins/image"
 import './TextEditor.css'
 import 'draft-js/dist/Draft.css'
+import clsx from 'clsx'
 
 const imagePlugin = createImagePlugin()
 
@@ -97,11 +98,11 @@ const StyleButton = (props: StyleButtonProps) => {
     }
   };
 
-  // const className = clsx(
-  //   "toolbar__button",
-  //   props.active && "toolbar__button--active",
-  //   props.className
-  // );
+  const className = clsx(
+    "toolbar__button",
+    props.active && "toolbar__button--active",
+    props.className
+  );
 
   return (
     <span
@@ -134,6 +135,8 @@ const BlockStyleControls = (props: any) => {
     .getCurrentContent()
     .getBlockForKey(selection.getStartKey())
     .getType();
+
+  console.log('blockType', blockType)
 
   return (
     <div className="toolbar__controls">

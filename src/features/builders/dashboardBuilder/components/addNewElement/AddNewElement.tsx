@@ -19,11 +19,14 @@ const elements = [
 ]
 
 interface AddNewElementProps {
-  closeToolbar?: () => void
+  closeToolbar?: (arg: boolean) => void,
+  title: boolean
 }
 
-
-export const AddNewElement: React.FC<AddNewElementProps> = ({ closeToolbar }) => {
+export const AddNewElement: React.FC<AddNewElementProps> = ({
+  closeToolbar,
+  title
+}) => {
   const {
     dashboardElements,
     setDashboardElements,
@@ -56,15 +59,15 @@ export const AddNewElement: React.FC<AddNewElementProps> = ({ closeToolbar }) =>
     if (elementType === 'button') {
       const elementId = generateUniqueString(dashboardElements)
       setBlockButtonId(elementId)
-      closeToolbar(false)
+      closeToolbar && closeToolbar(false)
     } else if (elementType === 'text') {
       const elementId = generateUniqueString(dashboardElements)
       setBlockTextId(elementId)
-      closeToolbar(false)
+      closeToolbar && closeToolbar(false)
     } else if (elementType === 'visualization') {
       const elementId = generateUniqueString(dashboardElements)
       setBlockChartId(elementId)
-      closeToolbar(false)
+      closeToolbar && closeToolbar(false)
     }
   }
 
@@ -72,7 +75,7 @@ export const AddNewElement: React.FC<AddNewElementProps> = ({ closeToolbar }) =>
   return (
     <>
       <div className={Style['add-new-element']}>
-        {/* <p className={Style['text']}>Add an element to get started</p> */}
+        {title && <p className={Style['text']}>Add an element to get started</p>}
         <ul className={Style['elements-list']}>
           {elements.map(element => (
             <li className={Style['element-list']} key={element.type} onClick={() => addElement(element.type)}>

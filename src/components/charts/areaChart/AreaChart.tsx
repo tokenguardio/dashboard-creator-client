@@ -34,8 +34,6 @@ export const AreaChart = ({
   locked,
   theme
 }) => {
-  console.log('theme', theme)
-  console.log('tokenguard', tokenguard)
   const labels = data.map((item => item.date))
   let modifiedData
   const formatter = Intl.NumberFormat('en', { notation: 'compact' })
@@ -63,11 +61,13 @@ export const AreaChart = ({
   let xAxisLabelColor = palette.gray700
   let xAxisLineColor = palette.gray100
   let xAxisSplitLineColor = palette.gray100
+  let xAxisLabelFont = 'sans-serif'
 
   // yAxis variables
   let yAxisLabelColor = palette.gray700
   let yAxisLineColor = palette.gray100
   let yAxisSplitLineColor = palette.gray100
+  let yAxisLabelFont = 'sans-serif'
 
   // toolbox
   let toolboxZoomIcon = zoom
@@ -89,7 +89,8 @@ export const AreaChart = ({
       },
       {
         offset: 0,
-        color: "#84D3BA",
+        // color: "#84D3BA",
+        color: palette.primary,
       },
     ]),
   }
@@ -187,8 +188,11 @@ export const AreaChart = ({
   }
 
   if (theme) {
-    itemColor = theme.strokeColor
-    toolboxTextFillColor = theme.textColor
+    toolboxTextFillColor = theme.fontColor
+    yAxisLabelColor = theme.fontColor
+    xAxisLabelColor = theme.fontColor
+    yAxisLabelFont = theme.fontFamily
+    xAxisLabelFont = theme.fontFamily
     tokenguard.color = [ theme.primaryColor, theme.secondaryColor, theme.primaryColor ]
     areaStyleObj.color = theme.gradient ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
       {
@@ -245,6 +249,7 @@ export const AreaChart = ({
       axisLabel: {
         color: xAxisLabelColor,
         fontSize: 12,
+        fontFamily: xAxisLabelFont
       },
       axisTick: {
         show: false,
@@ -270,6 +275,7 @@ export const AreaChart = ({
       axisLabel: {
         color: yAxisLabelColor,
         fontSize: 12,
+        fontFamily: yAxisLabelFont
       },
       axisLine: {
         lineStyle: {

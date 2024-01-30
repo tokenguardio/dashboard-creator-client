@@ -14,12 +14,12 @@ interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = (props) => (
-  <section className={Style['card']}>
+  <div className={Style['card']}>
     {props.title && (
       <header className={Style.header}>
         <h1 className={Style.title}>{props.title}</h1>
       </header>
     )}
     {props.children}
-  </section>
+  </div>
 )

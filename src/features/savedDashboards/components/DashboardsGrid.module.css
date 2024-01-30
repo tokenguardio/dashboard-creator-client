@@ -1,6 +1,7 @@
-.container {
+.grid-container {
   display: flex;
   justify-content: flex-start;
   gap: 2.4rem;
   align-items: center;
+  flex-wrap: wrap;
 }

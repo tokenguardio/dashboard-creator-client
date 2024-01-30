@@ -22,6 +22,7 @@ export const Customize = () => {
   }
 
   const handleFilters = (option, selectData) => {
+
     setDashboardTheme(prevTheme => ({
       ...prevTheme,
       [selectData.name]: option.value,
@@ -33,8 +34,19 @@ export const Customize = () => {
       <h3 className={Style['customize-title']}>Customize</h3>
       <div className={Style['customize-container-options']}>
         <CustomSelect
+          label="Theme"
+          name="theme"
+          value={dashboardTheme.name}
+          placeholder={dashboardTheme.name || ''}
+          options={[
+            { value: 'tokenguard', label: 'Tokenguard' },
+            // { value: 1, label: 'test2'},
+            // { value: 0, label: 'test3'},
+          ]}
+        />
+        <CustomSelect
           value={dashboardTheme.fontFamily}
-          name="font"
+          name="fontFamily"
           label="Font"
           placeholder={dashboardTheme.fontFamily || ''}
           change={handleFilters}
@@ -47,21 +59,12 @@ export const Customize = () => {
             { value: 'Georgia', label: 'Georgia'},
           ]}
         />
-        <CustomSelect
-          label="Color Palette"
-          name="color-palette"
-          options={[
-            { value: 0, label: 'test1'},
-            { value: 1, label: 'test2'},
-            { value: 0, label: 'test3'},
-          ]}
-        />
-        <div className={Style['customize-colors']}>
+        {/* <div className={Style['customize-colors']}>
           <Label text="Colors" forInput="colors" />
           <ColorTextInput name="primaryColor" value={dashboardTheme.primaryColor} change={e => updateTheme(e, 'primaryColor')} />
           <ColorTextInput name="secondaryColor" value={dashboardTheme.secondaryColor} change={e => updateTheme(e, 'secondaryColor')} />
           <ColorTextInput name="tertiaryColor" value={dashboardTheme.tertiaryColor} change={e => updateTheme(e, 'tertiaryColor')} />
-        </div>
+        </div> */}
       </div>
       <Line />
       <h3 className={Style['customize-title']}>Advanced</h3>

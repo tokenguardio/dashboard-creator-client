@@ -10,7 +10,7 @@ import { BlockChartContext } from '@/contexts/BlockChartContext'
 import { IconButton } from '@/components/button/IconButton'
 import { Icon } from '@/components/icon/Icon'
 import { TextInput } from '@/components/input/TextInput'
-
+import { Line } from '@/components/line/Line'
 
 import { Window } from './components/Window'
 import Style from './ChartBuilder.module.css'
@@ -47,8 +47,10 @@ export function ChartBuilder() {
       <div className={Style['container']}>
         <div className={Style['list']}>
           <TextInput
+            placeholder="Search"
             name="search"
           />
+          <Line />
           {blockChartId}
         </div>
         <div className={Style['preview']}>

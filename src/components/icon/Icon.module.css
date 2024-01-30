@@ -6,7 +6,7 @@
 
 .icon-active {
   composes: icon;
-  color: var(--color-secondary500);
-  --icon-fill: var(--color-secondary500);
-  --icon-stroke: var(--color-secondary500);
+  color: var(--color-primary500);
+  --icon-fill: var(--color-primary500);
+  --icon-stroke: var(--color-primary500);
 }

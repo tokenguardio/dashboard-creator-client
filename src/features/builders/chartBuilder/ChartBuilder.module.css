@@ -13,7 +13,7 @@
   justify-content: space-between;
   height: 4rem;
   padding: 0.8rem 1.6rem;
-  color: var(--color-primary900);
+  color: var(--color-secondary900);
   font-size: 1.6rem;
   line-height: 2.4rem;
 }
@@ -41,6 +41,6 @@
   transform: translate(-50%,-50%);
   font-size: 2rem;
   line-height: 3rem;
-  color: var(--color-primary900);
+  color: var(--color-secondary900);
   font-weight: 500;
 }

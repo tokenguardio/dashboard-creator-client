@@ -15,11 +15,19 @@ export const Toolbar = () => {
     <>
       <div className={Style['toolbar']}>
         <IconButton
-          icon={isShowingAddElementOptions ? <Icon name="plusElementNegative" width="48" height="48" /> : <Icon name="plusElement" width="48" height="48" />}
+          icon={isShowingAddElementOptions ? (
+            <Icon name="plusElementNegative" width="48" height="48" />
+          ) : (
+            <Icon name="plusElement" width="48" height="48" />
+          )}
           onClick={() => setIsShowingAddElementOptions(!isShowingAddElementOptions)}
         />
         <IconButton
-          icon={isShowingCustomizeOptions ? <Icon name="customizeNegative" width="48" height="48" color="red" /> : <Icon name="customize" width="48" height="48" />}
+          icon={isShowingCustomizeOptions ? (
+            <Icon name="customizeNegative" width="48" height="48" color="red" />
+          ) : (
+            <Icon name="customize" width="48" height="48" />
+          )}
           onClick={() => setIsShowingCustomizeOptions(!isShowingCustomizeOptions)}
         />
       </div>

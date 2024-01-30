@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react'
-// import { Loader } from 'components/lib'
 import Style from './DesignContent.module.css'
 import { TextEditor } from '../textEditor/TextEditor'
 import { Responsive, WidthProvider } from "react-grid-layout"
@@ -8,12 +7,12 @@ import { MultiAreaChart } from '@/components/charts/multiAreaChart/MultiAreaChar
 import { Icon } from '@/components/icon/Icon'
 import { Button } from '@/components/button/Button'
 import { Dropdown } from '@/components/dropdown/Dropdown'
-const ResponsiveGridLayout = WidthProvider(Responsive)
 import "/node_modules/react-grid-layout/css/styles.css"
 import "/node_modules/react-resizable/css/styles.css"
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
 import {BlockButtonContext } from '@/contexts/BlockButtonContext'
 import { BlockTextContext } from '@/contexts/BlockTextContext'
+const ResponsiveGridLayout = WidthProvider(Responsive)
 
 
 export const DesignContent = () => {
@@ -115,11 +114,11 @@ export const DesignContent = () => {
   };
 
   return (
-    <div className={Style['design-content']} style={{ fontFamily: dashboardTheme.font }}>
+    <div className={Style['design-content']}>
       {dashboardLayout.length > 0 && dashboardElements.length > 0 ? (
       <ResponsiveGridLayout
         // className="layout"
-        className={Style['grid']}
+        // className={Style['grid']}
         layout={dashboardLayout}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 12, md: 12, sm: 2, xs: 2, xxs: 1 }}
@@ -137,12 +136,16 @@ export const DesignContent = () => {
                   style={{
                     borderRadius: dashboardTheme.itemGridRadius,
                     backgroundColor: dashboardTheme.itemGridBgColor,
-                    color: dashboardTheme.fontColor
+                    color: dashboardTheme.fontColor,
+                    borderColor: dashboardTheme.strokeColor
                   }}
                 >
                   <p
                     className={Style['item-title']}
-                    style={{ color: dashboardTheme.fontColor }}
+                    style={{
+                      color: dashboardTheme.fontColor,
+                      fontFamily: dashboardTheme.fontFamily
+                    }}
                   >
                     {element?.title}
                   </p>
@@ -170,16 +173,19 @@ export const DesignContent = () => {
                     style={{
                       borderRadius: dashboardTheme.itemGridRadius,
                       backgroundColor: dashboardTheme.itemGridBgColor,
-                      color: dashboardTheme.fontColor
+                      color: dashboardTheme.fontColor,
+                      borderColor: dashboardTheme.strokeColor
                     }}
                   >
                     <p
                       className={Style['item-title']}
-                      style={{ color: dashboardTheme.fontColor }}
+                      style={{
+                        color: dashboardTheme.fontColor,
+                        fontFamily: dashboardTheme.fontFamily
+                      }}
                     >
                       {element?.title}
                     </p>
-                    {/* {renderSwitch(element)} */}
                     <MultiAreaChart
                       data={element.data}
                       round={0}
@@ -200,7 +206,10 @@ export const DesignContent = () => {
             return (
               <div key={item.i} data-grid={item}>
                 <div className={Style['move-wrapper']}>
-                  <div dangerouslySetInnerHTML={{ __html: element.text }} style={{ color: dashboardTheme.fontColor, fontFamily: dashboardTheme.font }}/>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: element.text }}
+                    style={{ color: dashboardTheme.fontColor, fontFamily: dashboardTheme.fontFamily }}
+                  />
                 </div>
                 <div className={Style['btn-more']}>
                   <Dropdown options={optionsText} id={item.i}>

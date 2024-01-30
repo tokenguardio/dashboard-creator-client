@@ -182,56 +182,57 @@ const exampleData = [
 ]
 
 const initialTheme = {
-  bgColor: palette.gray50,
-  itemGridRadius: '6px',
-  itemGridBgColor: palette.white,
-  fontColor: palette.gray900,
-  fontFamily: 'Roboto',
-  strokeColor: palette.secondary,
-  primaryColor: palette.secondary,
-  secondaryColor: palette.primary,
-  tertiaryColor: palette.warning600,
-  gradient: true,
-  dataZoome: true,
+//   name: 'Tokenguard',
+//   bgColor: palette.gray50,
+//   itemGridRadius: '6px',
+//   itemGridBgColor: palette.white,
+//   fontColor: palette.gray900,
+//   fontFamily: 'Roboto',
+//   strokeColor: palette.secondary,
+//   primaryColor: palette.primary,
+//   secondaryColor: palette.secondary,
+//   tertiaryColor: palette.warning600,
+//   gradient: true,
+//   dataZoom: true,
 }
 
 const initialLayout = [
-  { i: "a", x: 0, y: 0, w: 3, h: 15 },
-  { i: "b", x: 3, y: 0, w: 3, h: 15 },
-  { i: "c", x: 0, y: 0, w: 1, h: 2 },
-  { i: "d", x: 1, y: 9, w: 2, h: 3 },
-  { i: "f", x: 3, y: 2, w: 3, h: 15 },
+//   { i: "a", x: 0, y: 0, w: 3, h: 15 },
+//   { i: "b", x: 3, y: 0, w: 3, h: 15 },
+//   { i: "c", x: 0, y: 0, w: 1, h: 2 },
+//   { i: "d", x: 1, y: 9, w: 2, h: 3 },
+//   { i: "f", x: 3, y: 2, w: 3, h: 15 },
 ]
 const initialElements = [
-  {
-    title: 'Another chart',
-    type: 'areaChart',
-    i: 'a',
-    data: exampleData,
-  },
-  {
-    title: 'multi test chart',
-    type: 'multiAreaChart',
-    i: 'f',
-    data: exampleMultiData,
-  },
-  {
-    title: 'Fake chart test',
-    type: 'areaChart',
-    i: 'b',
-    data: exampleData,
-  },
-  {
-    text: 'Test Button',
-    type: 'button',
-    i: 'c',
-    link: 'https://app.tokenguard.io',
-  },
-  {
-    text: 'test text fdsfsdfsfsdfs',
-    type: 'text',
-    i: 'd',
-  },
+//   {
+//     title: 'Another chart',
+//     type: 'areaChart',
+//     i: 'a',
+//     data: exampleData,
+//   },
+//   {
+//     title: 'multi test chart',
+//     type: 'multiAreaChart',
+//     i: 'f',
+//     data: exampleMultiData,
+//   },
+//   {
+//     title: 'Fake chart test',
+//     type: 'areaChart',
+//     i: 'b',
+//     data: exampleData,
+//   },
+//   {
+//     text: 'Test Button',
+//     type: 'button',
+//     i: 'c',
+//     link: 'https://app.tokenguard.io',
+//   },
+//   {
+//     text: 'test text fdsfsdfsfsdfs',
+//     type: 'text',
+//     i: 'd',
+//   },
 ]
 
 export function DashboardContentProvider({ children }: DashboardContentProviderProps) {

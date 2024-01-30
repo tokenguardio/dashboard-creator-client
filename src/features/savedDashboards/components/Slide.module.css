@@ -1,5 +1,6 @@
 .slide {
-  min-width: 36rem;
+  min-width: 34.6rem;
+  height: 23.5rem;
   text-align: center;
 }
 
@@ -25,4 +26,5 @@ a {
   justify-content: space-between;
   align-items: center;
   position: relative;
+  margin-top: 0.8rem;
 }

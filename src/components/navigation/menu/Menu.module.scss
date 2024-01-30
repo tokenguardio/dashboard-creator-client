@@ -20,7 +20,7 @@
 
 .menu-item-active {
   composes: menu-item;
-  background-color: var(--color-primary600);
+  background-color: var(--color-secondary600);
   border-radius: 0.6rem;
 }
 
@@ -44,5 +44,5 @@
 
 .label-active {
   composes: label;
-  color: var(--color-secondary500);
+  color: var(--color-primary500);
 }

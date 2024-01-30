@@ -19,7 +19,7 @@
   bottom: 0;
   left: 0;
   z-index: 2;
-  background: var(--color-primary900);
+  background: var(--color-secondary900);
   background: rgba(0, 0, 0, 0.7);
 }
 
@@ -31,7 +31,7 @@
 }
 
 .title {
-  color: var(--color-primary900);
+  color: var(--color-secondary900);
   font-size: 1.4rem;
   line-height: 2rem;
   font-weight: 500;
