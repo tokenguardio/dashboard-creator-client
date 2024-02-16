@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const elementSchema = z.union([
+export const ElementSchema = z.union([
   z.object({
     title: z.string(),
     type: z.literal('areaChart'),
@@ -20,4 +20,4 @@ export const elementSchema = z.union([
   }),
 ])
 
-export type TElement = z.infer<typeof elementSchema>
+export type TElement = z.infer<typeof ElementSchema>

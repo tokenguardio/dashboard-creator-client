@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const layoutSchema = z.array(
+export const LayoutSchema = z.array(
   z.object({
     id: z.string(),
     x: z.number(),
@@ -10,4 +10,4 @@ export const layoutSchema = z.array(
   })
 )
 
-export type TLayout = z.infer<typeof layoutSchema>
+export type TLayout = z.infer<typeof LayoutSchema>

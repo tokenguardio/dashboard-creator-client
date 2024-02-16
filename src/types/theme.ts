@@ -6,7 +6,7 @@ import { z } from 'zod'
 //   additionalColor: z.string(),
 // })
 
-export const themeSchema = z.object({
+export const ThemeSchema = z.object({
   // font: z.string(),
   // palette: paletteSchema,
   // textColor: z.string(),
@@ -22,4 +22,4 @@ export const themeSchema = z.object({
   itemGridRadius: z.string()
 })
 
-export type TTheme = z.infer<typeof themeSchema>
+export type TTheme = z.infer<typeof ThemeSchema>

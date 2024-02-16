@@ -1,13 +1,13 @@
 import { z } from 'zod'
-import { layoutSchema } from './layout'
-import { elementSchema } from './element'
-import { themeSchema } from './theme'
+import { LayoutSchema } from './layout'
+import { ElementSchema } from './element'
+import { ThemeSchema } from './theme'
 
 export const DashboardSchema = z.object({
   title: z.string(),
-  elements: z.array(elementSchema),
-  layout: layoutSchema,
-  theme: themeSchema,
+  elements: z.array(ElementSchema),
+  layout: LayoutSchema,
+  theme: ThemeSchema,
   _id: z.string(),
 })
 
