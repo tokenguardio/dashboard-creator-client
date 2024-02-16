@@ -1,0 +1,8 @@
+.builder-container {
+  position: relative;
+}
+
+.content-container {
+  composes: builder-container;
+  padding: 2.4rem;
+}

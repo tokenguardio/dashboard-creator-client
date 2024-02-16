@@ -1,0 +1,30 @@
+.slide {
+  min-width: 34.6rem;
+  height: 23.5rem;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+.image {
+  margin: auto;
+}
+
+.name {
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  font-weight: 500;
+  color: var(--color-gray900);
+  text-decoration: none;
+  text-align: left;
+}
+
+.info-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin-top: 0.8rem;
+}

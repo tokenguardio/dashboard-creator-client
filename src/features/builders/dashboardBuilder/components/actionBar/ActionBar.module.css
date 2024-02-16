@@ -1,0 +1,10 @@
+.action-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 2.4rem;
+  background-color: var(--color-white);
+  height: 6.4rem;
+  gap: 1.6rem;
+  border-top: 1px solid var(--color-gray75);
+}

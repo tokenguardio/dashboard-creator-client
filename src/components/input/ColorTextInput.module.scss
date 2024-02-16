@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.input-container {
+  position: relative;
+}
+
+.text-input {
+  position: relative;
+  margin: 0;
+  padding: 0 0.5rem 0 3.2rem;
+  border-radius: 0.6rem;
+  height: 3.2rem;
+  width: 100%;
+  border: 1px solid var(--color-gray100);
+  -webkit-appearance: none;
+  -webkit-border-radius: 0.6rem;
+
+  &:focus {
+    outline: none;
+    border: 1.2px solid #818181;
+    box-shadow: 0px 2px 3px 0px #1018200D;
+  }
+}
+
+.color-input {
+  position: absolute;
+  top: 50%;
+  left: 0.8rem;
+  transform: translate(0,-50%);
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  height: 15em;
+  padding: 0;
+  width: 15em;
+  inline-size: 16px;
+  block-size: 16px;
+  border: 0;
+  border-radius: 0.4rem;
+  z-index: 2;
+
+  input[type="color" i] {
+    border: 0;
+    border-radius: 0.4rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    padding-inline: 0;
+    padding-block: 0;
+  }
+}
+
+input[type="color"] {
+	-webkit-appearance: none;
+	border: 0.6px solid var(--color-gray100);
+	width: 16px;
+	height: 16px;
+  border-radius: 0.4rem;
+}
+input[type="color"]::-webkit-color-swatch-wrapper {
+	padding: 0;
+  border-radius: 0.4rem;
+}
+input[type="color"]::-webkit-color-swatch {
+	border: 0.6px solid var(--color-gray100);
+  border-radius: 0.4rem;
+}

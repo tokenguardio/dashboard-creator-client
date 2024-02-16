@@ -1,0 +1,48 @@
+
+
+
+.menu {
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.menu-item {
+  margin: 1.2rem 0;
+  padding: 0.6rem 1.6rem 0.6rem 0.8rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 2rem;
+}
+
+.menu-item-active {
+  composes: menu-item;
+  background-color: var(--color-secondary600);
+  border-radius: 0.6rem;
+}
+
+.menu-item-disabled {
+  composes: menu-item;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.icon {
+  opacity: 1;
+  transition: all 0.2s ease-out;
+  height: 1.6rem;
+}
+
+.label {
+  font-size: 1.4rem;
+  line-height: 2rem;
+  color: var(--color-white);
+}
+
+.label-active {
+  composes: label;
+  color: var(--color-primary500);
+}
