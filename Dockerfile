@@ -3,7 +3,7 @@ FROM node:18-alpine as build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN apk add --no-cache yarn
-RUN npm install --network-timeout 300000
+RUN npm install
 COPY . .
 RUN npm run build
 
