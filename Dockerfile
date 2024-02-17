@@ -1,12 +1,14 @@
-FROM node:16
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-RUN npm install
-
+# stage1 - build react app first 
+FROM node:18-alpine as build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN apk add --no-cache yarn
+RUN npm install --network-timeout 300000
 COPY . .
+RUN npm run build
 
-EXPOSE 5173
-
-CMD ["npm", "run", "dev"]
+# stage 2 - build the final image and copy the react build files
+FROM nginx:alpine
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 3000
+CMD ["nginx", "-g", "daemon off;"]
