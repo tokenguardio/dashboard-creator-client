@@ -1,0 +1,12 @@
+.icon {
+  width: auto;
+  height: auto;
+  color: var(--color-white);
+}
+
+.icon-active {
+  composes: icon;
+  color: var(--color-primary500);
+  --icon-fill: var(--color-primary500);
+  --icon-stroke: var(--color-primary500);
+}

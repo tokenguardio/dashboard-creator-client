@@ -21,15 +21,12 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Absolute path configuration */
-    "baseUrl": "./", // Assuming your source files are in the "src" directory
-    // "paths": {
-    //   "@components/*": ["components/*"],
-    //   "@pages/*": ["pages/*"] // Add this line
-    // }
+    "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
     }
   },
   "include": ["src"],
+  "exclude": ["src/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

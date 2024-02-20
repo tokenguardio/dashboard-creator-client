@@ -1,0 +1,24 @@
+@import 'components/global.scss';
+
+.notAvailable {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 100%;
+  padding: 0 $size16;
+  text-align: center;
+}
+
+
+.title {
+  font-size: $size20;
+  line-height: $size28;
+  font-weight: 600;
+}
+
+.subtitle {
+  font-size: $size14;
+  line-height: $size20;
+  padding-bottom: $size24;
+}

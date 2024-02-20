@@ -1,0 +1,37 @@
+.tabs {
+  height: 5.6rem;
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tab {
+  cursor: pointer;
+  padding-top: 1.7rem;
+  padding-bottom: 1.5rem;
+
+  text-decoration: none;
+  position: relative;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+  color: var(--color-text);
+  margin-right: 2.4rem;
+}
+
+.active-tab {
+  composes: tab;
+
+  @media (min-width: 1024px) {
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0.1rem;
+      left: 0;
+      height: 0.3rem;
+      width: 100%;
+      background: var(--color-primary500);
+    }
+  }
+}
