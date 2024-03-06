@@ -4,7 +4,7 @@ import {
 } from 'react'
 import { toast } from 'react-toastify'
 
-import { Loader } from '@/components/loader/Loader'
+import { Loader } from '@/components/Loader/Loader'
 import { AreaChart } from '@/components/charts/areaChart/AreaChart'
 import { SingleValue } from '@/components/charts/singleValue/SingleValue'
 import { MultiAreaChart } from '@/components/charts/multiAreaChart/MultiAreaChart'

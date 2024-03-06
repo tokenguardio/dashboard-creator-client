@@ -1,4 +1,4 @@
-import { Loader } from '@/components/loader/Loader'
+import { Loader } from '@/components/Loader/Loader'
 import { AnimationValue } from './AnimationValue'
 
 import Style from './SingleValue.module.css'
