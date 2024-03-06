@@ -1,9 +1,10 @@
 import { useState, useContext } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import Style from './DesignContent.module.css'
 import { TextEditor } from '../textEditor/TextEditor'
 import { Responsive, WidthProvider } from "react-grid-layout"
 import { AreaChart } from '@/components/charts/areaChart/AreaChart'
-import { MultiAreaChart } from '@/components/charts/multiAreaChart/MultiAreaChart'
+// import { MultiAreaChart } from '@/components/charts/multiAreaChart/MultiAreaChart'
 import { Icon } from '@/components/icon/Icon'
 import { Button } from '@/components/button/Button'
 import { Dropdown } from '@/components/dropdown/Dropdown'
@@ -12,17 +13,24 @@ import "/node_modules/react-resizable/css/styles.css"
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
 import {BlockButtonContext } from '@/contexts/BlockButtonContext'
 import { BlockTextContext } from '@/contexts/BlockTextContext'
+import { useVerifiedDashboardFilters } from '@/features/dashboard/hooks/useVerifiedDashboardFilters'
 const ResponsiveGridLayout = WidthProvider(Responsive)
+
+import { Visualization } from '@/features/builders/dashboardBuilder/components/Visualization'
 
 
 export const DesignContent = () => {
   const {
     dashboardElements,
+    dashboardId,
     setDashboardElements,
     setDashboardLayout,
     dashboardLayout,
+    dashboardFilters,
     dashboardTheme
   } = useContext(DashboardContentContext)
+  const [searchParams, _setSearchParams] = useSearchParams()
+  const { verifiedFilters } = useVerifiedDashboardFilters(dashboardFilters, searchParams, dashboardId)
 
   const blockButtonContext = useContext(BlockButtonContext)
   const blockTextContext = useContext(BlockTextContext)
@@ -126,7 +134,61 @@ export const DesignContent = () => {
         rowHeight={10}
         draggableHandle={`.${Style['move-wrapper']}`}
       >
-        {dashboardLayout.map(item => {
+         {dashboardLayout.map((item) => {
+            const element = dashboardElements.find(element => element.i === item.i)
+            if (element?.type !== 'text' && element?.type !== 'button') {
+              return (
+                <div
+                  key={item.i}
+                  data-grid={item}
+                >
+                  <Visualization
+                    dashboardId={dashboardId}
+                    element={element}
+                    elementHeight={item.h}
+                    filters={verifiedFilters}
+                    dashboardTheme={dashboardTheme}
+                  />
+                  <div className={Style['item-more']}>
+                    <Dropdown options={options} id={item.i}>
+                      <Icon name="more" width={16} height={16} />
+                    </Dropdown>
+                  </div>                    
+                </div>
+              )
+            } else if (element?.type === 'text') {
+              return (
+                <div key={item.i} data-grid={item}>
+                  <div className={Style['move-wrapper']}>
+                    <div
+                      dangerouslySetInnerHTML={{ __html: element.text }}
+                      style={{ color: dashboardTheme?.fontColor, fontFamily: dashboardTheme?.fontFamily }}
+                    />
+                  </div>
+                  <div className={Style['btn-more']}>
+                    <Dropdown options={optionsText} id={item.i}>
+                      <Icon name="more" width={16} height={16} />
+                    </Dropdown>
+                  </div>
+                </div>
+              )
+            } else if (element?.type === 'button') { 
+              return (
+                <div key={item.i} data-grid={item}>
+                  <div className={Style['btn-wrapper']}>
+                    {element.text}
+                  </div>
+                  <div className={Style['btn-more']}>
+                    <Dropdown options={options} id={item.i}>
+                      <Icon name="more" width={16} height={16} />
+                    </Dropdown>
+                  </div>
+                </div>
+              )
+            }
+          }
+          )}
+        {/* {dashboardLayout.map(item => {
           const element = dashboardElements.find(element => element.i === item.i)
           if (element?.type === 'areaChart') {
             return (
@@ -149,7 +211,6 @@ export const DesignContent = () => {
                   >
                     {element?.title}
                   </p>
-                  {/* {renderSwitch(element)} */}
                   <AreaChart
                     data={element.data}
                     round={0}
@@ -232,7 +293,7 @@ export const DesignContent = () => {
               </div>
             )
           }
-        })}
+        })} */}
       </ResponsiveGridLayout>
       ) : null}
     </div>
