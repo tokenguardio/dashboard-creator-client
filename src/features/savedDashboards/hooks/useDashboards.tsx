@@ -14,11 +14,14 @@ export const useDashboards = () => {
       try {
         setIsLoadingDashboards(true)
         const data = await fetchDashboards()
+        console.log('data', data)
         const validatedDashboards = DashboardSchema.array().safeParse(data?.output)
-        if (!validatedDashboards.success) {
-          throw Error(validatedDashboards.error)
-        }
-        setDashboards(validatedDashboards.data)
+        console.log('validatedDashboards', validatedDashboards)
+        // if (!validatedDashboards.success) {
+        //   throw Error(validatedDashboards.error)
+        // }
+        // setDashboards(validatedDashboards.data)
+              setDashboards(data?.output)
         setIsLoadingDashboards(false)
       } catch (err) {
         setIsLoadingDashboards(false)

@@ -237,8 +237,10 @@ const initialElements = [
 
 export function DashboardContentProvider({ children }: DashboardContentProviderProps) {
   const [dashboardTitle, setDashboardTitle] = useState('Default dashboard')
+  const [dashboardId, setDashboardId] = useState()
   const [dashboardElements, setDashboardElements] = useState(initialElements)
   const [dashboardLayout, setDashboardLayout] = useState(initialLayout)
+  const [dashboardFilters, setDashboardFilters] = useState([])
   const [dashboardTheme, setDashboardTheme] = useState(initialTheme)
 
   return (
@@ -246,10 +248,14 @@ export function DashboardContentProvider({ children }: DashboardContentProviderP
       value={{
         dashboardTitle,
         setDashboardTitle,
+        dashboardId,
+        setDashboardId,
         dashboardElements,
         setDashboardElements,
         dashboardLayout,
         setDashboardLayout,
+        dashboardFilters,
+        setDashboardFilters,
         dashboardTheme,
         setDashboardTheme
       }}

@@ -6,3 +6,12 @@ export const fetchDashboard = async (id: string) => {
 
   return data
 }
+
+export const fetchDashboardDataElement = async (dashboardId, formattedElementId, requestBody) => {
+  const response = await axios.post(
+    `${process.env.API_BASE_URL}/api/dashboard/${dashboardId}/element/${formattedElementId}/exec`,
+    requestBody
+  )
+
+  return response.data
+}

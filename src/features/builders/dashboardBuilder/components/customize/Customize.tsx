@@ -6,6 +6,7 @@ import { Line } from '@/components/line/Line'
 import { TextInput } from '@/components/input/TextInput'
 import { ColorTextInput } from '@/components/input/ColorTextInput'
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
+import { palette } from '@/utils/constans'
 
 import { OptionBadge } from '../optionBadge/OptionBadge'
 import Style from './Customize.module.css'
@@ -69,11 +70,31 @@ export const Customize = () => {
       <Line />
       <h3 className={Style['customize-title']}>Advanced</h3>
       <div className={Style['advanced-options-container']}>
-        <ColorTextInput label="Card Background Color" value={dashboardTheme.itemGridBgColor} change={e => updateTheme(e, 'itemGridBgColor')} />
-        <ColorTextInput label="Text Color" value={dashboardTheme.fontColor} change={e => updateTheme(e, 'fontColor')} />
-        <ColorTextInput label="Stroke Color" value={dashboardTheme.strokeColor} change={e => updateTheme(e, 'strokeColor')} />
-        <ColorTextInput label="Dashboard Background Color" value={dashboardTheme.bgColor} change={e => updateTheme(e, 'bgColor')} />
-        <TextInput label="Chart Border Radius" value={dashboardTheme.itemGridRadius} change={e => updateTheme(e, 'itemGridRadius')}  />
+        <ColorTextInput
+          label="Card Background Color"
+          value={dashboardTheme.itemGridBgColor || palette.white}
+          change={e => updateTheme(e, 'itemGridBgColor')}
+        />
+        <ColorTextInput
+          label="Text Color"
+          value={dashboardTheme.fontColor || palette.gray900}
+          change={e => updateTheme(e, 'fontColor')}
+        />
+        <ColorTextInput
+          label="Stroke Color"
+          value={dashboardTheme.strokeColor || palette.white}
+          change={e => updateTheme(e, 'strokeColor')}
+        />
+        <ColorTextInput
+          label="Dashboard Background Color"
+          value={dashboardTheme.bgColor || palette.white}
+          change={e => updateTheme(e, 'bgColor')}
+        />
+        <TextInput
+          label="Chart Border Radius"
+          value={dashboardTheme.itemGridRadius || '6px'}
+          change={e => updateTheme(e, 'itemGridRadius')} 
+        />
         <Label text="Gradients in Linecharts" forInput="Text Color" />
         <div className={Style['option-badge-container']}>
           <OptionBadge
