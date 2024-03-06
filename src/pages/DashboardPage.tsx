@@ -10,7 +10,6 @@ import { Loader } from '@/components/Loader/Loader'
 import { Dashboard } from '@/features/dashboard/Dashboard'
 import { useDashboard } from '@/hooks/useDashboard'
 
-// export const DashboardPage = () => <Dashboard />
 export const DashboardPage = () => {
   const { id } = useParams()
   const { dashboard, isLoadingDashboard } = useDashboard(id)
