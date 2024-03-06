@@ -6,7 +6,7 @@
 
 import { useParams } from 'react-router-dom'
 
-import { Loader } from '@/components/loader/Loader'
+import { Loader } from '@/components/loader/_Loader'
 import { Dashboard } from '@/features/dashboard/Dashboard'
 import { useDashboard } from '@/hooks/useDashboard'
 
