@@ -1,11 +1,11 @@
-export const prepareLayoutFormat = (layoutData) => {
+export const prepareLayoutFormat = (layoutData, isStatic) => {
   if (layoutData?.length > 0) {
     const layoutWithIndex = layoutData.map(element => {
       return (
         {
           ...element,
           i: element.id,
-          static: true,
+          static: isStatic,
         }
       )
     })

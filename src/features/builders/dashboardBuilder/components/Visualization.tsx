@@ -63,8 +63,8 @@ function transformData(test) {
 
 function calcHeight(height) {
   const fullHeightOfCard = height * 2 * 10
-  const result = fullHeightOfCard - 77 - 42
-  console.log('result', result)
+  const result = fullHeightOfCard - 48 - 18 - 24
+
   return `${result}px`
 }
 
@@ -117,22 +117,27 @@ export const Visualization = ({
   return (
     <>
       {element?.visType === 'singleValue' ? (
-          <SingleValue data={data} title={element?.title} loading={isDataLoading} />
+          <SingleValue
+            data={data}
+            title={element?.title}
+            loading={isDataLoading}
+            theme={dashboardTheme}
+          />
       ) : (
       <div
         className={Style['grid-item']}
         style={{
           borderRadius: dashboardTheme?.itemGridRadius,
           backgroundColor: dashboardTheme?.itemGridBgColor,
-          color: dashboardTheme?.fontColor,
-          borderColor: dashboardTheme?.strokeColor
+          color: dashboardTheme?.textColor,
+          borderColor: dashboardTheme?.itemGridStroke
         }}
       >
         <h3
           className={Style['item-title']}
           style={{
-            color: dashboardTheme?.fontColor,
-            fontFamily: dashboardTheme?.fontFamily
+            color: dashboardTheme?.textColor,
+            fontFamily: dashboardTheme?.font
           }}
         >
           {element?.title}
@@ -146,11 +151,19 @@ export const Visualization = ({
             'areaChart': <AreaChart
               data={data}
               height={calcHeight(elementHeight)}
+              theme={dashboardTheme}
               // round={0}
               // maxValue={100}
-              // // locked
-              // theme={dashboardTheme}
+              locked
             />,
+            'barChart': <AreaChart
+            data={data}
+            height={calcHeight(elementHeight)}
+            theme={dashboardTheme}
+            // round={0}
+            // maxValue={100}
+            locked
+          />,
             'multiAreaChart': <MultiAreaChart
             data={data}
             // height={calcHeight(elementHeight)}

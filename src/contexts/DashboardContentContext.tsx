@@ -194,6 +194,18 @@ const initialTheme = {
 //   tertiaryColor: palette.warning600,
 //   gradient: true,
 //   dataZoom: true,
+  name: "Tokenguard",
+  primaryColor: "#48BD98",
+  secondaryColor: "#0A425E",
+  additionalColor: "#E6A627",
+  bgColor: "#E2D5D5",
+  itemGridRadius: "6px",
+  itemGridBgColor: "#FFFFFF",
+  font: "Roboto",
+  textColor: "#656565",
+  itemGridStroke: "#ECECEC",
+  chartGradient: true,
+  bottomTimeline: true,
 }
 
 const initialLayout = [

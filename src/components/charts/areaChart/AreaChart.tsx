@@ -1,10 +1,7 @@
 import ReactEChartsCore from 'echarts-for-react/lib/core'
 import * as echarts from 'echarts/core'
 import tokenguard from "../tokenguard"
-import {
-  LineChart,
-  BarChart,
-} from 'echarts/charts'
+import { LineChart } from 'echarts/charts'
 import {
   GridComponent,
   ToolboxComponent,
@@ -16,13 +13,21 @@ import {
 import {
   CanvasRenderer,
 } from 'echarts/renderers'
+
 import zoom from '@/assets/icons/zoom.svg'
 import reset from '@/assets/icons/reset.svg'
 import { palette } from '@/utils/constans'
 
-echarts.use(
-  [TitleComponent, TooltipComponent, GridComponent, ToolboxComponent, BarChart, CanvasRenderer, LineChart, DataZoomSliderComponent, DataZoomInsideComponent]
-);
+echarts.use([
+  TitleComponent,
+  TooltipComponent,
+  GridComponent,
+  ToolboxComponent,
+  CanvasRenderer,
+  LineChart,
+  DataZoomSliderComponent,
+  DataZoomInsideComponent
+])
 
 export const AreaChart = ({
   data,
@@ -32,6 +37,7 @@ export const AreaChart = ({
   formatValue,
   prefixValue,
   locked,
+  height,
   theme
 }) => {
   const labels = data.map((item => item.date))
@@ -46,8 +52,8 @@ export const AreaChart = ({
 
   // general styles
   let style = {
-    height: '100%',
     width: '100%',
+    height: height ? height : '100%'
   }
 
   // datazoom variables
@@ -188,13 +194,13 @@ export const AreaChart = ({
   }
 
   if (theme) {
-    toolboxTextFillColor = theme.fontColor
-    yAxisLabelColor = theme.fontColor
-    xAxisLabelColor = theme.fontColor
+    toolboxTextFillColor = theme.textColor
+    yAxisLabelColor = theme.textColor
+    xAxisLabelColor = theme.textColor
     yAxisLabelFont = theme.fontFamily
     xAxisLabelFont = theme.fontFamily
     tokenguard.color = [ theme.primaryColor, theme.secondaryColor, theme.primaryColor ]
-    areaStyleObj.color = theme.gradient ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    areaStyleObj.color = theme.chartGradient ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
       {
         offset: 1,
         color: "#FFFFFF",
@@ -204,7 +210,7 @@ export const AreaChart = ({
         color: theme.primaryColor,
       },
     ]) : theme.primaryColor
-    dataZoomObj = theme.dataZoom ? dataZoomObj : []
+    dataZoomObj = theme.bottomTimeline ? dataZoomObj : []
   }
 
   if (locked) {
@@ -213,9 +219,9 @@ export const AreaChart = ({
 
   const option = {
     grid: {
-      left: '2%',
-      right: '4%',
-      width: '94%',
+      left: '5%',
+      right: '8%',
+      width: '87%',
       bottom: 70,
       containLabel: true,
     },
@@ -224,7 +230,7 @@ export const AreaChart = ({
     toolbox: {
       show: true,
       top: 10,
-      right: '4%',
+      right: '8%',
       itemSize: 24,
       itemGap: 4,
       feature: {

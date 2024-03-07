@@ -37,8 +37,8 @@ export const Customize = () => {
         <CustomSelect
           label="Theme"
           name="theme"
-          value={dashboardTheme.name}
-          placeholder={dashboardTheme.name || ''}
+          value={dashboardTheme?.name}
+          placeholder={dashboardTheme?.name || ''}
           options={[
             { value: 'tokenguard', label: 'Tokenguard' },
             // { value: 1, label: 'test2'},
@@ -46,10 +46,10 @@ export const Customize = () => {
           ]}
         />
         <CustomSelect
-          value={dashboardTheme.fontFamily}
-          name="fontFamily"
+          value={dashboardTheme?.font || 'Arial'}
+          name="font"
           label="Font"
-          placeholder={dashboardTheme.fontFamily || ''}
+          placeholder={dashboardTheme?.font || 'Arial'}
           change={handleFilters}
           options={[
             { value: 'Roboto', label: 'Roboto'},
@@ -72,48 +72,48 @@ export const Customize = () => {
       <div className={Style['advanced-options-container']}>
         <ColorTextInput
           label="Card Background Color"
-          value={dashboardTheme.itemGridBgColor || palette.white}
+          value={dashboardTheme?.itemGridBgColor || palette.white}
           change={e => updateTheme(e, 'itemGridBgColor')}
         />
         <ColorTextInput
           label="Text Color"
-          value={dashboardTheme.fontColor || palette.gray900}
-          change={e => updateTheme(e, 'fontColor')}
+          value={dashboardTheme?.textColor || palette.gray900}
+          change={e => updateTheme(e, 'textColor')}
         />
         <ColorTextInput
           label="Stroke Color"
-          value={dashboardTheme.strokeColor || palette.white}
-          change={e => updateTheme(e, 'strokeColor')}
+          value={dashboardTheme?.itemGridStroke || palette.white}
+          change={e => updateTheme(e, 'itemGridStroke')}
         />
         <ColorTextInput
           label="Dashboard Background Color"
-          value={dashboardTheme.bgColor || palette.white}
+          value={dashboardTheme?.bgColor || palette.white}
           change={e => updateTheme(e, 'bgColor')}
         />
         <TextInput
           label="Chart Border Radius"
-          value={dashboardTheme.itemGridRadius || '6px'}
+          value={dashboardTheme?.itemGridRadius || '6px'}
           change={e => updateTheme(e, 'itemGridRadius')} 
         />
         <Label text="Gradients in Linecharts" forInput="Text Color" />
         <div className={Style['option-badge-container']}>
           <OptionBadge
-            selected={dashboardTheme.gradient}
+            selected={dashboardTheme?.chartGradient}
             action={() => {
               setDashboardTheme(prevTheme => ({
                 ...prevTheme,
-                gradient: true,
+                chartGradient: true,
               }))
             }}
           >
             <p>Yes</p>
           </OptionBadge>
           <OptionBadge
-            selected={!dashboardTheme.gradient}
+            selected={!dashboardTheme?.chartGradient}
             action={() => {
               setDashboardTheme(prevTheme => ({
                 ...prevTheme,
-                gradient: false,
+                chartGradient: false,
               }))
             }}
           >
@@ -123,22 +123,22 @@ export const Customize = () => {
         <Label text="Bottom Timeline" forInput="Text Color" />
         <div className={Style['option-badge-container']}>
           <OptionBadge
-            selected={dashboardTheme.dataZoom}
+            selected={dashboardTheme?.bottomTimeline}
             action={() => {
                 setDashboardTheme(prevTheme => ({
                   ...prevTheme,
-                  dataZoom: true,
+                  bottomTimeline: true,
                 }))
             }}
           >
             <p>Yes</p>
           </OptionBadge>
           <OptionBadge
-            selected={!dashboardTheme.dataZoom}
+            selected={!dashboardTheme?.bottomTimeline}
             action={() => {
               setDashboardTheme(prevTheme => ({
                 ...prevTheme,
-                dataZoom: false,
+                bottomTimeline: false,
               }))
             }}
           >

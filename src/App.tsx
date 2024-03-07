@@ -15,7 +15,6 @@ import { useMobile } from '@/hooks/useMobile'
 
 import Style from './App.module.css'
 
-
 export default function App() {
   const isMobile = useMobile()
 

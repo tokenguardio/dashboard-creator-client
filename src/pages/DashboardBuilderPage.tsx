@@ -11,7 +11,7 @@ import { DashboardContentContext } from '@/contexts/DashboardContentContext'
 import { DashboardBuilder } from '@/features/builders/dashboardBuilder/DashboardBuilder'
 import { useDashboard } from '@/hooks/useDashboard'
 import { prepareElementsFormat, prepareLayoutFormat } from '@/features/dashboard/utils/helpers'
-
+import { tokenguardTheme } from '@/utils/themes/tokenguard'
 
 export const DashboardBuilderPage = () => {
   const { id } = useParams()
@@ -30,9 +30,14 @@ export const DashboardBuilderPage = () => {
       setDashboardTitle(dashboard.title)
       setDashboardId(dashboard._id)
       setDashboardElements(prepareElementsFormat(dashboard.elements))
-      setDashboardLayout(prepareLayoutFormat(dashboard.layout))
-      setDashboardTheme(dashboard.theme)
+      setDashboardLayout(prepareLayoutFormat(dashboard.layout, false))
+      setDashboardTheme(dashboard.theme ? dashboard.theme : tokenguardTheme)
       setDashboardFilters(dashboard.filters)
+    } else {
+      setDashboardElements([])
+      setDashboardLayout([])
+      setDashboardTheme(tokenguardTheme)
+      setDashboardTitle('Default Dashboard')
     }
   }, [dashboard])
 

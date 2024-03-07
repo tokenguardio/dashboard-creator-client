@@ -1,6 +1,10 @@
 .dashboard {
-  max-width: 120rem;
+  padding: 2.4rem;
+}
+
+.layout {
   margin: auto;
+  max-width: 120rem;
 }
 
 .design-content {

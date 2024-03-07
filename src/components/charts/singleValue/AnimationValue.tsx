@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react'
 import Style from './AnimationValue.module.css'
 
-export const AnimationValue = ({ value, prefix }) => {
+export const AnimationValue = ({ value, prefix, theme }) => {
   const [animatedValue, setAnimatedValue] = useState(0)
 
   useEffect(() => {
@@ -35,5 +35,5 @@ export const AnimationValue = ({ value, prefix }) => {
     }
   }, [value, prefix])
 
-  return <span className={Style['animation-value']}>{animatedValue}</span>
+  return <span className={Style['animation-value']} style={{ color: theme?.textColor, fontFamily: theme?.font }}>{animatedValue}</span>
 }
