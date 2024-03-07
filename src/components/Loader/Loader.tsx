@@ -5,12 +5,13 @@
  **********/
 
 import ThreeDots from './images/three-dots.svg'
+import Style from './Loader.module.css'
 
 export function Loader() {
 
   return (
-    <div>
-      <img src={ThreeDots} alt="dots Loader" />
+    <div className={Style['loader']}>
+      <img className={Style['spinner']} src={ThreeDots} alt="dots Loader" />
     </div>
   )
 }

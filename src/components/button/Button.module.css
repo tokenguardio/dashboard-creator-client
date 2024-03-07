@@ -6,4 +6,5 @@
   height: 3.2rem;
   cursor: pointer;
   padding: 0.8rem 1.6rem;
+  white-space: nowrap;
 }

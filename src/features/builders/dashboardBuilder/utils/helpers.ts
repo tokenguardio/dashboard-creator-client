@@ -24,33 +24,19 @@ function existsInArray(string: string, arr: Array<StringObj>): boolean {
 
 export const prepareLayoutFormatToSend = (layoutData) => {
   if (layoutData?.length > 0) {
-    const layoutWithIndex = layoutData.map(element => {
-      element.id = element.i
-      const test = element.i
-      delete element.i
-      const newElement = {
-        w: 0,
-        h: 7,
-        x: 0,
-        y: 0,
-        // minH: 2,
-        // moved: false, 
-        static: true,
-        id: test
-        // id: "01duwmaa"
-      }
+    const layoutWithoutIndex = layoutData.map(element => {
+      const { i, ...rest } = element
 
       return (
         {
-          // ...element,
-          // // id: element.i,
-          // static: true,
-          ...newElement
+          static: true,
+          ...rest,
+          id: i,
         }
       )
     })
 
-    return layoutWithIndex
+    return layoutWithoutIndex
   }
 }
 
@@ -64,7 +50,6 @@ export const prepareElementsFormatToSend = (elementsData) => {
         {
           ...element,
           title: element.text,
-          // id: '01duwmaa',
         }
       )
     })
@@ -80,7 +65,7 @@ export const prepareLayoutFormat = (layoutData) => {
         {
           ...element,
           i: element.id,
-          static: true,
+          static: false,
         }
       )
     })

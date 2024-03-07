@@ -189,9 +189,9 @@ export const MultiAreaChart = ({
   ]
 
   if (theme) {
-    toolboxTextFillColor = theme.fontColor
-    yAxisLabelColor = theme.fontColor
-    xAxisLabelColor = theme.fontColor
+    toolboxTextFillColor = theme.textColor
+    yAxisLabelColor = theme.textColor
+    xAxisLabelColor = theme.textColor
     xAxisLabelFont = theme.fontFamily
     yAxisLabelFont = theme.fontFamily
     tokenguard.color = [ theme.primaryColor, theme.secondaryColor, theme.primaryColor ]

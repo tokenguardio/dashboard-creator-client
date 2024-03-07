@@ -125,8 +125,9 @@ export const DesignContent = () => {
     <div className={Style['design-content']}>
       {dashboardLayout.length > 0 && dashboardElements.length > 0 ? (
       <ResponsiveGridLayout
-        // className="layout"
-        // className={Style['grid']}
+        isDraggable
+        isRearrangeable
+        isResizable
         layout={dashboardLayout}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 12, md: 12, sm: 2, xs: 2, xxs: 1 }}
@@ -142,13 +143,15 @@ export const DesignContent = () => {
                   key={item.i}
                   data-grid={item}
                 >
-                  <Visualization
-                    dashboardId={dashboardId}
-                    element={element}
-                    elementHeight={item.h}
-                    filters={verifiedFilters}
-                    dashboardTheme={dashboardTheme}
-                  />
+                  <div className={`${Style['move-wrapper']}`}>
+                    <Visualization
+                      dashboardId={dashboardId}
+                      element={element}
+                      elementHeight={item.h}
+                      filters={verifiedFilters}
+                      dashboardTheme={dashboardTheme}
+                    />
+                  </div>
                   <div className={Style['item-more']}>
                     <Dropdown options={options} id={item.i}>
                       <Icon name="more" width={16} height={16} />
@@ -162,7 +165,7 @@ export const DesignContent = () => {
                   <div className={Style['move-wrapper']}>
                     <div
                       dangerouslySetInnerHTML={{ __html: element.text }}
-                      style={{ color: dashboardTheme?.fontColor, fontFamily: dashboardTheme?.fontFamily }}
+                      style={{ color: dashboardTheme?.textColor, fontFamily: dashboardTheme?.font }}
                     />
                   </div>
                   <div className={Style['btn-more']}>

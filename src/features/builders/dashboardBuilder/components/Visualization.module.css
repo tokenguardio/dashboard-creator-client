@@ -14,3 +14,8 @@
   color: var(--color-gray900);
   margin-bottom: 2.4rem;
 }
+
+.move-wrapper {
+  height: 100%;
+  cursor: grab;
+}

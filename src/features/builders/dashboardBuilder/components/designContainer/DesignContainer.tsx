@@ -6,6 +6,7 @@ import { palette } from '@/utils/constans'
 
 export const DesignContainer = ({ children }) => {
   const { dashboardTheme } = useContext(DashboardContentContext)
+
   return (
     <div
       className={Style['design-container']}
