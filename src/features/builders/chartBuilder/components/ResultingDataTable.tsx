@@ -46,7 +46,7 @@ export const ResultingDataTable = ({ data }) => {
   const [sortedData, setSortedData] = useState([])
   const columns = Object.keys(data[0])
   const formatter = Intl.NumberFormat('en', { notation: 'compact' })
-
+  
     const handleSort = (column) => {
     if (sortBy === column) {
       setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'));
@@ -60,7 +60,7 @@ export const ResultingDataTable = ({ data }) => {
           return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
         }
       });
-      setSortedData(reSort);
+      setSortedData(reSort)
     } else {
       setSortBy(column)
       setSortOrder('asc')

@@ -7,11 +7,18 @@ export const fetchDashboard = async (id: string) => {
   return data
 }
 
-export const fetchDashboardDataElement = async (dashboardId, formattedElementId, requestBody) => {
+export const fetchElementDataCustomQuery = async (dashboardId, formattedElementId, requestBody) => {
   const response = await axios.post(
     `${process.env.VITE_API_BASE_URL}/api/dashboard/${dashboardId}/element/${formattedElementId}/exec`,
     requestBody
   )
 
   return response.data
+}
+
+export const fetchElementDataBasicQuery = async (database, schema, table, bodyRequest) => {
+  const response = await axios.post(`${process.env.API_BASE_URL}/api/database-info/generate-chart-data/${database}/${schema}/${table}`, bodyRequest)
+  const data = response.data
+
+  return data
 }

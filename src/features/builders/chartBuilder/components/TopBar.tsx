@@ -18,6 +18,9 @@ export const TopBar = ({
   chartType,
   selectedData,
   resetBuilder,
+  databaseParam,
+  schemaParam,
+  tableParam,
   handleQuery
 }) => {
   const [editing, setEditing] = useState<boolean>(false)
@@ -41,19 +44,20 @@ export const TopBar = ({
   } = dashboardContentContext
 
   const saveElement = (blockChartId) => {
-
     if (dashboardElements.some(obj => obj?.id === blockChartId)) {
       const updatedDashboardElements = dashboardElements.map(element => {
         if (element.id === blockChartId) {
           return (
             {
               id: blockChartId,
+              i: blockChartId,
               title: chartTitle,
               type: 'visualization',
               dimension: selectedData[0].dimension[0],
               measures: selectedData[0].measures,
               queryId: element.queryId,
-              visType: chartType
+              visType: chartType,
+              data: result
             }
           )
         } else {
@@ -63,17 +67,26 @@ export const TopBar = ({
       setDashboardElements(updatedDashboardElements)
       setBlockChartId(null)
     } else {
+      const elementToSave = {
+        type: "basicQuery",
+        id: blockChartId,
+        i: blockChartId,
+        title: chartTitle,
+        dimension: selectedData[0].dimension[0],
+        measures: selectedData[0].measures,
+        dbname: databaseParam,
+        schema: schemaParam,
+        table: tableParam,
+        // queryId: 0,
+        visType: chartType,
+        data: result
+      }
+      if (selectedData[0].dimension[1]) {
+        elementToSave.differential = selectedData[0].dimension[1]
+      }
       setDashboardElements([
         ...dashboardElements,
-        {
-          id: blockChartId,
-          title: chartTitle,
-          type: "visualization",
-          dimension: selectedData[0].dimension[0],
-          measures: selectedData[0].measures,
-          queryId: 0,
-          visType: chartType
-        }
+        elementToSave
       ])
       setDashboardLayout(
         [
@@ -84,7 +97,7 @@ export const TopBar = ({
             static: false,
             x: 0,
             y: 0,
-            h: 8,
+            h: 24,
             w: 4
           }
         ]
