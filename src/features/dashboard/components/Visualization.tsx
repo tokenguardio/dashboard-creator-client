@@ -9,7 +9,6 @@ import { SingleValue } from '@/components/charts/singleValue/SingleValue'
 import { AreaChart } from '@/components/charts/areaChart/AreaChart'
 import { CustomBarChart } from '@/components/charts/barChart/BarChart'
 import { MultiAreaChart } from '@/components/charts/multiAreaChart/MultiAreaChart'
-// import { fetchElementDataCustomQuery } from '@/utils/fetches/dashboard'
 // import { logger } from 'utils/logger'
 import {
   fetchElementDataCustomQuery,
