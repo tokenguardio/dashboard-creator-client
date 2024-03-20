@@ -22,7 +22,6 @@ export const ActionBar = () => {
     setDashboardTitle,
     setDashboardTheme
   } = useContext(DashboardContentContext)
-  // const dashboardContent = useContext(DashboardContentContext)
   const navigate = useNavigate()
 
   const saveDashboard = async () => {
@@ -33,7 +32,6 @@ export const ActionBar = () => {
         layout: prepareLayoutFormatToSend(dashboardLayout),
         theme: dashboardTheme
       })
-      console.log('response', response.data)
       setDashboardElements([])
       setDashboardLayout([])
       setDashboardTheme({})
@@ -53,15 +51,14 @@ export const ActionBar = () => {
         layout: prepareLayoutFormatToSend(dashboardLayout),
         theme: dashboardTheme
       })
-      console.log('response', response.data)
       setDashboardElements([])
       setDashboardLayout([])
       setDashboardTheme({})
       setDashboardTitle('Default Dashboard')
-      toast.success('success saved')
+      toast.success('Success saved')
       navigate('/')
     } catch (err) {
-      toast.error('save failed')
+      toast.error('Save failed')
     }
   }
 

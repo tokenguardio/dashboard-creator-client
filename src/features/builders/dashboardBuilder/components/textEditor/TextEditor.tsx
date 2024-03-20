@@ -129,14 +129,12 @@ const BLOCK_TYPES = [
 ];
 
 const BlockStyleControls = (props: any) => {
-  const { editorState } = props;
+  const { editorState } = props
   const selection = editorState.getSelection();
   const blockType = editorState
     .getCurrentContent()
     .getBlockForKey(selection.getStartKey())
-    .getType();
-
-  console.log('blockType', blockType)
+    .getType()
 
   return (
     <div className="toolbar__controls">

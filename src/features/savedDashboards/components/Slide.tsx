@@ -27,7 +27,11 @@ export const Slide: React.FC<SlideProps> = ({
         <NavLink to={`/dashboard/${id}`}>
           <p className={Style['name']}>{title}</p>
         </NavLink>
-        <Dropdown options={options} id={id}>
+        <Dropdown
+          options={options}
+          id={id}
+          position="bottom"
+        >
           <Icon name="more" width={16} height={16} />
         </Dropdown>
       </div>

@@ -19,18 +19,6 @@ import { useVerifiedDashboardFilters } from './hooks/useVerifiedDashboardFilters
 import Style from './Dashboard.module.css'
 
 const initialTheme = {
-  // name: 'Tokenguard',
-  // bgColor: palette.gray50,
-  // itemGridRadius: '6px',
-  // itemGridBgColor: palette.white,
-  // fontColor: palette.gray900,
-  // fontFamily: 'Roboto',
-  // strokeColor: palette.gray100,
-  // primaryColor: palette.primary,
-  // secondaryColor: palette.secondary,
-  // tertiaryColor: palette.warning600,
-  // gradient: true,
-  // dataZoom: true,
   name: "Tokenguard",
   primaryColor: "#48BD98",
   secondaryColor: "#0A425E",
@@ -43,7 +31,6 @@ const initialTheme = {
   itemGridStroke: "#ECECEC",
   chartGradient: true,
   bottomTimeline: true,
-  // _id: "65e8d84c4999e7b2ca8d3438"
 }
 
 const dashboardTheme = {

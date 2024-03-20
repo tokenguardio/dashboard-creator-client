@@ -11,8 +11,9 @@ import { Dropdown } from '@/components/dropdown/Dropdown'
 import "/node_modules/react-grid-layout/css/styles.css"
 import "/node_modules/react-resizable/css/styles.css"
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
-import {BlockButtonContext } from '@/contexts/BlockButtonContext'
+import { BlockButtonContext } from '@/contexts/BlockButtonContext'
 import { BlockTextContext } from '@/contexts/BlockTextContext'
+import { BlockChartContext } from '@/contexts/BlockChartContext'
 import { useVerifiedDashboardFilters } from '@/features/dashboard/hooks/useVerifiedDashboardFilters'
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -34,6 +35,7 @@ export const DesignContent = () => {
 
   const blockButtonContext = useContext(BlockButtonContext)
   const blockTextContext = useContext(BlockTextContext)
+  const blockChartContext = useContext(BlockChartContext)
 
   if (!blockButtonContext) {
     throw new Error('Block button context must be used in Provider')
@@ -43,8 +45,13 @@ export const DesignContent = () => {
     throw new Error('Block text context must be used in Provider')
   }
 
+  if (!blockChartContext) {
+    throw new Error('Block chart context must be used in Provider')
+  }
+
   const { blockButtonId, setBlockButtonId } = blockButtonContext
   const { blockTextId, setBlockTextId } = blockTextContext
+  const { blockChartId, setBlockChartId } = blockChartContext
 
   const removeElement = (elementId) => {
     const test = dashboardLayout.filter(item => item.i !== elementId)
@@ -54,72 +61,43 @@ export const DesignContent = () => {
     setDashboardLayout(test)
   }
 
-
-  const options = [
+  const optionsVisualization = [
     {
-      name: 'edit',
+      label: 'Edit',
+      action: (id) => setBlockChartId(id)
+    },
+    {
+      label: 'Delete',
+      action: (id) => removeElement(id)
+    },
+  ]
+
+
+  const optionsButton = [
+    {
+      label: 'Edit',
       action: (id) => setBlockButtonId(id)
     },
     {
-      name: 'delete',
+      label: 'Delete',
       action: (id) => removeElement(id)
     },
   ]
 
   const optionsText = [
     {
-      name: 'edit',
+      label: 'Edit',
       action: (id) => setBlockTextId(id)
     },
     {
-      name: 'delete',
+      label: 'Delete',
       action: (id) => removeElement(id)
     },
   ]
 
-  // function renderSwitch(item) {
-  //   switch(item?.type) {
-  //     case 'text':
-  //       return <TextEditor />;
-  //     case 'areaChart':
-  //       return (
-  //         <AreaChart
-  //           data={item.data}
-  //           round={0}
-  //           maxValue={100}
-  //           locked
-  //         />
-  //       )
-  //     case 'button':
-  //       return 'bar';
-  //     default:
-  //       return null;
-  //   }
-  // }
-  function renderSwitch(item) {
-    switch(item?.type) {
-      case 'text':
-        return <TextEditor />;
-      case 'areaChart':
-        return (
-          <AreaChart
-            data={item.data}
-            round={0}
-            maxValue={100}
-            locked
-            theme={dashboardTheme}
-          />
-        )
-      case 'button':
-        return <Button onClick={() => console.log('test button')}>{item.text}</Button>;
-      default:
-        return null;
-    }
-  }
-
   const onLayoutChange = (layout: any, layouts: any) => {
     setDashboardLayout(layout)
-  };
+  }
 
   return (
     <div className={Style['design-content']}>
@@ -153,7 +131,7 @@ export const DesignContent = () => {
                     />
                   </div>
                   <div className={Style['item-more']}>
-                    <Dropdown options={options} id={item.i}>
+                    <Dropdown options={optionsVisualization} id={item.i}>
                       <Icon name="more" width={16} height={16} />
                     </Dropdown>
                   </div>                    
@@ -182,7 +160,7 @@ export const DesignContent = () => {
                     {element.text}
                   </div>
                   <div className={Style['btn-more']}>
-                    <Dropdown options={options} id={item.i}>
+                    <Dropdown options={optionsButton} id={item.i}>
                       <Icon name="more" width={16} height={16} />
                     </Dropdown>
                   </div>

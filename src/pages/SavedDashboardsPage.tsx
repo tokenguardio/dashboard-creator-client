@@ -4,6 +4,6 @@
  *
  **********/
 
-import { SavedDashboards } from "@/features/savedDashboards/SavedDashboards"
+import { SavedDashboards } from '@/features/savedDashboards/SavedDashboards'
 
 export const SavedDashboardsPage = () => <SavedDashboards />

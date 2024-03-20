@@ -21,11 +21,11 @@ export const DashboardsGrid = () => {
   }
   const options = [
     {
-      name: 'edit',
+      label: 'Edit',
       action: (id: string) => navigate(`/edit-dashboard/${id}`),
     },
     {
-      name: 'delete',
+      label: 'Delete',
       action: (id: string) => {
         removeDashboard(id)
         setDashboards(dashboards.filter(dashboard => dashboard._id !== id))

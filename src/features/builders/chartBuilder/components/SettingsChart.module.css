@@ -1,0 +1,20 @@
+.settings-chart-container {
+  background-color: var(--color-secondary600);
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 0.8rem 1.6rem;
+}
+
+.settings-chart-title {
+  color: var(--color-white);
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 2.4rem;
+  padding: 0.8rem 1.2rem 0.8rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}

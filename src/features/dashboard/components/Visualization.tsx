@@ -46,7 +46,7 @@ function transformData(test) {
           transformedData[date] = [];
       }
 
-      transformedData[date].push({ [key]: value });
+      transformedData[date].push({ [key]: value })
     }
   }
 
@@ -61,7 +61,7 @@ function transformData(test) {
 function calcHeight(height) {
   const fullHeightOfCard = height * 2 * 10
   const result = fullHeightOfCard - 48 - 18 - 24
-  console.log(result)
+
   return `${result}px`
 }
 

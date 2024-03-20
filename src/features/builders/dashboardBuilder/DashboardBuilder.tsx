@@ -4,6 +4,7 @@
  *
  **********/
 
+import React from 'react'
 import { useContext, useEffect } from 'react'
 
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
@@ -28,10 +29,6 @@ export function DashboardBuilder() {
   const { blockButtonId } = useContext(BlockButtonContext)
   const { blockTextId } = useContext(BlockTextContext)
   const { blockChartId } = useContext(BlockChartContext)
-
-  // useEffect(() => {
-  //   console.log('dashboardId', dashboardId)
-  // }, [dashboardId])
 
   if (blockChartId) {
     return (
