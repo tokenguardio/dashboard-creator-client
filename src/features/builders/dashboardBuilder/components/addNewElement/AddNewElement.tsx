@@ -71,7 +71,6 @@ export const AddNewElement: React.FC<AddNewElementProps> = ({
     }
   }
 
-
   return (
     <>
       <div className={Style['add-new-element']}>

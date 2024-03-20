@@ -7,9 +7,16 @@ interface IconButtonProps {
   children?: ReactNode
 }
 
-export const IconButton: React.FC<IconButtonProps> = ({ icon: icon, onClick, children }) => {
+export const IconButton: React.FC<IconButtonProps> = ({
+  icon: icon,
+  onClick,
+  children,
+}) => {
   return (
-    <button className={Style['icon-button']} onClick={onClick}>
+    <button
+      className={Style['icon-button']}
+      onClick={onClick}
+    >
       {icon}
       {children}
     </button>

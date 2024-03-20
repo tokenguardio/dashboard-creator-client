@@ -1,12 +1,34 @@
-import { useState, useEffect, useRef } from 'react'
-// import { useOutsideClick } from '@/hooks/useOutsideClick'
+import React, {
+  useState,
+  useEffect,
+  useRef,
+} from 'react'
+
+import { Icon } from '@/components/icon/Icon'
+import clsx from 'clsx'
 import Style from './Dropdown.module.scss'
 
-export const Dropdown = ({ options, id, children }) => {
+export const Dropdown = ({
+  options,
+  id,
+  children,
+  title,
+  position,
+}) => {
   const [_clickedOutside, setClickedOutside] = useState(false)
   const [isOpenDropDown, setOpenDropDown] = useState(false)
   const myRef = useRef(null)
-  // const ref = useOutsideClick()
+
+  const dropDownStyle = clsx(
+    Style['list'],
+    position === 'left' && Style['position-left'],
+    position === 'bottom' && Style['position-bottom'],
+  )
+
+  const handleOptionClick = (action) => {
+    setOpenDropDown(false)
+    action(id)
+  }
 
   const handleClickOutside = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (
@@ -27,31 +49,41 @@ export const Dropdown = ({ options, id, children }) => {
   })
 
   return (
-    <div className="relative" ref={myRef} onClick={handleClickInside}>
+    <div ref={myRef} onClick={handleClickInside}>
       <div
-        className={Style.wrapper}
+        className={Style['wrapper']}
         onClick={() => setOpenDropDown(!isOpenDropDown)}
       >
         {children}
       </div>
 
       {isOpenDropDown && (
-        <ul className={Style.list}>
-          {options.map(({ name, type, action, logo }) => {
-            return (
-              <li
-                onClick={() => action(id)}
-                key={name}
-                className={
-                  type ? `${Style[type]} ${Style.option}` : Style.option
-                }
-              >
-                {logo && <img src={logo} alt={`logo ${name}`} />}
-                {name}
-              </li>
-            )
-          })}
-        </ul>
+        <div className={dropDownStyle}>
+          {title && <p className={Style['title']}>{title}</p>}
+          <ul>
+            {options.map(({
+              label,
+              type,
+              action,
+              logo,
+              icon
+            }) => {
+              return (
+                <li
+                  onClick={() => handleOptionClick(action)}
+                  key={label}
+                  className={
+                    type ? `${Style[type]} ${Style.option}` : Style.option
+                  }
+                >
+                  {logo && <img src={logo} alt={`logo ${label}`} />}
+                  {icon && <Icon width="12" height="12" name={icon} />}
+                  <p>{label}</p>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
       )}
     </div>
   )

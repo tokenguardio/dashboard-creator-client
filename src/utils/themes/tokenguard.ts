@@ -1,4 +1,4 @@
-import { palette } from "@/utils/constans"
+import { palette } from '@/utils/constans'
 
 export const tokenguardTheme = {
   name: "Tokenguard",

@@ -1,3 +1,4 @@
+import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Flip, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -31,7 +32,6 @@ export default function App() {
           <BlockTextProvider>
             <Routes>
               <Route element={<Layout />}>
-                {/* <Route path="/create-dashboard" element={<DashboardBuilderPage />} /> */}
                 {['/create-dashboard', '/edit-dashboard/:id'].map(path => <Route key={path} path={path} element={<DashboardBuilderPage />} />)}
                 {['/saved-dashboards', '/'].map(path => <Route key={path} path={path} element={<SavedDashboardsPage />} />)}
               </Route>  

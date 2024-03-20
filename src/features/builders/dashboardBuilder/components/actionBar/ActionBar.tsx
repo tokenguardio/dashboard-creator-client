@@ -22,18 +22,16 @@ export const ActionBar = () => {
     setDashboardTitle,
     setDashboardTheme
   } = useContext(DashboardContentContext)
-  // const dashboardContent = useContext(DashboardContentContext)
   const navigate = useNavigate()
 
   const saveDashboard = async () => {
     try {
-      const response = await axios.post(`${process.env.API_BASE_URL}/api/dashboard`, {
+      const response = await axios.post(`${process.env.VITE_API_BASE_URL}/api/dashboard`, {
         title: dashboardTitle,
         elements: prepareElementsFormatToSend(dashboardElements),
         layout: prepareLayoutFormatToSend(dashboardLayout),
         theme: dashboardTheme
       })
-      console.log('response', response.data)
       setDashboardElements([])
       setDashboardLayout([])
       setDashboardTheme({})
@@ -47,21 +45,20 @@ export const ActionBar = () => {
 
   const updateDashboard = async () => {
     try {
-      const response = await axios.put(`${process.env.API_BASE_URL}/api/dashboard/${dashboardId}`, {
+      const response = await axios.put(`${process.env.VITE_API_BASE_URL}/api/dashboard/${dashboardId}`, {
         title: dashboardTitle,
         elements: prepareElementsFormatToSend(dashboardElements),
         layout: prepareLayoutFormatToSend(dashboardLayout),
         theme: dashboardTheme
       })
-      console.log('response', response.data)
       setDashboardElements([])
       setDashboardLayout([])
       setDashboardTheme({})
       setDashboardTitle('Default Dashboard')
-      toast.success('success saved')
+      toast.success('Success saved')
       navigate('/')
     } catch (err) {
-      toast.error('save failed')
+      toast.error('Save failed')
     }
   }
 

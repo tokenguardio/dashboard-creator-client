@@ -14,9 +14,8 @@ export const useDashboards = () => {
       try {
         setIsLoadingDashboards(true)
         const data = await fetchDashboards()
-        console.log('data', data)
         const validatedDashboards = DashboardSchema.array().safeParse(data?.output)
-        console.log('validatedDashboards', validatedDashboards)
+
         // if (!validatedDashboards.success) {
         //   throw Error(validatedDashboards.error)
         // }

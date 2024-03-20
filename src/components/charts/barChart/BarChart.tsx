@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import ReactEChartsCore from 'echarts-for-react/lib/core'
 import * as echarts from 'echarts/core'
 import {
-  LineChart,
+  BarChart,
 } from 'echarts/charts'
 import {
   GridComponent,
@@ -28,7 +28,7 @@ echarts.use([
   GridComponent,
   ToolboxComponent,
   CanvasRenderer,
-  LineChart,
+  BarChart,
   DataZoomSliderComponent,
   DataZoomInsideComponent
 ])
@@ -59,10 +59,10 @@ export const calcWidthOfLegend = (width, numbersOfToolboxItem) => {
 
 export function findValueByName(array, name) {
   for (let i = 0; i < array.length; i++) {
-      let obj = array[i]
-      if (name in obj) {
-          return obj[name]
-      }
+    let obj = array[i]
+    if (name in obj) {
+        return obj[name]
+    }
   }
   return null
 }
@@ -127,7 +127,7 @@ export const useContainerDimensions = myRef => {
   return dimensions
 };
 
-export const AreaChart = ({
+export const CustomBarChart = ({
   data,
   height,
 }) => {
@@ -158,7 +158,7 @@ export const AreaChart = ({
 
     return {
       data: result,
-      type: 'line',
+      type: 'bar',
       smooth: true,
       clip: true,
       name: legendItem,
@@ -395,6 +395,7 @@ export const AreaChart = ({
     <div
       ref={componentRef}
       style={{
+        // width: width ? width : '100%',
         width: '100%',
         margin: 'auto'
       }}
@@ -407,6 +408,7 @@ export const AreaChart = ({
         theme={tokenguard}
         style={{
           height: height ? height : '300px',
+          // width: width ? width : '100%',
           margin: 'auto'
         }}
       />
