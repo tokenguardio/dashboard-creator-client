@@ -321,15 +321,10 @@ export function ChartBuilder() {
         const bodyRequest = {
           dimension: selectedData[0].dimension[0],
           measures: selectedData[0].measures,
+          filters: []
         }
         if (selectedData[0].dimension[1]) {
-          bodyRequest.filters = [
-            {
-              columnName: selectedData[0].dimension[1]
-            }
-          ]
-        } else {
-          bodyRequest.filters = []
+          bodyRequest.differential = selectedData[0].dimension[1]
         }
 
         const result = await fetchQuery(databaseParam, schemaParam, tableParam, bodyRequest)
