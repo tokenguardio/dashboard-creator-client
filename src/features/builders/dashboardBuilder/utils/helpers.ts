@@ -45,11 +45,12 @@ export const prepareElementsFormatToSend = (elementsData) => {
     const ElementsArrWithIndex = elementsData.map(element => {
       element.id = element.i
       delete element.i
+      delete element.data
 
       return (
         {
           ...element,
-          title: element.text,
+          title: element.text || element.title,
         }
       )
     })

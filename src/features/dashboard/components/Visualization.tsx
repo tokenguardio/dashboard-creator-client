@@ -7,9 +7,14 @@ import { toast } from 'react-toastify'
 import { Loader } from '@/components/Loader/Loader'
 import { SingleValue } from '@/components/charts/singleValue/SingleValue'
 import { AreaChart } from '@/components/charts/areaChart/AreaChart'
+import { CustomBarChart } from '@/components/charts/barChart/BarChart'
 import { MultiAreaChart } from '@/components/charts/multiAreaChart/MultiAreaChart'
-import { fetchDashboardDataElement } from '@/utils/fetches/dashboard'
+// import { fetchElementDataCustomQuery } from '@/utils/fetches/dashboard'
 // import { logger } from 'utils/logger'
+import {
+  fetchElementDataCustomQuery,
+  fetchElementDataBasicQuery
+} from '@/utils/fetches/dashboard'
 
 import { convertToUrlFormat } from '../utils/helpers'
 import { prepareFiltersBodyRequestFormat } from '../utils/helpers'
@@ -74,17 +79,17 @@ export const Visualization = ({
 }) => {
   const [data, setData] = useState()
   const [isDataLoading, setIsDataLoading] = useState(false)
-  const filtersBodyRequest = prepareFiltersBodyRequestFormat(filters)
+  const filtersBodyRequest = filters ? prepareFiltersBodyRequestFormat(filters) : []
 
   useEffect(() => {
-    if (element?.queryId && filtersBodyRequest) {
+    if (element.type !== 'basicQuery') {
       const fetchData = async () => {
         try {
           setIsDataLoading(true)
           const bodyRequest = {
             "filters": filtersBodyRequest
           }
-          const fetchedElementData = await fetchDashboardDataElement(dashboardId, convertToUrlFormat(element.id), bodyRequest)
+          const fetchedElementData = await fetchElementDataCustomQuery(dashboardId, convertToUrlFormat(element.id), bodyRequest)
           let result = fetchedElementData?.output?.data
           if (element.visType === 'multiAreaChart' || element.visType === 'multiLineChart' || element.visType === 'stackBarChart') {
             result = transformData(fetchedElementData?.output?.data)
@@ -109,8 +114,92 @@ export const Visualization = ({
       }
   
       fetchData()
+    } else {
+      if (!element.data) {
+        const fetchData = async () => {
+          try {
+            setIsDataLoading(true)
+            const measuresWithoutId = element.measures.map(measure => ({ columnName: measure.columnName, operator: measure.operator }))
+            const bodyRequest = {
+              dimension: element.dimension,
+              measures: measuresWithoutId,
+              filters: []
+            }
+            if (element.differential) {
+              bodyRequest.differential = element.differential
+            }
+
+            const fetchedElementData = await fetchElementDataBasicQuery(element.dbname, element.schema, element.table, bodyRequest)
+            let result = fetchedElementData?.data
+            if (element.visType === 'multiAreaChart' || element.visType === 'multiLineChart' || element.visType === 'stackBarChart') {
+              result = transformData(fetchedElementData?.output?.data)
+            }
+            if (element.visType === 'singleValue') {
+              result = { currentValue: fetchedElementData?.output?.data[0].current_value }
+            }
+            
+            // VALIDATION TODO
+            // const validatedElementData = parseData(element.visType, fetchedElementData)
+            // if (!validatedElementData.success) {
+            //   logger.error(validatedElementData.error)
+            //   throw Error('Incorrect dashboard element response data format')
+            // }
+            // setData(fetchedElementData?.output?.data)
+            setData(result)
+            setIsDataLoading(false)
+          } catch (err) {
+            setIsDataLoading(false)
+            toast.error('Upss.. There was a problem to load data')
+          }
+        }
+
+        fetchData()
+      } else {
+        setData(element.data)
+      }
     }
-  }, [element?.queryId, JSON.stringify(filtersBodyRequest)])
+  }, [
+    // element?.queryId,
+    element?.type,
+    JSON.stringify(filtersBodyRequest),
+    dashboardId
+  ])
+
+  // useEffect(() => {
+  //   if (element?.queryId && filtersBodyRequest) {
+  //     const fetchData = async () => {
+  //       try {
+  //         setIsDataLoading(true)
+  //         const bodyRequest = {
+  //           "filters": filtersBodyRequest
+  //         }
+  //         const fetchedElementData = await fetchElementDataCustomQuery(dashboardId, convertToUrlFormat(element.id), bodyRequest)
+  //         let result = fetchedElementData?.output?.data
+  //         if (element.visType === 'multiAreaChart' || element.visType === 'multiLineChart' || element.visType === 'stackBarChart') {
+  //           result = transformData(fetchedElementData?.output?.data)
+  //         }
+  //         if (element.visType === 'singleValue') {
+  //           result = { currentValue: fetchedElementData?.output?.data[0].current_value }
+  //         }
+          
+  //         // VALIDATION TODO
+  //         // const validatedElementData = parseData(element.visType, fetchedElementData)
+  //         // if (!validatedElementData.success) {
+  //         //   logger.error(validatedElementData.error)
+  //         //   throw Error('Incorrect dashboard element response data format')
+  //         // }
+  //         // setData(fetchedElementData?.output?.data)
+  //         setData(result)
+  //         setIsDataLoading(false)
+  //       } catch (err) {
+  //         setIsDataLoading(false)
+  //         toast.error('Upss.. There was a problem to load data')
+  //       }
+  //     }
+  
+  //     fetchData()
+  //   }
+  // }, [element?.queryId, JSON.stringify(filtersBodyRequest)])
 
   return (
     <>
@@ -154,7 +243,14 @@ export const Visualization = ({
               // // locked
               theme={dashboardTheme}
             />,
-            'barChart': <AreaChart
+            'lineChart': <AreaChart
+              data={data}
+              height={calcHeight(elementHeight)}
+              theme={dashboardTheme}
+              // round={0}
+              // maxValue={100}
+            />,
+            'barChart': <CustomBarChart
             data={data}
             height={calcHeight(elementHeight)}
             // round={0}

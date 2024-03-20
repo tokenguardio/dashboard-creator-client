@@ -130,6 +130,7 @@ export const useContainerDimensions = myRef => {
 export const AreaChart = ({
   data,
   height,
+  locked
 }) => {
   const [legendWidth, setLegendWidth] = useState()
   const componentRef = useRef()
@@ -261,6 +262,15 @@ export const AreaChart = ({
     legendObj.selected = legendsData
     legendObj.selector = []
     legendObj.left = '2%'
+  }
+
+  const style = {
+    height: height ? height : '300px',
+    margin: 'auto'
+  }
+
+  if (locked) {
+    style.pointerEvents = 'none'
   }
 
   const option = {
@@ -405,10 +415,7 @@ export const AreaChart = ({
         notMerge={true}
         lazyUpdate={true}
         theme={tokenguard}
-        style={{
-          height: height ? height : '300px',
-          margin: 'auto'
-        }}
+        style={style}
       />
     </div>
   )

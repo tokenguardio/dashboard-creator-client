@@ -6,7 +6,7 @@ export const agregateOptions = [
   },
   {
     label: 'Average',
-    value: 'average',
+    value: 'avg',
     icon: 'average'
   },
   {

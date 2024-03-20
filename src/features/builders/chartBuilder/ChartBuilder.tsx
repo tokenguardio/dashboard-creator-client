@@ -12,10 +12,10 @@ import { DashboardContentContext } from '@/contexts/DashboardContentContext'
 import { Icon } from '@/components/icon/Icon'
 import { Button } from '@/components/button/Button'
 import { Dropdown } from '@/components/dropdown/Dropdown'
+import { fetchElementDataBasicQuery } from '@/utils/fetches/dashboard'
 
 import { useDatabases } from './hooks/useDatabases'
 import { fetchColumns } from './utils/fetches/column'
-import { fetchQuery } from './utils/fetches/query'
 import { Window } from './components/Window'
 import { ResultView } from './components/ResultView'
 import { TopBar } from './components/TopBar'
@@ -56,6 +56,7 @@ export function ChartBuilder() {
     dashboardElements,
   } = dashboardContentContext
   const { databases } = useDatabases()
+  console.log('dashboardElements', dashboardElements)
 
   const handleTable = (e) => {
     const databaseName = e.currentTarget.getAttribute('data-value')
@@ -327,7 +328,7 @@ export function ChartBuilder() {
           bodyRequest.differential = selectedData[0].dimension[1]
         }
 
-        const result = await fetchQuery(databaseParam, schemaParam, tableParam, bodyRequest)
+        const result = await fetchElementDataBasicQuery(databaseParam, schemaParam, tableParam, bodyRequest)
         setResult(result.data)
       }
 
@@ -356,6 +357,11 @@ export function ChartBuilder() {
       const editedChart = dashboardElements.filter(item => item.id === blockChartId)
       if (editedChart.length > 0) {
         setChartTitle(editedChart[0].title)
+        // setSelectedData({
+        //   table: editedChart[0].table,
+        //   dimension: editedChart[0].dimension,
+        //   measures: editedChart[0].measures,
+        // })
       }
     }
 
@@ -437,6 +443,9 @@ export function ChartBuilder() {
         selectedData={selectedData}
         chartType={chartType}
         handleQuery={handleQuery}
+        databaseParam={databaseParam}
+        tableParam={tableParam}
+        schemaParam={schemaParam}
       />
       <div className={Style['builder-container']}>
         <div className={Style['list']}>
