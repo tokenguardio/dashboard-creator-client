@@ -130,7 +130,8 @@ export const useContainerDimensions = myRef => {
 export const AreaChart = ({
   data,
   height,
-  locked
+  locked,
+  theme
 }) => {
   const [legendWidth, setLegendWidth] = useState()
   const componentRef = useRef()
@@ -150,6 +151,34 @@ export const AreaChart = ({
   // legend
   let selectorLabelColor = palette.gray700
   let itemLegendTextColor = palette.gray700
+
+    // datazoom variables
+    let dataZoomBorderColor = palette.gray200
+    let dataZoomBgColor = '#f6f6f6'
+    let dataZoomFillerColor = '#093cc80a'
+    let dataZoomSelectedLineColor = '#0a425e'
+    let dataZoomSelectedAreaColor = '#dbe7ed'
+  
+    // xAxis variables
+    let xAxisLabelColor = palette.gray700
+    let xAxisLineColor = palette.gray100
+    let xAxisSplitLineColor = palette.gray100
+    let xAxisLabelFont = 'sans-serif'
+  
+    // yAxis variables
+    let yAxisLabelColor = palette.gray700
+    let yAxisLineColor = palette.gray100
+    let yAxisSplitLineColor = palette.gray100
+    let yAxisLabelFont = 'sans-serif'
+  
+    // toolbox
+    let toolboxZoomIcon = zoom
+    let toolboxResetIcon = reset
+    let toolboxTextFillColor = '#072f43'
+  
+    // tooltip
+    let tooltipCrossColor = palette.gray700
+    let tooltipLineColor = palette.gray700
 
   const generatedSeries = legendsData.map(legendItem => {
     let result = []
@@ -222,6 +251,20 @@ export const AreaChart = ({
     },
   }
 
+  let areaStyleObj = {
+    opacity: 0.6,
+    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      {
+        offset: 1,
+        color: "#FFFFFF",
+      },
+      {
+        offset: 0,
+        // color: "#84D3BA",
+        color: palette.primary,
+      },
+    ]),
+  }
   let toolboxObj = {
     show: true,
     top: 0,
@@ -262,6 +305,79 @@ export const AreaChart = ({
     legendObj.selected = legendsData
     legendObj.selector = []
     legendObj.left = '2%'
+  }
+
+  let dataZoomObj = [
+    {
+      type: 'slider',
+      xAxisIndex: 0,
+      filterMode: 'none',
+      showDetail: false,
+      borderColor: dataZoomBorderColor,
+      backgroundColor: dataZoomBgColor,
+      fillerColor: dataZoomFillerColor,
+      borderRadius: 5,
+      dataBackground: {
+        lineStyle: {
+          opacity: 0,
+        },
+        areaStyle: {
+          opacity: 0,
+        }
+      },
+      selectedDataBackground: {
+        lineStyle: {
+          color: dataZoomSelectedLineColor,
+          width: 1,
+          opacity: 0.6
+        },
+        areaStyle: {
+          color: dataZoomSelectedAreaColor,
+          opacity: 1
+        },
+      },
+      moveHandleSize: 2,
+      moveHandleStyle: {
+        borderColor: '#CBCBCB',
+        color: '#CBCBCB',
+      },
+      handleStyle: {
+        borderColor: '#CBCBCB',
+        color: '#CBCBCB',
+        borderWidth: 2,
+      },
+      emphasis: {
+        moveHandleStyle: {
+          borderColor: '#8E8E8E',
+          color: '#8E8E8E'
+        },
+        handleStyle: {
+          borderColor: '#8E8E8E',
+          color: '#8E8E8E',
+          borderWidth: 2,
+        },
+      }
+    }
+  ]
+
+  if (theme) {
+    toolboxTextFillColor = theme.fontColor
+    yAxisLabelColor = theme.fontColor
+    xAxisLabelColor = theme.fontColor
+    yAxisLabelFont = theme.fontFamily
+    xAxisLabelFont = theme.fontFamily
+    tokenguard.color = [ theme.primaryColor, theme.secondaryColor, theme.primaryColor ]
+    areaStyleObj.color = theme.gradient ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      {
+        offset: 1,
+        color: "#FFFFFF",
+      },
+      {
+        offset: 0,
+        color: theme.primaryColor,
+      },
+    ]) : theme.primaryColor
+    dataZoomObj = theme.dataZoom ? dataZoomObj : []
   }
 
   const style = {

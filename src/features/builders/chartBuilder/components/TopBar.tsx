@@ -97,7 +97,7 @@ export const TopBar = ({
             static: false,
             x: 0,
             y: 0,
-            h: 8,
+            h: 24,
             w: 4
           }
         ]
