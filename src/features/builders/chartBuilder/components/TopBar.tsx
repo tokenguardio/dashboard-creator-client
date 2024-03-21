@@ -63,14 +63,13 @@ export const TopBar = ({
           return (
             {
               ...element,
-              elementToSave
+              ...elementToSave
             }
           )
         } else {
           return element
         }
       })
-
       setDashboardElements(updatedDashboardElements)
       setBlockChartId(null)
     } else {

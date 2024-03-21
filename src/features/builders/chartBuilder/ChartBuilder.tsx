@@ -605,7 +605,6 @@ export function ChartBuilder() {
                                                 </p>
                                                   {selectedOption && (
                                                     <div className={Style['measure-icon-frame']}>
-                                                      {console.log(selectedOption.operator)}
                                                       <Icon name={selectedOption.operator} width="12" height="12" />
                                                     </div>
                                                   )}

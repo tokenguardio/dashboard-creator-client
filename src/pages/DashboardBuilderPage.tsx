@@ -7,6 +7,9 @@
 import { useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { BlockChartProvider } from '@/contexts/BlockChartContext'
+import { BlockButtonProvider } from '@/contexts/BlockButtonContext'
+import { BlockTextProvider } from '@/contexts/BlockTextContext'
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
 import { DashboardBuilder } from '@/features/builders/dashboardBuilder/DashboardBuilder'
 import { useDashboard } from '@/hooks/useDashboard'
@@ -42,6 +45,12 @@ export const DashboardBuilderPage = () => {
   }, [dashboard])
 
   return (
-    <DashboardBuilder />
+    <BlockChartProvider>
+      <BlockButtonProvider>
+        <BlockTextProvider>
+          <DashboardBuilder />
+        </BlockTextProvider>
+      </BlockButtonProvider>
+    </BlockChartProvider>
   )
 }
