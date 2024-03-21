@@ -13,7 +13,7 @@ export const DashboardsGrid = () => {
 
   const removeDashboard = async (id) => {
     try {                                                     
-      const response = await axios.delete(`${process.env.API_BASE_URL}/api/dashboard/${id}`)
+      const response = await axios.delete(`${process.env.VITE_API_BASE_URL}/api/dashboard/${id}`)
       toast.success('Dashboard successfully removed')
     } catch (err) {
       toast.error('The removal of the dashboard failed')
