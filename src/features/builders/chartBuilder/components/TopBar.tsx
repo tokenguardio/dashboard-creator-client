@@ -47,17 +47,23 @@ export const TopBar = ({
     if (dashboardElements.some(obj => obj?.id === blockChartId)) {
       const updatedDashboardElements = dashboardElements.map(element => {
         if (element.id === blockChartId) {
+          const elementToSave = {
+            title: chartTitle,
+            dimension: selectedData[0].dimension[0],
+            measures: selectedData[0].measures,
+            dbname: databaseParam,
+            schema: schemaParam,
+            table: tableParam,
+            visType: chartType,
+            data: result
+          }
+          if (selectedData[0].dimension[1]) {
+            elementToSave.differential = selectedData[0].dimension[1]
+          }
           return (
             {
-              id: blockChartId,
-              i: blockChartId,
-              title: chartTitle,
-              type: 'visualization',
-              dimension: selectedData[0].dimension[0],
-              measures: selectedData[0].measures,
-              queryId: element.queryId,
-              visType: chartType,
-              data: result
+              ...element,
+              ...elementToSave
             }
           )
         } else {
@@ -68,7 +74,7 @@ export const TopBar = ({
       setBlockChartId(null)
     } else {
       const elementToSave = {
-        type: "basicQuery",
+        type: 'basicQuery',
         id: blockChartId,
         i: blockChartId,
         title: chartTitle,
