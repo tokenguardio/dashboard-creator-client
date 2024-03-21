@@ -113,144 +113,37 @@ export const DesignContent = () => {
         rowHeight={10}
         draggableHandle={`.${Style['move-wrapper']}`}
       >
-         {dashboardLayout.map((item) => {
-            const element = dashboardElements.find(element => element.i === item.i)
-            if (element?.type !== 'text' && element?.type !== 'button') {
-              return (
-                <div
-                  key={item.i}
-                  data-grid={item}
-                >
-                  <div className={`${Style['move-wrapper']}`}>
-                    <Visualization
-                      dashboardId={dashboardId}
-                      element={element}
-                      elementHeight={item.h}
-                      filters={verifiedFilters}
-                      dashboardTheme={dashboardTheme}
-                    />
-                  </div>
-                  <div className={Style['item-more']}>
-                    <Dropdown options={optionsVisualization} id={item.i}>
-                      <Icon name="more" width={16} height={16} />
-                    </Dropdown>
-                  </div>                    
-                </div>
-              )
-            } else if (element?.type === 'text') {
-              return (
-                <div key={item.i} data-grid={item}>
-                  <div className={Style['move-wrapper']}>
-                    <div
-                      dangerouslySetInnerHTML={{ __html: element.text }}
-                      style={{ color: dashboardTheme?.textColor, fontFamily: dashboardTheme?.font }}
-                    />
-                  </div>
-                  <div className={Style['btn-more']}>
-                    <Dropdown options={optionsText} id={item.i}>
-                      <Icon name="more" width={16} height={16} />
-                    </Dropdown>
-                  </div>
-                </div>
-              )
-            } else if (element?.type === 'button') { 
-              return (
-                <div key={item.i} data-grid={item}>
-                  <div className={Style['btn-wrapper']}>
-                    {element.text}
-                  </div>
-                  <div className={Style['btn-more']}>
-                    <Dropdown options={optionsButton} id={item.i}>
-                      <Icon name="more" width={16} height={16} />
-                    </Dropdown>
-                  </div>
-                </div>
-              )
-            }
-          }
-          )}
-        {/* {dashboardLayout.map(item => {
+        {dashboardLayout.map((item) => {
           const element = dashboardElements.find(element => element.i === item.i)
-          if (element?.type === 'areaChart') {
+          if (element?.type !== 'text' && element?.type !== 'button') {
             return (
-              <div key={item.i} data-grid={item}>
-                <div
-                  className={`${Style['move-wrapper']} ${Style['grid-item']}`}
-                  style={{
-                    borderRadius: dashboardTheme.itemGridRadius,
-                    backgroundColor: dashboardTheme.itemGridBgColor,
-                    color: dashboardTheme.fontColor,
-                    borderColor: dashboardTheme.strokeColor
-                  }}
-                >
-                  <p
-                    className={Style['item-title']}
-                    style={{
-                      color: dashboardTheme.fontColor,
-                      fontFamily: dashboardTheme.fontFamily
-                    }}
-                  >
-                    {element?.title}
-                  </p>
-                  <AreaChart
-                    data={element.data}
-                    round={0}
-                    maxValue={100}
-                    locked
-                    theme={dashboardTheme}
+              <div
+                key={item.i}
+                data-grid={item}
+              >
+                <div className={`${Style['move-wrapper']}`}>
+                  <Visualization
+                    dashboardId={dashboardId}
+                    element={element}
+                    elementHeight={item.h}
+                    filters={verifiedFilters}
+                    dashboardTheme={dashboardTheme}
                   />
                 </div>
                 <div className={Style['item-more']}>
-                  <Dropdown options={options} id={item.i}>
+                  <Dropdown options={optionsVisualization} id={item.i}>
                     <Icon name="more" width={16} height={16} />
                   </Dropdown>
-                </div>
+                </div>                    
               </div>
             )
-            } else if (element?.type === 'multiAreaChart') {
-              return (
-                <div key={item.i} data-grid={item}>
-                  <div
-                    className={`${Style['move-wrapper']} ${Style['grid-item']}`}
-                    style={{
-                      borderRadius: dashboardTheme.itemGridRadius,
-                      backgroundColor: dashboardTheme.itemGridBgColor,
-                      color: dashboardTheme.fontColor,
-                      borderColor: dashboardTheme.strokeColor
-                    }}
-                  >
-                    <p
-                      className={Style['item-title']}
-                      style={{
-                        color: dashboardTheme.fontColor,
-                        fontFamily: dashboardTheme.fontFamily
-                      }}
-                    >
-                      {element?.title}
-                    </p>
-                    <MultiAreaChart
-                      data={element.data}
-                      round={0}
-                      maxValue={100}
-                      locked
-                      theme={dashboardTheme}
-                    />
-                  </div>
-                  <div className={Style['item-more']}>
-                    <Dropdown options={options} id={item.i}>
-                      <Icon name="more" width={16} height={16} />
-                    </Dropdown>
-                  </div>
-                </div>
-              )
-
           } else if (element?.type === 'text') {
             return (
               <div key={item.i} data-grid={item}>
                 <div className={Style['move-wrapper']}>
                   <div
                     dangerouslySetInnerHTML={{ __html: element.text }}
-                    style={{ color: dashboardTheme.fontColor, fontFamily: dashboardTheme.fontFamily }}
+                    style={{ color: dashboardTheme?.textColor, fontFamily: dashboardTheme?.font }}
                   />
                 </div>
                 <div className={Style['btn-more']}>
@@ -267,14 +160,14 @@ export const DesignContent = () => {
                   {element.text}
                 </div>
                 <div className={Style['btn-more']}>
-                  <Dropdown options={options} id={item.i}>
+                  <Dropdown options={optionsButton} id={item.i}>
                     <Icon name="more" width={16} height={16} />
                   </Dropdown>
                 </div>
               </div>
             )
           }
-        })} */}
+        })}
       </ResponsiveGridLayout>
       ) : null}
     </div>

@@ -56,7 +56,6 @@ export function ChartBuilder() {
     dashboardElements,
   } = dashboardContentContext
   const { databases } = useDatabases()
-  console.log('dashboardElements', dashboardElements)
 
   const handleTable = (e) => {
     const databaseName = e.currentTarget.getAttribute('data-value')
@@ -339,33 +338,83 @@ export function ChartBuilder() {
   }
 
   useEffect(() => {
-    const modifiedDatabasesData = databases.map(database => {
-      return (
-        {
-          ...database,
-          isExpanded: false,
-          columns: []
-        }
-      )
-    })
+    if (databases) {
+      const editedChartElement = dashboardElements.filter(item => item.id === blockChartId)[0]
+      const modifiedDatabasesData = databases.map(database => {
 
-    setDatabasesData(modifiedDatabasesData)
-  }, [databases])
+        return (
+          {
+            ...database,
+            isExpanded: database.datname === editedChartElement?.dbname ? true : false,
+          }
+        )
+      })
 
-  useEffect(() => {
-    if (blockChartId) {
-      const editedChart = dashboardElements.filter(item => item.id === blockChartId)
-      if (editedChart.length > 0) {
-        setChartTitle(editedChart[0].title)
-        // setSelectedData({
-        //   table: editedChart[0].table,
-        //   dimension: editedChart[0].dimension,
-        //   measures: editedChart[0].measures,
-        // })
+      setDatabasesData(modifiedDatabasesData)
+
+      if (editedChartElement) {
+        const fetchData = async () => {
+          try {
+            const responseOfTables = await fetchTables(editedChartElement.dbname)
+            const responseOfColumns = await fetchColumns(editedChartElement.dbname, editedChartElement.table, editedChartElement.schema)
+            const measuresWithoutId = editedChartElement.measures.map(item => {
+              delete item._id
+        
+              return (
+                {
+                  ...item,
+                }
+              )
+            })
+        
+            const bodyRequest = {
+              dimension: editedChartElement.dimension,
+              measures: measuresWithoutId,
+              filters: []
+            }
+            if (editedChartElement.differential) {
+              bodyRequest.differential = editedChartElement.differential
+            }
+    
+            const responseOfChartData = await fetchElementDataBasicQuery(
+              editedChartElement.dbname,
+              editedChartElement.schema,
+              editedChartElement.table,
+              bodyRequest
+            )
+            setResult(responseOfChartData.data)
+            setDatabaseParam(editedChartElement.dbname)
+            setTableParam(editedChartElement.table)
+            setSchemaParam(editedChartElement.schema)
+            const modifiedResponse = responseOfTables.data.map(item => {
+              return (
+                {
+                  ...item,
+                  columns: item.table_name === editedChartElement.table ? responseOfColumns.data : [],
+                  isExpanded: item.table_name === editedChartElement.table ? true : false,
+                }
+              )
+            })
+            setDataExplorer(modifiedResponse)
+            setChartTitle(editedChartElement.title)
+            setSelectedData([{
+              table: editedChartElement.table,
+              dimension: [ editedChartElement.dimension ],
+              measures: editedChartElement.measures,
+            }])
+          } catch (err) {
+            toast.error('Loading Explorer failed')
+          }
+        } 
+
+        fetchData()
       }
     }
-
-  }, [blockChartId, dashboardElements])
+  }, [
+    databases,
+    blockChartId,
+    dashboardElements,
+  ])
 
   const checkDimensionColumn = (table, column) => {
     const filteredData = selectedData.filter(item => item.table === table)
@@ -556,6 +605,7 @@ export function ChartBuilder() {
                                                 </p>
                                                   {selectedOption && (
                                                     <div className={Style['measure-icon-frame']}>
+                                                      {console.log(selectedOption.operator)}
                                                       <Icon name={selectedOption.operator} width="12" height="12" />
                                                     </div>
                                                   )}

@@ -49,13 +49,17 @@ export const TopBar = ({
         if (element.id === blockChartId) {
           return (
             {
-              id: blockChartId,
-              i: blockChartId,
+              // type: 'basicQuery',
+              // id: blockChartId,
+              // i: blockChartId,
+              ...element,
               title: chartTitle,
-              type: 'visualization',
               dimension: selectedData[0].dimension[0],
               measures: selectedData[0].measures,
-              queryId: element.queryId,
+              dbname: databaseParam,
+              schema: schemaParam,
+              table: tableParam,
+              // queryId: element.queryId,
               visType: chartType,
               data: result
             }
@@ -68,7 +72,7 @@ export const TopBar = ({
       setBlockChartId(null)
     } else {
       const elementToSave = {
-        type: "basicQuery",
+        type: 'basicQuery',
         id: blockChartId,
         i: blockChartId,
         title: chartTitle,
