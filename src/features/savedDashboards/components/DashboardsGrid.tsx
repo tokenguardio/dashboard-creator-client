@@ -1,11 +1,12 @@
+import React from 'react'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-import Style from './DashboardsGrid.module.css'
 import { Slide } from './Slide'
 import { SlideButton } from './SlideButton'
 import { useDashboards } from '../hooks/useDashboards'
+import Style from './DashboardsGrid.module.css'
 
 export const DashboardsGrid = () => {
   const { dashboards, isLoadingDashboards, setDashboards } = useDashboards()

@@ -4,7 +4,7 @@
  *
  **********/
 
-import { useEffect, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { BlockChartProvider } from '@/contexts/BlockChartContext'

@@ -4,7 +4,7 @@
  *
  **********/
 
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 import Style from './Card.module.css'
 

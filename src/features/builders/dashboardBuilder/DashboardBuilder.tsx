@@ -4,8 +4,7 @@
  *
  **********/
 
-import React from 'react'
-import { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
 import { BlockButtonContext } from '@/contexts/BlockButtonContext'

@@ -21,6 +21,7 @@ import tokenguard from "../tokenguard"
 import zoom from '@/assets/icons/zoom.svg'
 import reset from '@/assets/icons/reset.svg'
 import { palette } from '@/utils/constans'
+import { TTheme } from '@/types/theme'
 
 echarts.use([
   TitleComponent,
@@ -90,14 +91,14 @@ export const getTopSeriesData = (length, seriesData) => {
 
 export function getTopNamesSelected(arr) {
   arr.sort((a, b) => b.average - a.average);
-  const selected = {};
+  const selected = {}
 
   for (let i = 0; i < arr.length; i++) {
-    const obj = arr[i];
+    const obj = arr[i]
     selected[obj.name] = i < 10 ? true : false;
   }
 
-  return selected;
+  return selected
 }
 
 export const useContainerDimensions = myRef => {
@@ -125,18 +126,27 @@ export const useContainerDimensions = myRef => {
   }, [myRef])
 
   return dimensions
-};
+}
+
+type TCustomBarChart = {
+  data: unknown;
+  height?: number;
+  locked: boolean;
+  theme: TTheme;
+}
 
 export const CustomBarChart = ({
   data,
+  theme,
+  locked,
   height,
-}) => {
+}: TCustomBarChart) => {
   const [legendWidth, setLegendWidth] = useState()
   const componentRef = useRef()
   const { width } = useContainerDimensions(componentRef)
   let topSeriesData
   const legendsData = generateLegendsData(data)
-  const labelsData = data.map(point => point.dimension)
+  const labelsData = data.map(point => point?.dimension)
 
   useEffect(() => {
     if (legendsData.length > 10) {
@@ -149,6 +159,34 @@ export const CustomBarChart = ({
   // legend
   let selectorLabelColor = palette.gray700
   let itemLegendTextColor = palette.gray700
+
+    // datazoom variables
+    let dataZoomBorderColor = palette.gray200
+    let dataZoomBgColor = '#f6f6f6'
+    let dataZoomFillerColor = '#093cc80a'
+    let dataZoomSelectedLineColor = '#0a425e'
+    let dataZoomSelectedAreaColor = '#dbe7ed'
+  
+    // xAxis variables
+    let xAxisLabelColor = palette.gray700
+    let xAxisLineColor = palette.gray100
+    let xAxisSplitLineColor = palette.gray100
+    let xAxisLabelFont = 'sans-serif'
+  
+    // yAxis variables
+    let yAxisLabelColor = palette.gray700
+    let yAxisLineColor = palette.gray100
+    let yAxisSplitLineColor = palette.gray100
+    let yAxisLabelFont = 'sans-serif'
+  
+    // toolbox
+    let toolboxZoomIcon = zoom
+    let toolboxResetIcon = reset
+    let toolboxTextFillColor = '#072f43'
+  
+    // tooltip
+    let tooltipCrossColor = palette.gray700
+    let tooltipLineColor = palette.gray700
 
   const generatedSeries = legendsData.map(legendItem => {
     let result = []
@@ -220,7 +258,19 @@ export const CustomBarChart = ({
       },
     },
   }
-
+  let areaStyleObj = {
+    opacity: 0.6,
+    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      {
+        offset: 1,
+        color: "#FFFFFF",
+      },
+      {
+        offset: 0,
+        color: palette.primary,
+      },
+    ]),
+  }
   let toolboxObj = {
     show: true,
     top: 0,
@@ -242,10 +292,6 @@ export const CustomBarChart = ({
       },
     },
   }
-  // let restoreIconObj = {
-  //   show: true,
-  //   icon: `image://${restore}`,
-  // }
 
   if (legendsData.length > 10) {
     topSeriesData = getTopSeriesData(labelsData.length, seriesData)
@@ -261,6 +307,89 @@ export const CustomBarChart = ({
     legendObj.selected = legendsData
     legendObj.selector = []
     legendObj.left = '2%'
+  }
+
+  let dataZoomObj = [
+    {
+      type: 'slider',
+      xAxisIndex: 0,
+      filterMode: 'none',
+      showDetail: false,
+      borderColor: dataZoomBorderColor,
+      backgroundColor: dataZoomBgColor,
+      fillerColor: dataZoomFillerColor,
+      borderRadius: 5,
+      dataBackground: {
+        lineStyle: {
+          opacity: 0,
+        },
+        areaStyle: {
+          opacity: 0,
+        }
+      },
+      selectedDataBackground: {
+        lineStyle: {
+          color: dataZoomSelectedLineColor,
+          width: 1,
+          opacity: 0.6
+        },
+        areaStyle: {
+          color: dataZoomSelectedAreaColor,
+          opacity: 1
+        },
+      },
+      moveHandleSize: 2,
+      moveHandleStyle: {
+        borderColor: '#CBCBCB',
+        color: '#CBCBCB',
+      },
+      handleStyle: {
+        borderColor: '#CBCBCB',
+        color: '#CBCBCB',
+        borderWidth: 2,
+      },
+      emphasis: {
+        moveHandleStyle: {
+          borderColor: '#8E8E8E',
+          color: '#8E8E8E'
+        },
+        handleStyle: {
+          borderColor: '#8E8E8E',
+          color: '#8E8E8E',
+          borderWidth: 2,
+        },
+      }
+    }
+  ]
+
+  if (theme) {
+    toolboxTextFillColor = theme.font
+    yAxisLabelColor = theme.textColor
+    xAxisLabelColor = theme.textColor
+    yAxisLabelFont = theme.font
+    xAxisLabelFont = theme.font
+    tokenguard.color = [ theme.primaryColor, theme.secondaryColor, theme.primaryColor ]
+    areaStyleObj.color = theme.chartGradient ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      {
+        offset: 1,
+        color: "#FFFFFF",
+      },
+      {
+        offset: 0,
+        color: theme.primaryColor,
+      },
+    ]) : theme.primaryColor
+    dataZoomObj = theme.bottomTimeline ? dataZoomObj : []
+    legendObj.textStyle.color = theme.textColor
+  }
+
+  const style = {
+    height: height ? height : '300px',
+    margin: 'auto'
+  }
+
+  if (locked) {
+    style.pointerEvents = 'none'
   }
 
   const option = {
@@ -288,10 +417,10 @@ export const CustomBarChart = ({
       {
         type: 'category',
         data: labelsData,
-        boundaryGap: false,
         axisLabel: {
-          color: '#656565',
+          color: xAxisLabelColor,
           fontSize: 12,
+          fontFamily: xAxisLabelFont
         },
         axisTick: {
           show: false,
@@ -336,58 +465,7 @@ export const CustomBarChart = ({
         },
       },
     ],
-     dataZoom: [
-      {
-        type: 'slider',
-        xAxisIndex: 0,
-        filterMode: 'none',
-        showDetail: false,
-        borderColor: '#CBCBCB',
-        backgroundColor: '#f6f6f6',
-        fillerColor: 'rgba(9, 60, 200, 0.04)',
-        borderRadius: 5,
-        dataBackground: {
-          lineStyle: {
-            opacity: 0,
-          },
-          areaStyle: {
-            opacity: 0,
-          }
-        },
-        selectedDataBackground: {
-          lineStyle: {
-            color: '#0A425E',
-            width: 1,
-            opacity: 0.6
-          },
-          areaStyle: {
-            color: '#DBE7ED',
-            opacity: 1
-          },
-        },
-        moveHandleSize: 2,
-        moveHandleStyle: {
-          borderColor: '#CBCBCB',
-          color: '#CBCBCB',
-        },
-        handleStyle: {
-          borderColor: '#CBCBCB',
-          color: '#CBCBCB',
-          borderWidth: 2,
-        },
-        emphasis: {
-          moveHandleStyle: {
-            borderColor: '#8E8E8E',
-            color: '#8E8E8E'
-          },
-          handleStyle: {
-            borderColor: '#8E8E8E',
-            color: '#8E8E8E',
-            borderWidth: 2,
-          },
-        }
-      },
-    ],
+    dataZoom: dataZoomObj,
     series: seriesData
   }
 
@@ -395,7 +473,6 @@ export const CustomBarChart = ({
     <div
       ref={componentRef}
       style={{
-        // width: width ? width : '100%',
         width: '100%',
         margin: 'auto'
       }}
@@ -406,11 +483,7 @@ export const CustomBarChart = ({
         notMerge={true}
         lazyUpdate={true}
         theme={tokenguard}
-        style={{
-          height: height ? height : '300px',
-          // width: width ? width : '100%',
-          margin: 'auto'
-        }}
+        style={style}
       />
     </div>
   )

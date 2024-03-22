@@ -6,12 +6,14 @@ import { toast } from 'react-toastify'
 
 import { Loader } from '@/components/Loader/Loader'
 import { AreaChart } from '@/components/charts/areaChart/AreaChart'
+import { CustomBarChart } from '@/components/charts/barChart/BarChart'
 import { SingleValue } from '@/components/charts/singleValue/SingleValue'
 import { MultiAreaChart } from '@/components/charts/multiAreaChart/MultiAreaChart'
 import {
   fetchElementDataCustomQuery,
   fetchElementDataBasicQuery
 } from '@/utils/fetches/dashboard'
+import { adjustForSingleValue } from '@/utils/helpers'
 // import { logger } from 'utils/logger'
 
 import {
@@ -19,7 +21,6 @@ import {
   convertToUrlFormat
 } from '@/features/dashboard/utils/helpers'
 import Style from './Visualization.module.css'
-
 
 function transformQueryResult(data) {
   const sortedData = data.sort((a, b) => {
@@ -95,9 +96,6 @@ export const Visualization = ({
           if (element.visType === 'multiAreaChart' || element.visType === 'multiLineChart' || element.visType === 'stackBarChart') {
             result = transformData(fetchedElementData?.output?.data)
           }
-          if (element.visType === 'singleValue') {
-            result = { currentValue: fetchedElementData?.output?.data[0].current_value }
-          }
           
           // VALIDATION TODO
           // const validatedElementData = parseData(element.visType, fetchedElementData)
@@ -135,9 +133,6 @@ export const Visualization = ({
             if (element.visType === 'multiAreaChart' || element.visType === 'multiLineChart' || element.visType === 'stackBarChart') {
               result = transformData(fetchedElementData?.output?.data)
             }
-            if (element.visType === 'singleValue') {
-              result = { currentValue: fetchedElementData?.output?.data[0].current_value }
-            }
             
             // VALIDATION TODO
             // const validatedElementData = parseData(element.visType, fetchedElementData)
@@ -170,7 +165,7 @@ export const Visualization = ({
     <>
       {element?.visType === 'singleValue' ? (
           <SingleValue
-            data={data}
+            data={adjustForSingleValue(data, 'N/A')}
             title={element?.title}
             loading={isDataLoading}
             theme={dashboardTheme}
@@ -216,7 +211,7 @@ export const Visualization = ({
             // maxValue={100}
             locked
           />,
-            'barChart': <AreaChart
+            'barChart': <CustomBarChart
             data={data}
             height={calcHeight(elementHeight)}
             theme={dashboardTheme}

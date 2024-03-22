@@ -397,6 +397,7 @@ export function ChartBuilder() {
             })
             setDataExplorer(modifiedResponse)
             setChartTitle(editedChartElement.title)
+            setChartType(editedChartElement.visType)
             setSelectedData([{
               table: editedChartElement.table,
               dimension: [ editedChartElement.dimension ],
@@ -644,6 +645,7 @@ export function ChartBuilder() {
               data={result}
               chartType={chartType}
               setChartType={setChartType}
+              chartTitle={chartTitle}
             />
           )}
         </div>

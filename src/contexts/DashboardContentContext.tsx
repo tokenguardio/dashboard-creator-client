@@ -4,17 +4,22 @@
  *
  **********/
 
-import { useState, createContext, ReactNode } from 'react'
+import React, {
+  useState,
+  createContext,
+  ReactNode,
+} from 'react'
 
 import { palette } from '@/utils/constans'
+import { TLayout } from '@/types/layout'
 
 export interface DashboardContentContextProps {
   dashboardTitle: string
   setDashboardTitle: React.Dispatch<React.SetStateAction<string>>
   dashboardElements: Array<string>
   setDashboardElements: React.Dispatch<React.SetStateAction<Array<string>>>
-  dashboardLayout: Array<string>
-  setDashboardLayout: React.Dispatch<React.SetStateAction<Array<string>>>
+  dashboardLayout: TLayout
+  setDashboardLayout: React.Dispatch<React.SetStateAction<TLayout>>
 }
 
 export const DashboardContentContext = createContext<DashboardContentContextProps | undefined>(undefined)

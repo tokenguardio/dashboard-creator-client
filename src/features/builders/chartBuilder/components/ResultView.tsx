@@ -10,6 +10,7 @@ import Style from './ResultView.module.css'
 export const ResultView = ({
   chartType,
   setChartType,
+  chartTitle,
   data,
 }) => {
   const [isExpandedChart, setIsExpandedChart] = useState(true)
@@ -27,6 +28,7 @@ export const ResultView = ({
         <ResultingChart
           data={data}
           chartType={chartType}
+          chartTitle={chartTitle}
         />
       )}
       <SettingsDataTable

@@ -1,9 +1,10 @@
 
 import { useState, useEffect } from 'react'
+
 import Style from './AnimationValue.module.css'
 
 export const AnimationValue = ({ value, prefix, theme }) => {
-  const [animatedValue, setAnimatedValue] = useState(0)
+  const [displayedValue, setDisplayedValue] = useState(0)
 
   useEffect(() => {
     let startValue = 0
@@ -14,26 +15,36 @@ export const AnimationValue = ({ value, prefix, theme }) => {
     const animate = () => {
       const currentTime = new Date().getTime()
       const growth = Math.min(1, (currentTime - startTime) / duration)
-      setAnimatedValue(Math.floor(startValue + growth * (value - startValue)).toString().slice(0, 5))
+      setDisplayedValue(Math.floor(startValue + growth * (value - startValue)).toString().slice(0, 5))
       if (growth < 1) {
         requestAnimationFrame(animate)
       } else if (growth === 1) {
         if (prefix) {
-          setAnimatedValue(`${prefix}${formatter.format(value)}`)
+          setDisplayedValue(`${prefix}${formatter.format(value)}`)
         } else {
-          setAnimatedValue(formatter.format(value))
+          setDisplayedValue(formatter.format(value))
         }
       }
     }
 
-    if (!value) {
-      setAnimatedValue('N/A')
-    } else if (value === 0 || value.length === 0) {
-      setAnimatedValue('N/A')
+    if (typeof value === 'string') {
+      setDisplayedValue(value)
+    } else if (value === 0) {
+      setDisplayedValue('N/A')
     } else {    
       animate()
     }
   }, [value, prefix])
 
-  return <span className={Style['animation-value']} style={{ color: theme?.textColor, fontFamily: theme?.font }}>{animatedValue}</span>
+  return (
+    <span
+      className={Style['animation-value']}
+      style={{
+        color: theme?.textColor,
+        fontFamily: theme?.font
+      }}
+    >
+      {displayedValue}
+    </span>
+  )
 }
