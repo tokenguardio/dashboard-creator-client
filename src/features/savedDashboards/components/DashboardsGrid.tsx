@@ -1,11 +1,12 @@
+import React from 'react'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-import Style from './DashboardsGrid.module.css'
 import { Slide } from './Slide'
 import { SlideButton } from './SlideButton'
 import { useDashboards } from '../hooks/useDashboards'
+import Style from './DashboardsGrid.module.css'
 
 export const DashboardsGrid = () => {
   const { dashboards, isLoadingDashboards, setDashboards } = useDashboards()
@@ -13,7 +14,7 @@ export const DashboardsGrid = () => {
 
   const removeDashboard = async (id) => {
     try {                                                     
-      const response = await axios.delete(`${process.env.API_BASE_URL}/api/dashboard/${id}`)
+      const response = await axios.delete(`${process.env.VITE_API_BASE_URL}/api/dashboard/${id}`)
       toast.success('Dashboard successfully removed')
     } catch (err) {
       toast.error('The removal of the dashboard failed')
@@ -21,11 +22,11 @@ export const DashboardsGrid = () => {
   }
   const options = [
     {
-      name: 'edit',
+      label: 'Edit',
       action: (id: string) => navigate(`/edit-dashboard/${id}`),
     },
     {
-      name: 'delete',
+      label: 'Delete',
       action: (id: string) => {
         removeDashboard(id)
         setDashboards(dashboards.filter(dashboard => dashboard._id !== id))

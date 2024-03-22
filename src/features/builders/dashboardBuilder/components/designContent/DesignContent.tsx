@@ -1,31 +1,39 @@
-import { useState, useContext } from 'react'
-import Style from './DesignContent.module.css'
-import { TextEditor } from '../textEditor/TextEditor'
-import { Responsive, WidthProvider } from "react-grid-layout"
-import { AreaChart } from '@/components/charts/areaChart/AreaChart'
-import { MultiAreaChart } from '@/components/charts/multiAreaChart/MultiAreaChart'
-import { Icon } from '@/components/icon/Icon'
-import { Button } from '@/components/button/Button'
-import { Dropdown } from '@/components/dropdown/Dropdown'
+import React, { useContext } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { Responsive, WidthProvider } from 'react-grid-layout'
 import "/node_modules/react-grid-layout/css/styles.css"
 import "/node_modules/react-resizable/css/styles.css"
+
+import { Icon } from '@/components/icon/Icon'
+import { Dropdown } from '@/components/dropdown/Dropdown'
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
-import {BlockButtonContext } from '@/contexts/BlockButtonContext'
+import { BlockButtonContext } from '@/contexts/BlockButtonContext'
 import { BlockTextContext } from '@/contexts/BlockTextContext'
+import { BlockChartContext } from '@/contexts/BlockChartContext'
+
+import { useVerifiedDashboardFilters } from '@/features/dashboard/hooks/useVerifiedDashboardFilters'
+import { Visualization } from '@/features/builders/dashboardBuilder/components/Visualization'
+import Style from './DesignContent.module.css'
+
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
 
 export const DesignContent = () => {
   const {
     dashboardElements,
+    dashboardId,
     setDashboardElements,
     setDashboardLayout,
     dashboardLayout,
+    dashboardFilters,
     dashboardTheme
   } = useContext(DashboardContentContext)
+  const [searchParams, _setSearchParams] = useSearchParams()
+  const { verifiedFilters } = useVerifiedDashboardFilters(dashboardFilters, searchParams, dashboardId)
 
   const blockButtonContext = useContext(BlockButtonContext)
   const blockTextContext = useContext(BlockTextContext)
+  const blockChartContext = useContext(BlockChartContext)
 
   if (!blockButtonContext) {
     throw new Error('Block button context must be used in Provider')
@@ -35,8 +43,13 @@ export const DesignContent = () => {
     throw new Error('Block text context must be used in Provider')
   }
 
+  if (!blockChartContext) {
+    throw new Error('Block chart context must be used in Provider')
+  }
+
   const { blockButtonId, setBlockButtonId } = blockButtonContext
   const { blockTextId, setBlockTextId } = blockTextContext
+  const { blockChartId, setBlockChartId } = blockChartContext
 
   const removeElement = (elementId) => {
     const test = dashboardLayout.filter(item => item.i !== elementId)
@@ -46,79 +59,51 @@ export const DesignContent = () => {
     setDashboardLayout(test)
   }
 
-
-  const options = [
+  const optionsVisualization = [
     {
-      name: 'edit',
+      label: 'Edit',
+      action: (id) => setBlockChartId(id)
+    },
+    {
+      label: 'Delete',
+      action: (id) => removeElement(id)
+    },
+  ]
+
+
+  const optionsButton = [
+    {
+      label: 'Edit',
       action: (id) => setBlockButtonId(id)
     },
     {
-      name: 'delete',
+      label: 'Delete',
       action: (id) => removeElement(id)
     },
   ]
 
   const optionsText = [
     {
-      name: 'edit',
+      label: 'Edit',
       action: (id) => setBlockTextId(id)
     },
     {
-      name: 'delete',
+      label: 'Delete',
       action: (id) => removeElement(id)
     },
   ]
 
-  // function renderSwitch(item) {
-  //   switch(item?.type) {
-  //     case 'text':
-  //       return <TextEditor />;
-  //     case 'areaChart':
-  //       return (
-  //         <AreaChart
-  //           data={item.data}
-  //           round={0}
-  //           maxValue={100}
-  //           locked
-  //         />
-  //       )
-  //     case 'button':
-  //       return 'bar';
-  //     default:
-  //       return null;
-  //   }
-  // }
-  function renderSwitch(item) {
-    switch(item?.type) {
-      case 'text':
-        return <TextEditor />;
-      case 'areaChart':
-        return (
-          <AreaChart
-            data={item.data}
-            round={0}
-            maxValue={100}
-            locked
-            theme={dashboardTheme}
-          />
-        )
-      case 'button':
-        return <Button onClick={() => console.log('test button')}>{item.text}</Button>;
-      default:
-        return null;
-    }
-  }
-
   const onLayoutChange = (layout: any, layouts: any) => {
     setDashboardLayout(layout)
-  };
+  }
 
   return (
     <div className={Style['design-content']}>
       {dashboardLayout.length > 0 && dashboardElements.length > 0 ? (
       <ResponsiveGridLayout
-        // className="layout"
-        // className={Style['grid']}
+        isDraggable
+        isRearrangeable
+        isResizable
         layout={dashboardLayout}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 12, md: 12, sm: 2, xs: 2, xxs: 1 }}
@@ -126,89 +111,37 @@ export const DesignContent = () => {
         rowHeight={10}
         draggableHandle={`.${Style['move-wrapper']}`}
       >
-        {dashboardLayout.map(item => {
+        {dashboardLayout.map((item) => {
           const element = dashboardElements.find(element => element.i === item.i)
-          if (element?.type === 'areaChart') {
+          if (element?.type !== 'text' && element?.type !== 'button') {
             return (
-              <div key={item.i} data-grid={item}>
-                <div
-                  className={`${Style['move-wrapper']} ${Style['grid-item']}`}
-                  style={{
-                    borderRadius: dashboardTheme.itemGridRadius,
-                    backgroundColor: dashboardTheme.itemGridBgColor,
-                    color: dashboardTheme.fontColor,
-                    borderColor: dashboardTheme.strokeColor
-                  }}
-                >
-                  <p
-                    className={Style['item-title']}
-                    style={{
-                      color: dashboardTheme.fontColor,
-                      fontFamily: dashboardTheme.fontFamily
-                    }}
-                  >
-                    {element?.title}
-                  </p>
-                  {/* {renderSwitch(element)} */}
-                  <AreaChart
-                    data={element.data}
-                    round={0}
-                    maxValue={100}
-                    locked
-                    theme={dashboardTheme}
+              <div
+                key={item.i}
+                data-grid={item}
+              >
+                <div className={`${Style['move-wrapper']}`}>
+                  <Visualization
+                    dashboardId={dashboardId}
+                    element={element}
+                    elementHeight={item.h}
+                    filters={verifiedFilters}
+                    dashboardTheme={dashboardTheme}
                   />
                 </div>
                 <div className={Style['item-more']}>
-                  <Dropdown options={options} id={item.i}>
+                  <Dropdown options={optionsVisualization} id={item.i}>
                     <Icon name="more" width={16} height={16} />
                   </Dropdown>
-                </div>
+                </div>                    
               </div>
             )
-            } else if (element?.type === 'multiAreaChart') {
-              return (
-                <div key={item.i} data-grid={item}>
-                  <div
-                    className={`${Style['move-wrapper']} ${Style['grid-item']}`}
-                    style={{
-                      borderRadius: dashboardTheme.itemGridRadius,
-                      backgroundColor: dashboardTheme.itemGridBgColor,
-                      color: dashboardTheme.fontColor,
-                      borderColor: dashboardTheme.strokeColor
-                    }}
-                  >
-                    <p
-                      className={Style['item-title']}
-                      style={{
-                        color: dashboardTheme.fontColor,
-                        fontFamily: dashboardTheme.fontFamily
-                      }}
-                    >
-                      {element?.title}
-                    </p>
-                    <MultiAreaChart
-                      data={element.data}
-                      round={0}
-                      maxValue={100}
-                      locked
-                      theme={dashboardTheme}
-                    />
-                  </div>
-                  <div className={Style['item-more']}>
-                    <Dropdown options={options} id={item.i}>
-                      <Icon name="more" width={16} height={16} />
-                    </Dropdown>
-                  </div>
-                </div>
-              )
-
           } else if (element?.type === 'text') {
             return (
               <div key={item.i} data-grid={item}>
                 <div className={Style['move-wrapper']}>
                   <div
                     dangerouslySetInnerHTML={{ __html: element.text }}
-                    style={{ color: dashboardTheme.fontColor, fontFamily: dashboardTheme.fontFamily }}
+                    style={{ color: dashboardTheme?.textColor, fontFamily: dashboardTheme?.font }}
                   />
                 </div>
                 <div className={Style['btn-more']}>
@@ -225,7 +158,7 @@ export const DesignContent = () => {
                   {element.text}
                 </div>
                 <div className={Style['btn-more']}>
-                  <Dropdown options={options} id={item.i}>
+                  <Dropdown options={optionsButton} id={item.i}>
                     <Icon name="more" width={16} height={16} />
                   </Dropdown>
                 </div>

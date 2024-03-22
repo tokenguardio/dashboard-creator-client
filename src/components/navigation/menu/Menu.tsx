@@ -4,10 +4,11 @@
  *   main app navigation
  *
  **********/
-
+import React from 'react'
 import { NavLink, matchPath, useLocation } from 'react-router-dom'
-import Style from './Menu.module.scss'
+
 import { Icon } from '@/components/icon/Icon'
+import Style from './Menu.module.scss'
 
 type NavItem = {
   link: string;
@@ -23,7 +24,7 @@ const navItems: Array<NavItem> = [
     link: '/create-dashboard',
     icon: 'block',
     name: 'Dashboard Builder',
-    related: ['/create-dashboard','/add-text', '/add-visualization', '/add-button', '/add-new-element'],
+    related: ['/create-dashboard','/edit-dashboard/:id'],
     label: 'Dashboard Builder',
     disabled: false,
   },
@@ -48,7 +49,6 @@ const verifyLinkClasses = (isDisabled: boolean, relatedArr: Array<string>, pathn
 
   return 'menu-item'
 }
-
 
 export const Menu = () => {
   const { pathname } = useLocation()

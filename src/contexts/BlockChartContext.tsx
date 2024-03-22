@@ -4,14 +4,18 @@
  *
  **********/
 
-import { useState, createContext, ReactNode } from 'react'
+import React, {
+  useState,
+  createContext, 
+  ReactNode,
+} from 'react'
 
 export interface BlockChartContextProps {
-  blockChartId: string | undefined
+  blockChartId: string | undefined | null
   setBlockChartId: React.Dispatch<React.SetStateAction<undefined>>
 }
 
-export const BlockChartContext = createContext<BlockChartContextProps | undefined>(undefined)
+export const BlockChartContext = createContext<BlockChartContextProps | undefined | null>(undefined)
 
 interface BlockChartProviderProps {
   children: ReactNode

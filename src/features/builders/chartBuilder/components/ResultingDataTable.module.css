@@ -1,0 +1,53 @@
+.resulting-datatable-container {
+  margin-top: 1.6rem;
+  padding-bottom: 2.4rem;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table {
+  border-collapse: collapse;
+  width: 100%;
+  border: 0.5px solid var(--color-gray50);
+}
+
+.table td {
+  padding-left: 2.4rem;
+  padding-right: 2.4rem;
+  border-right: 0.5px solid var(--color-gray50);
+}
+
+.head-row {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  color: var(--color-gray900);
+  font-weight: 500;
+  text-align: left;
+}
+
+.body-row {
+  height: 2.4rem;
+  text-align: left;
+  border-top: 0.5px solid var(--color-gray50);
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  font-weight: 400;
+  color: var(--color-gray800);
+}
+
+.body-odd-row {
+  background-color: var(--color-gray50);
+}
+
+.head-cell {
+  cursor: pointer;
+  padding-left: 2.4rem;
+  padding-right: 2.4rem;
+  border-right: 0.5px solid var(--color-gray50);
+  height: 3.2rem;
+}
+
+.head-cell-content {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 import { IconButton } from '@/components/button/IconButton'
 import { Icon } from '@/components/icon/Icon'
@@ -17,7 +17,6 @@ export const Modal: React.FC<ModalProps> = ({
   title,
   hasCloseButton,
   isOpen,
-  // onClose,
 }) => {
   return (
     <div className={Style['modal-container']}>

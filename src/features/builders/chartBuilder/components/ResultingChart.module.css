@@ -1,0 +1,20 @@
+.resulting-chart-container {
+  margin: 1.6rem 1.6rem 0 1.6rem;
+  padding: 2.4rem 0;
+  outline: 1px solid var(--color-gray75);
+  border-radius: 0.8rem;
+  display: flex;
+  width: calc(100% - 3.2rem);
+}
+
+.single-value-container {
+  width: 100%;
+  padding: 0 2.4rem;
+  height: 12rem;
+}
+
+.text-notification {
+  margin: 2rem auto;
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+}

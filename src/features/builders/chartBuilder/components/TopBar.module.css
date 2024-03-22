@@ -1,0 +1,36 @@
+.topbar {
+  background-color: var(--color-gray50);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4.4rem;
+  padding: 0.8rem 1.6rem;
+  color: var(--color-secondary900);
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+}
+
+.builder-settings-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.chart-title-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.chart-title {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  font-weight: 500;
+  padding: 0;
+  margin: 0;
+}

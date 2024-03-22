@@ -1,35 +1,33 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode } from 'react'
+import clsx from 'clsx'
+
 import Style from './Button.module.css'
 
 interface ButtonProps {
   onClick: () => void,
   children?: ReactNode,
-  // TODO
-  // color: string,
-  // variant: string,
-  // size: string,
-  // leftIcon,
-  // rightIcon,
+  size: 'small' | 'medium' | 'large',
+  variant: 'outline' | 'solid',
+  color: string,
 }
 
-// export const Button: React.FC<ButtonProps> = ({ leftIcon: icon, rightIcon: icon, onClick, children }) => {
 export const Button: React.FC<ButtonProps> = ({
-  // TODO
-  // color,
-  // variant,
-  // size,
-  // leftIcon,
-  // rightIcon,
   onClick,
   children,
+  size,
+  variant,
+  color
 }) => {
+  const buttonStyle = clsx(
+    Style['button'],
+    variant ? Style[variant] : Style['solid'],
+    size ? Style[size] : Style['medium'],
+    color ? Style[size] : Style['primary'],
+  )
+
   return (
-    <button className={Style['button']} onClick={onClick}>
-      {/* to do */}
-      {/* {leftIcon && <img src={leftIcon} alt="" />} */}
+    <button className={buttonStyle} onClick={onClick}>
       {children}
-      {/* to do */}
-      {/* {rightIcon && <img src={rightIcon} alt="" />} */}
     </button>
   )
 }
