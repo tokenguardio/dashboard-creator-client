@@ -32,14 +32,9 @@ export function ChartBuilder() {
   const [selectedData, setSelectedData] = useState([])
   const [schemaParam, setSchemaParam] = useState()
   const [tableParam, setTableParam] = useState()
-  const [columnParam, setColumnParam] = useState()
   const [databaseParam, setDatabaseParam] = useState()
   const [dimension, setDimension] = useState()
-  const [agregate, setAgregate] = useState()
-  const [dimensionValidationText, setDimensionValidationText] = useState()
-  const [measure, setMeasure] = useState()
   const [isAgregateOptionsVisible, setIsAgregateOptionsVisible] = useState(false)
-  const [columns, setcolumns] = useState({})
   const blockChartContext = useContext(BlockChartContext)
   const dashboardContentContext = useContext(DashboardContentContext)
   
@@ -261,7 +256,6 @@ export function ChartBuilder() {
   const handleDimension = (tableName, columnName) => {
     setDimension(columnName)
     setTableParam(tableName)
-    setColumnParam(columnName)
 
     if (selectedData.length === 0) {
       const firstObj = {
@@ -421,11 +415,11 @@ export function ChartBuilder() {
     const filteredData = selectedData.filter(item => item.table === table)
     if (filteredData && filteredData.length > 0) {
       if (filteredData[0]?.dimension) {
-        const test = filteredData[0]?.dimension.filter(item => item === column)
-
-        if (test.length > 0) {
+        const verifiedDimensions = filteredData[0]?.dimension.filter(item => item === column)
+        if (verifiedDimensions.length > 0) {
           return true
         }
+
         return false
       } else {
         return false
@@ -440,9 +434,9 @@ export function ChartBuilder() {
     const filteredData = selectedData.filter(item => item.table === table)
     if (filteredData && filteredData.length > 0) {
       if (filteredData[0]?.measures) {
-        const test = filteredData[0]?.measures.filter(item => item.columnName === column)
-        if (test) {
-          return test[0]
+        const verifiedMeasures = filteredData[0]?.measures.filter(item => item.columnName === column)
+        if (verifiedMeasures) {
+          return verifiedMeasures[0]
         }
 
         return null
@@ -517,6 +511,13 @@ export function ChartBuilder() {
                     </div>
                     {database.isExpanded && (
                       <ul className={Style['list-of-tables']}>
+                        {dataExplorer.length === 0 && (
+                          <li>
+                            <p className={Style['information-text']}>
+                              No data
+                            </p>
+                          </li>
+                        )}
                         {dataExplorer.length > 0 && (
                           dataExplorer.map((table, index) => (
                             <li
@@ -545,10 +546,14 @@ export function ChartBuilder() {
                                       &nbsp; (X Axis)
                                     </span>
                                   </p>
-                                  <p className={Style['validation-text']}>
-                                    {dimensionValidationText}
-                                  </p>
                                   <ul className={Style['list-of-columns']}>
+                                    {!table.columns.some(item => item.isDimension === true) && (
+                                      <li>
+                                        <p className={`${Style['information-text']} ${Style['column-title']}`}>
+                                          No data
+                                        </p>
+                                      </li>
+                                    )}
                                     {table.columns.map(item => {
                                       if (item.isDimension) {
                                         return (
@@ -574,6 +579,13 @@ export function ChartBuilder() {
                                     </span>
                                   </p>
                                   <ul className={Style['list-of-columns']}>
+                                    {!table.columns.some(item => item.isMeasure === true) && (
+                                      <li>
+                                        <p className={`${Style['information-text']} ${Style['column-title']}`}>
+                                          No data
+                                        </p>
+                                      </li>
+                                    )}
                                     {table.columns.map(item => {
                                       if (item.isMeasure) {
                                         const selectedOption = checkMeasureColumn(table.table_name, item.column_name)

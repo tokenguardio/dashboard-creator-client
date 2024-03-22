@@ -1,6 +1,6 @@
+import React from 'react'
 import { useState, useEffect } from 'react'
 import { EditorState, RichUtils, ContentState, convertToRaw } from 'draft-js'
-import { Button } from '@/components/button/Button'
 import Editor from "@draft-js-plugins/editor"
 import { convertToHTML } from 'draft-convert'
 import draftToHtml from 'draftjs-to-html'
@@ -9,6 +9,8 @@ import createImagePlugin from "@draft-js-plugins/image"
 import './TextEditor.css'
 import 'draft-js/dist/Draft.css'
 import clsx from 'clsx'
+
+import { Button } from '@/components/button/Button'
 
 const imagePlugin = createImagePlugin()
 
@@ -35,13 +37,10 @@ export const TextEditor = ({ data, saveDataFn }) => {
   }
 
   const handleSaveClick = () => {
-    const rawContentState = convertToRaw(editorState.getCurrentContent());
+    const rawContentState = convertToRaw(editorState.getCurrentContent())
     const markup = draftToHtml(
       rawContentState, 
-      // hashtagConfig, 
-      // directional, 
-      // customEntityTransform
-    );
+    )
     saveDataFn(markup)
   }
   
@@ -69,7 +68,6 @@ export const TextEditor = ({ data, saveDataFn }) => {
       </div>
       <div>
         <Button onClick={() => handleSaveClick()}>Save</Button>
-
       </div>
     </>
   )
@@ -87,7 +85,7 @@ type StyleButtonProps = {
 const StyleButton = (props: StyleButtonProps) => {
   const handleMouseDown = (e: React.MouseEvent<HTMLSpanElement>) => {
     e.preventDefault();
-    props?.onToggle!(props.style || "");
+    props?.onToggle!(props.style || "")
   };
 
   const handleClick = (e: React.MouseEvent<HTMLSpanElement>) => {
@@ -122,10 +120,8 @@ const BLOCK_TYPES = [
   { label: "H4", style: "header-four" },
   { label: "H5", style: "header-five" },
   { label: "H6", style: "header-six" },
-  // { label: "Blockquote", style: "blockquote" },
   { label: "UL", style: "unordered-list-item" },
   { label: "OL", style: "ordered-list-item" },
-  // { label: "Code Block", style: "code-block" }
 ];
 
 const BlockStyleControls = (props: any) => {

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import Style from './Window.module.css'
 
 export const Window = ({ children }: {children: ReactNode}) => (

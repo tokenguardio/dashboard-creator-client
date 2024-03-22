@@ -160,33 +160,33 @@ export const AreaChart = ({
   let selectorLabelColor = palette.gray700
   let itemLegendTextColor = palette.gray700
 
-    // datazoom variables
-    let dataZoomBorderColor = palette.gray200
-    let dataZoomBgColor = '#f6f6f6'
-    let dataZoomFillerColor = '#093cc80a'
-    let dataZoomSelectedLineColor = '#0a425e'
-    let dataZoomSelectedAreaColor = '#dbe7ed'
-  
-    // xAxis variables
-    let xAxisLabelColor = palette.gray700
-    let xAxisLineColor = palette.gray100
-    let xAxisSplitLineColor = palette.gray100
-    let xAxisLabelFont = 'sans-serif'
-  
-    // yAxis variables
-    let yAxisLabelColor = palette.gray700
-    let yAxisLineColor = palette.gray100
-    let yAxisSplitLineColor = palette.gray100
-    let yAxisLabelFont = 'sans-serif'
-  
-    // toolbox
-    let toolboxZoomIcon = zoom
-    let toolboxResetIcon = reset
-    let toolboxTextFillColor = '#072f43'
-  
-    // tooltip
-    let tooltipCrossColor = palette.gray700
-    let tooltipLineColor = palette.gray700
+  // datazoom variables
+  let dataZoomBorderColor = palette.gray200
+  let dataZoomBgColor = '#f6f6f6'
+  let dataZoomFillerColor = '#093cc80a'
+  let dataZoomSelectedLineColor = '#0a425e'
+  let dataZoomSelectedAreaColor = '#dbe7ed'
+
+  // xAxis variables
+  let xAxisLabelColor = palette.gray700
+  let xAxisLineColor = palette.gray100
+  let xAxisSplitLineColor = palette.gray100
+  let xAxisLabelFont = 'sans-serif'
+
+  // yAxis variables
+  let yAxisLabelColor = palette.gray700
+  let yAxisLineColor = palette.gray100
+  let yAxisSplitLineColor = palette.gray100
+  let yAxisLabelFont = 'sans-serif'
+
+  // toolbox
+  let toolboxZoomIcon = zoom
+  let toolboxResetIcon = reset
+  let toolboxTextFillColor = '#072f43'
+
+  // tooltip
+  let tooltipCrossColor = palette.gray700
+  let tooltipLineColor = palette.gray700
 
   const generatedSeries = legendsData.map(legendItem => {
     let result = []

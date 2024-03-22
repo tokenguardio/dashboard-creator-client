@@ -10,7 +10,6 @@ import React, {
   ReactNode,
 } from 'react'
 
-import { palette } from '@/utils/constans'
 import { TLayout } from '@/types/layout'
 
 export interface DashboardContentContextProps {

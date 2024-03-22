@@ -1,11 +1,10 @@
-import { useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import '/node_modules/react-grid-layout/css/styles.css'
 import '/node_modules/react-resizable/css/styles.css'
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
-import { palette } from '@/utils/constans'
 import { Title } from '@/components/title/Title'
 import { Button } from '@/components/button/Button'
 
@@ -38,10 +37,8 @@ const dashboardTheme = {
 }
 
 export const Dashboard = ({ dashboardData }) => {
-  const navigate = useNavigate()
   const [searchParams, _setSearchParams] = useSearchParams()
   const [_dashboardLayout, setDashboardLayout] = useState()
-  // const { layout, elements, filters, _id } = dashboardData
   const layout = prepareLayoutFormat(dashboardData.layout, true)
   const elements = prepareElementsFormat(dashboardData.elements)
   const { verifiedFilters } = useVerifiedDashboardFilters(dashboardData.filters, searchParams, dashboardData._id)
@@ -52,7 +49,6 @@ export const Dashboard = ({ dashboardData }) => {
   return (
     <main className={Style['dashboard']} style={{ backgroundColor: dashboardData.theme.bgColor }}>
       <div className={Style['layout']}><Title text={dashboardData.title} /></div>
-      {/* {verifiedFilters && verifiedFilters.length > 0 && <DashboardFilters filters={verifiedFilters} dashboardId={dashboardCreator._id} />} */}
       {layout?.length > 0 && elements?.length > 0 ? (
         <ResponsiveGridLayout
           layout={_dashboardLayout}
@@ -73,16 +69,13 @@ export const Dashboard = ({ dashboardData }) => {
                   key={item.i}
                   data-grid={item}
                 >
-                  {/* {verifiedFilters && verifiedFilters.length > 0 ? ( */}
-                    <Visualization
-                      dashboardId={dashboardData?.temporary_id || dashboardData._id}
-                      element={element}
-                      elementHeight={item.h}
-                      filters={verifiedFilters}
-                      dashboardTheme={dashboardData?.theme}
-                    />                    
-                    {/* )  : null
-                  } */}
+                  <Visualization
+                    dashboardId={dashboardData?.temporary_id || dashboardData._id}
+                    element={element}
+                    elementHeight={item.h}
+                    filters={verifiedFilters}
+                    dashboardTheme={dashboardData?.theme}
+                  />                    
                 </div>
               )
             } else if (element.type === 'text') {

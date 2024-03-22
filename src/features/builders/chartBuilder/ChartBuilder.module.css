@@ -165,3 +165,9 @@
 .active-measure p {
   opacity: 0.75;
 }
+
+.information-text {
+  font-style: italic;
+  font-weight: 300;
+  padding-left: 2.4rem;
+}
