@@ -1,8 +1,8 @@
 ### dashboard-creator-client
 
-#### Tokenguard Dashboard Builder - Client
+#### [Tokenguard](https://tokenguard.io) Dashboard Builder - Client
 
-Welcome to the Tokenguard Dashboard Builder Client repository! This repository contains the frontend implementation of our dashboard builder tool for data analytics. With this client application, users can create, customize, and visualize data metrics in an intuitive and interactive manner. This tool is under constant development and its initial version was delivered thanks to Web3 Foundation [grant](https://grants.web3.foundation/applications/Tokenguard)
+Welcome to the [Tokenguard](https://app.tokenguard.io) Dashboard Builder Client repository! This repository contains the frontend implementation of our dashboard builder tool for data analytics. With this client application, users can create, customize, and visualize data metrics in an intuitive and interactive manner. This tool is under constant development and its initial version was delivered thanks to Web3 Foundation [grant](https://grants.web3.foundation/applications/Tokenguard)
 
 ### Getting Started
 
