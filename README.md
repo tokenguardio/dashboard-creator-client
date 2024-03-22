@@ -1,30 +1,35 @@
-# React + TypeScript + Vite
+### dashboard-creator-client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#### Tokenguard Dashboard Builder - Client
 
-Currently, two official plugins are available:
+Welcome to the Tokenguard Dashboard Builder Client repository! This repository contains the frontend implementation of our dashboard builder tool for data analytics. With this client application, users can create, customize, and visualize data metrics in an intuitive and interactive manner. This tool is under constant development and its initial version was delivered thanks to Web3 Foundation [grant] (https://grants.web3.foundation/applications/Tokenguard)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Getting Started
 
-## Expanding the ESLint configuration
+To get started with the dashboard builder client, follow these steps:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+1. **Clone the Repository**: `git clone https://github.com/tokenguardio/dashboard-creator-client.git`
+2. **Install Dependencies**: `npm install` or `yarn install`
+3. **Run the Development Server**: `npm run dev` or `yarn dev`
 
-- Configure the top-level `parserOptions` property like this:
+### Features
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- **Metrics Visualisation**: Visualize data from raw sources using customizable visualizations such as line charts, bar charts, pie charts, and more.
+- **Dashboard Layout**: Create, save, modify, and delete dashboards with drag-and-drop functionality. Customize dashboard layouts with captions, titles, and links.
+- **User-Friendly Interface**: Intuitive user interface for seamless dashboard creation and customization.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Tech Stack
+
+- **Frontend Framework**: ReactJS, TypeScript, ViteJS
+- **Data Storage**: MongoDB
+- **Visualization Library**: Apache ECharts
+
+### Contributing
+
+We welcome contributions from the community! If you'd like to contribute to the Tokenguard Dashboard Builder Client, please check out our [contribution guidelines](CONTRIBUTING.md) for more information.
+
+### License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
