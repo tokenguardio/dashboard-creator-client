@@ -1,3 +1,4 @@
+import React from 'react'
 import { forwardRef, Ref } from 'react'
 
 import { Label } from '@/components/label/Label'

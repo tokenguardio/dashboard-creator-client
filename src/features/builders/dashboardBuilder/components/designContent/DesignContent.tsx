@@ -1,23 +1,21 @@
-import { useState, useContext } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import Style from './DesignContent.module.css'
-import { TextEditor } from '../textEditor/TextEditor'
-import { Responsive, WidthProvider } from "react-grid-layout"
-import { AreaChart } from '@/components/charts/areaChart/AreaChart'
-// import { MultiAreaChart } from '@/components/charts/multiAreaChart/MultiAreaChart'
-import { Icon } from '@/components/icon/Icon'
-import { Button } from '@/components/button/Button'
-import { Dropdown } from '@/components/dropdown/Dropdown'
+import React, { useContext } from 'react'
+import { useSearchParams } from 'react-router-dom'
+import { Responsive, WidthProvider } from 'react-grid-layout'
 import "/node_modules/react-grid-layout/css/styles.css"
 import "/node_modules/react-resizable/css/styles.css"
+
+import { Icon } from '@/components/icon/Icon'
+import { Dropdown } from '@/components/dropdown/Dropdown'
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
 import { BlockButtonContext } from '@/contexts/BlockButtonContext'
 import { BlockTextContext } from '@/contexts/BlockTextContext'
 import { BlockChartContext } from '@/contexts/BlockChartContext'
-import { useVerifiedDashboardFilters } from '@/features/dashboard/hooks/useVerifiedDashboardFilters'
-const ResponsiveGridLayout = WidthProvider(Responsive)
 
+import { useVerifiedDashboardFilters } from '@/features/dashboard/hooks/useVerifiedDashboardFilters'
 import { Visualization } from '@/features/builders/dashboardBuilder/components/Visualization'
+import Style from './DesignContent.module.css'
+
+const ResponsiveGridLayout = WidthProvider(Responsive)
 
 
 export const DesignContent = () => {

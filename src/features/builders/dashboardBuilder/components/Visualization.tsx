@@ -1,4 +1,4 @@
-import {
+import React, {
   useEffect,
   useState,
 } from 'react'
@@ -6,12 +6,13 @@ import { toast } from 'react-toastify'
 
 import { Loader } from '@/components/Loader/Loader'
 import { AreaChart } from '@/components/charts/areaChart/AreaChart'
+import { CustomBarChart } from '@/components/charts/barChart/BarChart'
 import { SingleValue } from '@/components/charts/singleValue/SingleValue'
-import { MultiAreaChart } from '@/components/charts/multiAreaChart/MultiAreaChart'
 import {
   fetchElementDataCustomQuery,
   fetchElementDataBasicQuery
 } from '@/utils/fetches/dashboard'
+import { adjustForSingleValue } from '@/utils/helpers'
 // import { logger } from 'utils/logger'
 
 import {
@@ -19,7 +20,6 @@ import {
   convertToUrlFormat
 } from '@/features/dashboard/utils/helpers'
 import Style from './Visualization.module.css'
-
 
 function transformQueryResult(data) {
   const sortedData = data.sort((a, b) => {
@@ -92,20 +92,7 @@ export const Visualization = ({
           }
           const fetchedElementData = await fetchElementDataCustomQuery(dashboardId, convertToUrlFormat(element.id), bodyRequest)
           let result = fetchedElementData?.output?.data
-          if (element.visType === 'multiAreaChart' || element.visType === 'multiLineChart' || element.visType === 'stackBarChart') {
-            result = transformData(fetchedElementData?.output?.data)
-          }
-          if (element.visType === 'singleValue') {
-            result = { currentValue: fetchedElementData?.output?.data[0].current_value }
-          }
           
-          // VALIDATION TODO
-          // const validatedElementData = parseData(element.visType, fetchedElementData)
-          // if (!validatedElementData.success) {
-          //   logger.error(validatedElementData.error)
-          //   throw Error('Incorrect dashboard element response data format')
-          // }
-          // setData(fetchedElementData?.output?.data)
           setData(result)
           setIsDataLoading(false)
         } catch (err) {
@@ -132,20 +119,6 @@ export const Visualization = ({
 
             const fetchedElementData = await fetchElementDataBasicQuery(element.dbname, element.schema, element.table, bodyRequest)
             let result = fetchedElementData?.data
-            if (element.visType === 'multiAreaChart' || element.visType === 'multiLineChart' || element.visType === 'stackBarChart') {
-              result = transformData(fetchedElementData?.output?.data)
-            }
-            if (element.visType === 'singleValue') {
-              result = { currentValue: fetchedElementData?.output?.data[0].current_value }
-            }
-            
-            // VALIDATION TODO
-            // const validatedElementData = parseData(element.visType, fetchedElementData)
-            // if (!validatedElementData.success) {
-            //   logger.error(validatedElementData.error)
-            //   throw Error('Incorrect dashboard element response data format')
-            // }
-            // setData(fetchedElementData?.output?.data)
             setData(result)
             setIsDataLoading(false)
           } catch (err) {
@@ -160,7 +133,6 @@ export const Visualization = ({
       }
     }
   }, [
-    // element?.queryId,
     element?.type,
     JSON.stringify(filtersBodyRequest),
     dashboardId
@@ -170,7 +142,7 @@ export const Visualization = ({
     <>
       {element?.visType === 'singleValue' ? (
           <SingleValue
-            data={data}
+            data={adjustForSingleValue(data, 'N/A')}
             title={element?.title}
             loading={isDataLoading}
             theme={dashboardTheme}
@@ -204,69 +176,20 @@ export const Visualization = ({
               data={data}
               height={calcHeight(elementHeight)}
               theme={dashboardTheme}
-              // round={0}
-              // maxValue={100}
               locked
             />,
             'lineChart': <AreaChart
             data={data}
             height={calcHeight(elementHeight)}
             theme={dashboardTheme}
-            // round={0}
-            // maxValue={100}
             locked
           />,
-            'barChart': <AreaChart
+            'barChart': <CustomBarChart
             data={data}
             height={calcHeight(elementHeight)}
             theme={dashboardTheme}
-            // round={0}
-            // maxValue={100}
             locked
           />,
-            'multiAreaChart': <MultiAreaChart
-            data={data}
-            // height={calcHeight(elementHeight)}
-            // round={0}
-            // maxValue={100}
-            // locked
-            // theme={dashboardTheme}
-          />,
-            // 'multiLineChart': <CustomMultiLineChart
-            //   data={data}
-            //   height={calcHeight(elementHeight)}
-            //   // round={0}
-            //   // maxValue={100}
-            //   // locked
-            //   // theme={dashboardTheme}
-            // />,
-            // 'stackBarChart': <CustomStackBarChart
-            //   data={data}
-            //   height={calcHeight(elementHeight)}
-            //   // round={0}
-            //   // maxValue={100}
-            //   // locked
-            //   // theme={dashboardTheme}
-            // />,
-            // 'lineChart':  <CustomLineChart
-            //   data={data}
-            //   height={calcHeight(elementHeight)}
-            //   // round={round}
-            //   // formatValue={formatValue}
-            //   // prefixValue={prefixValue}
-            // />,
-            // 'barChart':  <CustomBarChart
-            //   data={data}
-            //   height={calcHeight(elementHeight)}
-            //   // round={round}
-            //   // formatValue={formatValue}
-            //   // prefixValue={prefixValue}
-            // />,
-            // 'pieChart':  <CustomPieChart data={data} />,
-            // 'table':  <TableChart
-            //   data={data}
-            //   height={calcHeight(elementHeight)}
-            // />,
           } [element?.visType]
         }     
       </div>)}

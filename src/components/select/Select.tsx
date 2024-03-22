@@ -1,7 +1,10 @@
 
-import './Select.css'
+import React from 'react'
 import Select from 'react-select'
+
 import { Label } from '@/components/label/Label'
+
+import './Select.css'
 
 export const CustomSelect = ({
   options,

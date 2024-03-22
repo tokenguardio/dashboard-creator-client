@@ -21,6 +21,7 @@ import tokenguard from "../tokenguard"
 import zoom from '@/assets/icons/zoom.svg'
 import reset from '@/assets/icons/reset.svg'
 import { palette } from '@/utils/constans'
+import { TTheme } from '@/types/theme'
 
 echarts.use([
   TitleComponent,
@@ -117,22 +118,29 @@ export const useContainerDimensions = myRef => {
       setDimensions(getDimensions())
     }
 
-    window.addEventListener("resize", handleResize)
+    window.addEventListener('resize', handleResize)
 
     return () => {
-      window.removeEventListener("resize", handleResize)
+      window.removeEventListener('resize', handleResize)
     }
   }, [myRef])
 
   return dimensions
-};
+}
+
+type AreaChartPropsType = {
+  data: unknown;
+  height?: number;
+  locked: boolean;
+  theme: TTheme;
+}
 
 export const AreaChart = ({
   data,
   height,
   locked,
   theme
-}) => {
+}: AreaChartPropsType) => {
   const [legendWidth, setLegendWidth] = useState()
   const componentRef = useRef()
   const { width } = useContainerDimensions(componentRef)
@@ -152,33 +160,33 @@ export const AreaChart = ({
   let selectorLabelColor = palette.gray700
   let itemLegendTextColor = palette.gray700
 
-    // datazoom variables
-    let dataZoomBorderColor = palette.gray200
-    let dataZoomBgColor = '#f6f6f6'
-    let dataZoomFillerColor = '#093cc80a'
-    let dataZoomSelectedLineColor = '#0a425e'
-    let dataZoomSelectedAreaColor = '#dbe7ed'
-  
-    // xAxis variables
-    let xAxisLabelColor = palette.gray700
-    let xAxisLineColor = palette.gray100
-    let xAxisSplitLineColor = palette.gray100
-    let xAxisLabelFont = 'sans-serif'
-  
-    // yAxis variables
-    let yAxisLabelColor = palette.gray700
-    let yAxisLineColor = palette.gray100
-    let yAxisSplitLineColor = palette.gray100
-    let yAxisLabelFont = 'sans-serif'
-  
-    // toolbox
-    let toolboxZoomIcon = zoom
-    let toolboxResetIcon = reset
-    let toolboxTextFillColor = '#072f43'
-  
-    // tooltip
-    let tooltipCrossColor = palette.gray700
-    let tooltipLineColor = palette.gray700
+  // datazoom variables
+  let dataZoomBorderColor = palette.gray200
+  let dataZoomBgColor = '#f6f6f6'
+  let dataZoomFillerColor = '#093cc80a'
+  let dataZoomSelectedLineColor = '#0a425e'
+  let dataZoomSelectedAreaColor = '#dbe7ed'
+
+  // xAxis variables
+  let xAxisLabelColor = palette.gray700
+  let xAxisLineColor = palette.gray100
+  let xAxisSplitLineColor = palette.gray100
+  let xAxisLabelFont = 'sans-serif'
+
+  // yAxis variables
+  let yAxisLabelColor = palette.gray700
+  let yAxisLineColor = palette.gray100
+  let yAxisSplitLineColor = palette.gray100
+  let yAxisLabelFont = 'sans-serif'
+
+  // toolbox
+  let toolboxZoomIcon = zoom
+  let toolboxResetIcon = reset
+  let toolboxTextFillColor = '#072f43'
+
+  // tooltip
+  let tooltipCrossColor = palette.gray700
+  let tooltipLineColor = palette.gray700
 
   const generatedSeries = legendsData.map(legendItem => {
     let result = []
@@ -260,7 +268,6 @@ export const AreaChart = ({
       },
       {
         offset: 0,
-        // color: "#84D3BA",
         color: palette.primary,
       },
     ]),
@@ -286,17 +293,12 @@ export const AreaChart = ({
       },
     },
   }
-  // let restoreIconObj = {
-  //   show: true,
-  //   icon: `image://${restore}`,
-  // }
 
   if (legendsData.length > 10) {
     topSeriesData = getTopSeriesData(labelsData.length, seriesData)
     legendObj.selected = getTopNamesSelected(topSeriesData)
     legendObj.selector = legendSelector
     legendObj.right = '4%'
-    // toolboxObj.feature.restore = restoreIconObj
   } else if (10 > legendsData.length > 5) {
     legendObj.selected = legendsData
     legendObj.selector = legendSelector
@@ -361,13 +363,13 @@ export const AreaChart = ({
   ]
 
   if (theme) {
-    toolboxTextFillColor = theme.fontColor
-    yAxisLabelColor = theme.fontColor
-    xAxisLabelColor = theme.fontColor
-    yAxisLabelFont = theme.fontFamily
-    xAxisLabelFont = theme.fontFamily
+    toolboxTextFillColor = theme.font
+    yAxisLabelColor = theme.textColor
+    xAxisLabelColor = theme.textColor
+    yAxisLabelFont = theme.font
+    xAxisLabelFont = theme.font
     tokenguard.color = [ theme.primaryColor, theme.secondaryColor, theme.primaryColor ]
-    areaStyleObj.color = theme.gradient ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    areaStyleObj.color = theme.chartGradient ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
       {
         offset: 1,
         color: "#FFFFFF",
@@ -377,7 +379,8 @@ export const AreaChart = ({
         color: theme.primaryColor,
       },
     ]) : theme.primaryColor
-    dataZoomObj = theme.dataZoom ? dataZoomObj : []
+    dataZoomObj = theme.bottomTimeline ? dataZoomObj : []
+    legendObj.textStyle.color = theme.textColor
   }
 
   const style = {
@@ -416,8 +419,9 @@ export const AreaChart = ({
         data: labelsData,
         boundaryGap: false,
         axisLabel: {
-          color: '#656565',
+          color: xAxisLabelColor,
           fontSize: 12,
+          fontFamily: xAxisLabelFont
         },
         axisTick: {
           show: false,
@@ -462,58 +466,7 @@ export const AreaChart = ({
         },
       },
     ],
-     dataZoom: [
-      {
-        type: 'slider',
-        xAxisIndex: 0,
-        filterMode: 'none',
-        showDetail: false,
-        borderColor: '#CBCBCB',
-        backgroundColor: '#f6f6f6',
-        fillerColor: 'rgba(9, 60, 200, 0.04)',
-        borderRadius: 5,
-        dataBackground: {
-          lineStyle: {
-            opacity: 0,
-          },
-          areaStyle: {
-            opacity: 0,
-          }
-        },
-        selectedDataBackground: {
-          lineStyle: {
-            color: '#0A425E',
-            width: 1,
-            opacity: 0.6
-          },
-          areaStyle: {
-            color: '#DBE7ED',
-            opacity: 1
-          },
-        },
-        moveHandleSize: 2,
-        moveHandleStyle: {
-          borderColor: '#CBCBCB',
-          color: '#CBCBCB',
-        },
-        handleStyle: {
-          borderColor: '#CBCBCB',
-          color: '#CBCBCB',
-          borderWidth: 2,
-        },
-        emphasis: {
-          moveHandleStyle: {
-            borderColor: '#8E8E8E',
-            color: '#8E8E8E'
-          },
-          handleStyle: {
-            borderColor: '#8E8E8E',
-            color: '#8E8E8E',
-            borderWidth: 2,
-          },
-        }
-      },
-    ],
+    dataZoom: dataZoomObj,
     series: seriesData
   }
 

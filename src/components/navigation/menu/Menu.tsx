@@ -4,10 +4,11 @@
  *   main app navigation
  *
  **********/
-
+import React from 'react'
 import { NavLink, matchPath, useLocation } from 'react-router-dom'
-import Style from './Menu.module.scss'
+
 import { Icon } from '@/components/icon/Icon'
+import Style from './Menu.module.scss'
 
 type NavItem = {
   link: string;

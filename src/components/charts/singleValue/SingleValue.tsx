@@ -22,7 +22,7 @@ export const SingleValue = ({
     >
       {loading ? <Loader /> : (
         <div className={Style['single-value']}>
-          <AnimationValue value={data?.currentValue} prefix={prefix} theme={theme} />
+          <AnimationValue value={data?.currentValue || data} prefix={prefix} theme={theme} />
         </div>
       )}
       {title && <p className={Style['single-value-title']} style={{ color: theme?.textColor, fontFamily: theme?.font }}>{title}</p>}

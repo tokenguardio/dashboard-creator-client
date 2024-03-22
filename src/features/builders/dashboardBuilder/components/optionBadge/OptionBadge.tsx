@@ -10,6 +10,7 @@
  *   params: object passed to the callback function (optional)
  *
  **********/
+import React from 'react'
 
 import Style from './OptionBadge.module.css'
 
@@ -21,7 +22,6 @@ export function OptionBadge(props) {
       onClick={(e) => {
         e.preventDefault()
         e.stopPropagation()
-
         props.action && props.action(props.params)
       }}
     >

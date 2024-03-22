@@ -1,25 +1,19 @@
 import { z } from 'zod'
 
-// export const paletteSchema = z.object({
-//   primaryColor: z.string(),
-//   secondaryColor: z.string(),
-//   additionalColor: z.string(),
-// })
-
 export const ThemeSchema = z.object({
-  // font: z.string(),
-  // palette: paletteSchema,
-  // textColor: z.string(),
-  // itemGridStroke: z.string(),
-  // bgColor: z.string(),
-  // itemGridRadius: z.string(),
-  // itemGridBgColor: z.string(),
-  // chartGradient: z.boolean(),
-  // bottomTimeline: z.boolean(),
+  name: z.string(),
   _id: z.string(),
+  font: z.string(),
+  textColor: z.string(),
+  itemGridStroke: z.string(),
   bgColor: z.string(),
   itemGridBgColor: z.string(),
-  itemGridRadius: z.string()
+  chartGradient: z.boolean(),
+  bottomTimeline: z.boolean(),
+  itemGridRadius: z.string(),
+  additionalColor: z.string(),
+  primaryColor: z.string(),
+  secondaryColor: z.string()
 })
 
 export type TTheme = z.infer<typeof ThemeSchema>

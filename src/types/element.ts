@@ -4,18 +4,31 @@ export const ElementSchema = z.union([
   z.object({
     title: z.string(),
     type: z.literal('areaChart'),
+      //     visType: z.union([
+  //       z.literal('areaChart'),
+  //       z.literal('barChart'),
+  //       z.literal('stackedBarChart'),
+  //       z.literal('multiAreaChart'),
+  //       z.literal('lineChart'),
+  //       z.literal('multiLineChart'),
+  //       z.literal('table')
+  //     ]),
     id: z.string(),
     data: z.unknown(),
   }),
   z.object({
-    text: z.string(),
-    type: z.literal('text'),
     id: z.string(),
+    i: z.string().optional(),
+    text: z.string(),
+    title: z.string().optional(),
+    type: z.literal('text'),
   }),
   z.object({
-    text: z.string(),
-    type: z.literal('button'),
     id: z.string(),
+    i: z.string().optional(),
+    text: z.string(),
+    title: z.string().optional(),
+    type: z.literal('button'),
     link: z.string(),
   }),
 ])

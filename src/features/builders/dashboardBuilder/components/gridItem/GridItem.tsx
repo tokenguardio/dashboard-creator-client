@@ -1,3 +1,5 @@
+import React from 'react'
+
 import Style from './GridItem.module.css'
 
 export const GridItem = ({ children, key }) => {
@@ -5,8 +7,5 @@ export const GridItem = ({ children, key }) => {
     <div className={Style['grid-item']} key={key}>
       {children}
     </div>
-    // <Card>
-    //   {children}
-    // </Card>
   )
 }

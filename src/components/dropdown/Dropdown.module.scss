@@ -53,7 +53,6 @@
 }
 
 .option {
-  // display: block;
   padding: 0.4rem 0.8rem;
   margin: 0.4rem 0;
   display: flex;
@@ -64,23 +63,10 @@
   line-height: 2rem;
   font-weight: 400;
   height: 2rem;
-  /* border-bottom: 1px solid var(--color-gray100); */
   cursor: pointer;
-
-  /* // &:last-child {
-  //   border-bottom: none;
-  // } */
 }
-
-// .option:hover {
-//   background-color: var(--color-gray50);
-// }
 
 // types class
-
-.danger {
-  color: red;
-}
 
 .selected {
   background-color: var(--color-gray50);

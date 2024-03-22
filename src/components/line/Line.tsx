@@ -3,6 +3,7 @@
  *   LINE
  *
  **********/
+import React from 'react'
 
 import Style from './Line.module.css'
 

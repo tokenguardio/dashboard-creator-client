@@ -3,6 +3,7 @@
  *   SIDEBAR
  *
  **********/
+import React from 'react'
 
 import { Menu } from '@/components/navigation/menu/Menu'
 
