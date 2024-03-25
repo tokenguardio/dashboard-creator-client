@@ -12,8 +12,10 @@ import {
   fetchElementDataCustomQuery,
   fetchElementDataBasicQuery
 } from '@/utils/fetches/dashboard'
-import { adjustForSingleValue } from '@/utils/helpers'
-// import { logger } from 'utils/logger'
+import {
+  adjustForSingleValue,
+  checkDifferential
+} from '@/utils/helpers'
 
 import {
   prepareFiltersBodyRequestFormat,
@@ -119,7 +121,7 @@ export const Visualization = ({
 
             const fetchedElementData = await fetchElementDataBasicQuery(element.dbname, element.schema, element.table, bodyRequest)
             let result = fetchedElementData?.data
-            setData(result)
+            setData(checkDifferential(result))
             setIsDataLoading(false)
           } catch (err) {
             setIsDataLoading(false)

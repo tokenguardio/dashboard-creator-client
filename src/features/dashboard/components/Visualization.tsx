@@ -8,7 +8,10 @@ import { Loader } from '@/components/Loader/Loader'
 import { SingleValue } from '@/components/charts/singleValue/SingleValue'
 import { AreaChart } from '@/components/charts/areaChart/AreaChart'
 import { CustomBarChart } from '@/components/charts/barChart/BarChart'
-import { adjustForSingleValue } from '@/utils/helpers'
+import {
+  adjustForSingleValue,
+  checkDifferential,
+} from '@/utils/helpers'
 import {
   fetchElementDataCustomQuery,
   fetchElementDataBasicQuery
@@ -72,7 +75,7 @@ export const Visualization = ({
 
             const fetchedElementData = await fetchElementDataBasicQuery(element.dbname, element.schema, element.table, bodyRequest)
             let result = fetchedElementData?.data
-            setData(result)
+            setData(checkDifferential(result))
             setIsDataLoading(false)
           } catch (err) {
             setIsDataLoading(false)
