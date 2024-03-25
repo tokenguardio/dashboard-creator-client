@@ -1,0 +1,154 @@
+.list {
+  width: 28.8rem;
+  padding: 1.6rem;
+  border-right: 1px solid var(--color-gray100);
+  overflow-y: auto;
+  max-height: calc(100vh - 6.4rem);
+}
+
+.list-of-databases {
+  list-style-type: none;
+}
+
+.database-list-item {
+  padding: 0.4rem 0;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  font-weight: 500;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  color: var(--color-gray900);
+  z-index: 2;
+}
+
+.database-title-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 1.6rem 0.4rem 0.8rem;
+}
+
+.database-title-frame {
+  outline: 1px solid var(--color-primary500);
+  background-color: var(--color-primary50);
+  border-radius: 0.4rem;
+}
+
+.database-title {
+  z-index: 0;
+}
+
+.list-of-tables {
+  list-style-type: none;
+  margin-top: 1rem;
+}
+
+.table-list-item {
+  padding: 0.4rem 0;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  color: var(--color-gray800);
+  z-index: 2;
+}
+
+.table-title-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 1.6rem;
+}
+
+.table-title-frame {
+  outline: 1px solid var(--color-primary500);
+  background-color: var(--color-primary50);
+  border-radius: 0.4rem;
+}
+
+.table-title {
+  z-index: 0;
+  opacity: 0.75;
+}
+
+.table-title-active {
+  opacity: 1;
+}
+
+.list-description {
+  padding: 1.6rem 2.4rem 0.8rem 2.4rem;
+  color: var(--color-gray900);
+  font-weight: 500;
+}
+
+.additional-text {
+  color: var(--color-gray500);
+}
+
+.list-of-columns {
+  list-style-type: none;
+  padding: 0;
+  position: relative;
+}
+
+.column-list-item {
+  padding: 0.4rem 0.8rem 0.4rem 2.4rem;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  margin-bottom: 0.8rem;
+  cursor: pointer;
+  color: var(--color-gray800);
+  position: relative;
+}
+
+.column-title {
+  opacity: 0.5;
+}
+
+.column-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%
+}
+
+.measure-icon-frame {
+  width: 1.6rem;
+  height: 1.6rem;
+  outline: 1px solid var(--color-gray100);
+  border-radius: 0.4rem;
+  padding: 0.3rem;
+  display: flex;
+}
+
+.active-dimension {
+  background-color: #edf0f8;
+  border-radius: 0.6rem;
+}
+
+.active-dimension p {
+  opacity: 0.75;
+}
+
+.active-differential {
+  font-size: 1rem;
+}
+
+.active-measure {
+  background-color: var(--color-primary50);
+  border-radius: 0.6rem;
+  opacity: 1;
+}
+
+.active-measure p {
+  opacity: 0.75;
+}
+
+.information-text {
+  font-style: italic;
+  font-weight: 300;
+  padding-left: 2.4rem;
+}
+
+.validation-text {
+  composes: information-text;
+  color: var(--color-danger);
+}

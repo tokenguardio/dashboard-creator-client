@@ -11,6 +11,7 @@ import {
   TitleComponent,
   DataZoomInsideComponent,
   DataZoomSliderComponent,
+  LegendComponent
 } from 'echarts/components'
 import {
   CanvasRenderer,
@@ -31,6 +32,7 @@ echarts.use([
   CanvasRenderer,
   LineChart,
   DataZoomSliderComponent,
+  LegendComponent,
   DataZoomInsideComponent
 ])
 
@@ -368,7 +370,6 @@ export const AreaChart = ({
     xAxisLabelColor = theme.textColor
     yAxisLabelFont = theme.font
     xAxisLabelFont = theme.font
-    tokenguard.color = [ theme.primaryColor, theme.secondaryColor, theme.primaryColor ]
     areaStyleObj.color = theme.chartGradient ? new echarts.graphic.LinearGradient(0, 0, 0, 1, [
       {
         offset: 1,

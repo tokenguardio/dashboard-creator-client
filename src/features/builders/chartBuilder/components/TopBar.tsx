@@ -49,16 +49,16 @@ export const TopBar = ({
         if (element.id === blockChartId) {
           const elementToSave = {
             title: chartTitle,
-            dimension: selectedData[0].dimension[0],
-            measures: selectedData[0].measures,
+            dimension: selectedData.dimension,
+            measures: selectedData.measures,
             dbname: databaseParam,
             schema: schemaParam,
             table: tableParam,
             visType: chartType,
             data: result
           }
-          if (selectedData[0].dimension[1]) {
-            elementToSave.differential = selectedData[0].dimension[1]
+          if (selectedData.differential) {
+            elementToSave.differential = selectedData.differential
           }
           return (
             {
@@ -78,8 +78,8 @@ export const TopBar = ({
         id: blockChartId,
         i: blockChartId,
         title: chartTitle,
-        dimension: selectedData[0].dimension[0],
-        measures: selectedData[0].measures,
+        dimension: selectedData.dimension,
+        measures: selectedData.measures,
         dbname: databaseParam,
         schema: schemaParam,
         table: tableParam,
@@ -87,8 +87,8 @@ export const TopBar = ({
         visType: chartType,
         data: result
       }
-      if (selectedData[0].dimension[1]) {
-        elementToSave.differential = selectedData[0].dimension[1]
+      if (selectedData.differential) {
+        elementToSave.differential = selectedData.differential
       }
       setDashboardElements([
         ...dashboardElements,

@@ -3,6 +3,7 @@
   padding-bottom: 2.4rem;
   width: 100%;
   overflow-x: auto;
+  width: calc(100vw - 56.6rem);
 }
 
 .table {
@@ -50,4 +51,8 @@
 .head-cell-content {
   display: flex;
   justify-content: space-between;
+}
+
+.head-cell-title {
+  white-space: nowrap;
 }

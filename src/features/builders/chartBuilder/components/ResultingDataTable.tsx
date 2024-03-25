@@ -31,7 +31,9 @@ const TableHeaderCell = ({
   return (
     <th className={Style['head-cell']} onClick={handleClick}>
       <div className={Style['head-cell-content']}>
-        <p>{label}</p> 
+        <p className={Style['head-cell-title']}>
+          {label}
+        </p> 
         <span>
           {verifySortIcon(sortOrder)}
         </span>
@@ -49,28 +51,29 @@ export const ResultingDataTable = ({ data }) => {
   
     const handleSort = (column) => {
     if (sortBy === column) {
-      setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'));
+      setSortOrder((prevOrder) => (prevOrder === 'asc' ? 'desc' : 'asc'))
       const reSort = sortedData.slice().sort((a, b) => {
         const aValue = a[sortBy]
         const bValue = b[sortBy]
   
         if (typeof aValue === 'string' && typeof bValue === 'string') {
-          return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+          return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue)
         } else {
-          return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
+          return sortOrder === 'asc' ? aValue - bValue : bValue - aValue
         }
       });
       setSortedData(reSort)
     } else {
       setSortBy(column)
-      setSortOrder('asc')
+      setSortOrder('desc')
       const reSort = sortedData.slice().sort((a, b) => {
         const aValue = a[column]
         const bValue = b[column]
         if (typeof aValue === 'string' && typeof bValue === 'string') {
-          return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+
+          return aValue.localeCompare(bValue)
         } else {
-          return sortOrder === 'asc' ? aValue - bValue : bValue - aValue
+          return aValue - bValue
         }
       })
       setSortedData(reSort)
@@ -78,8 +81,6 @@ export const ResultingDataTable = ({ data }) => {
   }
 
   useEffect(() => {
-
-    if (sortedData.length === 0) {
       const defaultSort = [...data].sort((a, b) => {
 
         const aValue = a[columns[0]]
@@ -92,47 +93,45 @@ export const ResultingDataTable = ({ data }) => {
       })
 
       setSortedData(defaultSort)
-    }
-
-  }, [])
+  }, [
+    JSON.stringify(data)
+  ])
 
   return (
     <div className={Style['resulting-datatable-container']}>
       {data &&
-        <div className={Style['table-wrapper']}>
-          <table className={Style['table']}>
-            <thead>
-              <tr className={Style['head-row']}>
-                {columns.map((column, index) => (
-                  <TableHeaderCell
-                    key={`${column}${index}`}
-                    label={column}
-                    column={column}
-                    onSort={handleSort}
-                    sortOrder={sortBy === column ? sortOrder : null}
-                  />
-                ))}         
-              </tr>
-            </thead>
-            <tbody>
-              {sortedData && sortedData?.map((row, index) => {
-                const rowData = Object.values(row)
-                return (
-                  <tr
-                    key={index}
-                    className={index % 2 === 0 ? Style['body-row'] : `${Style['body-row']} ${Style['body-odd-row']}`}
-                  >
-                    {rowData.map((item, index) => (
-                      <td key={`${item}${index}`}>
-                        {typeof item === 'number' ? formatter.format(item?.toFixed(0) || 0) : item}
-                      </td>
-                    ))}
-                  </tr>
-                )}
+        <table className={Style['table']}>
+          <thead>
+            <tr className={Style['head-row']}>
+              {columns.map((column, index) => (
+                <TableHeaderCell
+                  key={`${column}${index}`}
+                  label={column}
+                  column={column}
+                  onSort={handleSort}
+                  sortOrder={sortBy === column ? sortOrder : null}
+                />
+              ))}         
+            </tr>
+          </thead>
+          <tbody>
+            {sortedData && sortedData?.map((row, index) => {
+              const rowData = Object.values(row)
+              return (
+                <tr
+                  key={index}
+                  className={index % 2 === 0 ? Style['body-row'] : `${Style['body-row']} ${Style['body-odd-row']}`}
+                >
+                  {rowData.map((item, index) => (
+                    <td key={`${item}${index}`}>
+                      {typeof item === 'number' ? formatter.format(item?.toFixed(0) || 0) : item}
+                    </td>
+                  ))}
+                </tr>
               )}
-            </tbody>
-          </table>
-        </div>
+            )}
+          </tbody>
+        </table>
       }     
     </div>
   )
