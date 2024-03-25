@@ -5,7 +5,8 @@ export default {
     "#3b687e",
     "#81e2c6",
     "#5b94af",
-    "#8ea8b5"
+    "#8ea8b5",
+    "#041c27",
   ],
   backgroundColor: "rgba(255,255,255,0)",
   textStyle: {},

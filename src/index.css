@@ -30,6 +30,8 @@ html {
   --color-gray75: #ececec;
   --color-gray50: #f4f4f4;
   --color-white: #ffffff;
+
+  --color-danger: red;
 }
 
 body {

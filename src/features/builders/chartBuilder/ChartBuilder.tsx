@@ -9,18 +9,17 @@ import { toast } from 'react-toastify'
 
 import { BlockChartContext } from '@/contexts/BlockChartContext'
 import { DashboardContentContext } from '@/contexts/DashboardContentContext'
-import { Icon } from '@/components/icon/Icon'
 import { Button } from '@/components/button/Button'
-import { Dropdown } from '@/components/dropdown/Dropdown'
 import { fetchElementDataBasicQuery } from '@/utils/fetches/dashboard'
+import { checkDifferential } from '@/utils/helpers'
 
 import { useDatabases } from './hooks/useDatabases'
 import { fetchColumns } from './utils/fetches/column'
 import { Window } from './components/Window'
 import { ResultView } from './components/ResultView'
 import { TopBar } from './components/TopBar'
-import { agregateOptions } from './utils/constans'
 import { fetchTables } from './utils/fetches/databases'
+import { ListOfData } from './components/ListOfData'
 import Style from './ChartBuilder.module.css'
 
 export function ChartBuilder() {
@@ -29,11 +28,12 @@ export function ChartBuilder() {
   const [chartTitle, setChartTitle] = useState('Default Chart Name')
   const [databasesData, setDatabasesData] = useState([])
   const [dataExplorer, setDataExplorer] = useState([])
-  const [selectedData, setSelectedData] = useState([])
+  const [selectedData, setSelectedData] = useState()
   const [schemaParam, setSchemaParam] = useState()
   const [tableParam, setTableParam] = useState()
   const [databaseParam, setDatabaseParam] = useState()
-  const [dimension, setDimension] = useState()
+  const [dimensionValidText, setDimensionValidText] = useState()
+  const [measuresValidText, setMeasuresValidText] = useState()  
   const [isAgregateOptionsVisible, setIsAgregateOptionsVisible] = useState(false)
   const blockChartContext = useContext(BlockChartContext)
   const dashboardContentContext = useContext(DashboardContentContext)
@@ -169,41 +169,111 @@ export function ChartBuilder() {
     }
   }
 
-  const handleMeasure = (tableName, columnName, optionValue) => {
-    if (selectedData.length === 0) {
-      const firstObj = {
-        table: tableName,
-        measures: [
-          {
-            columnName: columnName,
-            operator: optionValue
-          }
-        ],
+  const handleColumn = (tableName, columnName, type, optionValue) => {
+    setTableParam(tableName)
+    if (!selectedData || tableName !== selectedData.table) {
+      if (type === 'dimension') {
+        setSelectedData({
+          table: tableName,
+          dimension: columnName
+        })
+      } else{
+        setSelectedData({
+          table: tableName,
+          measures: [
+            {
+              columnName: columnName,
+              operator: optionValue
+            }
+          ]
+        })
       }
-
-      const modifiedSelectedData = [ firstObj ]
-
-      setSelectedData(modifiedSelectedData)
     } else {
-      const modifiedSelectedData = selectedData.map(item => {
-        if (tableName === item.table) {
-          if (item?.measures && item.measures.some(obj => obj.columnName === columnName)) {
-              const modifiedMeasures = item.measures.filter(item => item.columnName !== columnName)
-              if (item.measures.some(obj => obj.operator === optionValue)) {
-                if (modifiedMeasures.length === 0 && (!item.dimension || item.dimension?.length === 0)) {
-                  return
-                } else {
+      if (type === 'dimension') {
+        if (selectedData?.dimension === columnName && !selectedData?.differential) {
+          if (!selectedData?.measures || selectedData?.measures?.length === 0) {
+            setDimensionValidText()
+            setSelectedData()
+          } else {
+            setDimensionValidText()
+            setSelectedData(prevState => {
+              let modifiedState = prevState
+              delete modifiedState.dimension
+              return (
+                {
+                  ...modifiedState
+                }
+              )
+            })
+          }
+
+        } else if (selectedData?.dimension === columnName && selectedData?.differential) {
+          setDimensionValidText()
+          setSelectedData(prevState => {
+            let modifiedState = { ...prevState }
+            modifiedState.dimension = modifiedState.differential
+            delete modifiedState.differential
+            return (
+              {
+                ...modifiedState
+              }
+            )
+          })
+        } else if (selectedData?.dimension !== columnName && selectedData?.differential && columnName !== selectedData?.differential) {
+          setDimensionValidText('Max. number of (X) selected')
+        } else if (selectedData?.dimension && selectedData?.dimension !== columnName && !selectedData?.differential && (selectedData?.measures?.length < 2 || !selectedData.measures)) {
+          setDimensionValidText()
+          setSelectedData(
+            prevState => ({
+              ...prevState,
+              differential: columnName
+            })
+          )
+        } else if (!selectedData?.dimension && selectedData?.measures?.length > 0) {
+          setDimensionValidText()
+          setSelectedData(
+            prevState => ({
+              ...prevState,
+              dimension: columnName
+            })
+          )
+        } else if (selectedData?.dimension !== columnName && !selectedData?.differential && selectedData?.measures?.length > 1) {
+          setDimensionValidText('Max. number of (X) selected')
+        } else if (selectedData?.dimension !== columnName && selectedData?.differential === columnName) {
+          setDimensionValidText()
+          setSelectedData(prevState => {
+            let modifiedState = prevState
+            delete modifiedState.differential
+            return (
+              {
+                ...modifiedState
+              }
+            )
+          })
+        }
+      } else {
+        if (selectedData?.measures && selectedData.measures.some(obj => obj.columnName === columnName)) {
+          const modifiedMeasures = selectedData.measures.filter(item => item.columnName !== columnName)
+            if (selectedData.measures.some(obj => obj.operator === optionValue)) {
+              if (modifiedMeasures.length === 0 && !selectedData.dimension) {
+                setMeasuresValidText()
+                setSelectedData()
+              } else {
+                setMeasuresValidText()
+                setSelectedData(prevState => {
                   return (
                     {
-                      ...item,
-                      measures: modifiedMeasures
+                      ...prevState,
+                      measures: modifiedMeasures.length === 0 ? undefined : modifiedMeasures
                     }
                   )
-                }
-              } else {
+                })
+              }
+            } else {
+              setSelectedData(prevState => {
                 return (
                   {
-                    ...item,
+                    ...prevState,
                     measures: [
                       ...modifiedMeasures,
                       {
@@ -213,122 +283,68 @@ export function ChartBuilder() {
                     ]
                   }
                 )
-              }
-          } else {
-            let modifiedMeasures
-            if (item.measures) {
-              modifiedMeasures = [
-                ...item?.measures,
-                {
-                  columnName: columnName,
-                  operator: optionValue
-                }
-              ]
-            } else {
-              modifiedMeasures = [
-                {
-                  columnName: columnName,
-                  operator: optionValue
-                }
-              ]
+              })
             }
-            return (
-              {
-                ...item,
-                measures: modifiedMeasures
-              }
-            )
-          }
         } else {
+          let modifiedMeasures
+          if (selectedData.measures && !selectedData.differential) {
+            setMeasuresValidText()
+            modifiedMeasures = [
+              ...selectedData?.measures,
+              {
+                columnName: columnName,
+                operator: optionValue
+              }
+            ]
+          } else if (selectedData.measures && selectedData.differential) {
+            setMeasuresValidText('Max. number of (Y) selected')
+            return (
+              setSelectedData(prevState => prevState)
+            )
+          } else {
+            setMeasuresValidText()
+            modifiedMeasures = [
+              {
+                columnName: columnName,
+                operator: optionValue
+              }
+            ]
+          }
           return (
-            {
-              table: tableName,
-              dimension: [columnName],
-            }
-          )
-        }
-      })  
-      const removedNotExistData = modifiedSelectedData.filter(item => item !== undefined)
-      setSelectedData(removedNotExistData)
-    }
-  }
-
-  const handleDimension = (tableName, columnName) => {
-    setDimension(columnName)
-    setTableParam(tableName)
-
-    if (selectedData.length === 0) {
-      const firstObj = {
-        table: tableName,
-        dimension: [columnName],
-      }
-
-      const modifiedSelectedData = [ firstObj ]
-      setSelectedData(modifiedSelectedData)
-    } else {
-      const modifiedSelectedData = selectedData.map(item => {
-        if (tableName === item.table) {
-          if (item.dimension && item.dimension.includes(columnName)) {
-            const modifiedDimension = item.dimension.filter(item => item !== columnName)
-            if (modifiedDimension.length === 0 && (!item.measures || item.measures?.length === 0)) {
-              return
-            } else {
+            setSelectedData(prevState => {
               return (
                 {
-                  ...item,
-                  dimension: modifiedDimension
+                  ...prevState,
+                  measures: modifiedMeasures
                 }
               )
-            }
-          } else {
-            let modifiedDimension
-            if (item.dimension) {
-              modifiedDimension = [ ...item?.dimension, columnName ]
-            } else {
-              modifiedDimension = [ columnName ]
-            }
-
-            return (
-              {
-                ...item,
-                dimension: modifiedDimension
-              }
-            )
-          }
-        } else {
-          return (
-            {
-              table: tableName,
-              dimension: [columnName],
-            }
+            })
           )
         }
-      })  
-      const removedNotExistData = modifiedSelectedData.filter(item => item !== undefined)
-      setSelectedData(removedNotExistData)
+      }
     }
   }
 
   const handleQuery = () => {
-    try {
-      const fetchDataQuery = async () => {
+    const fetchDataQuery = async () => {
+      try {
         const bodyRequest = {
-          dimension: selectedData[0].dimension[0],
-          measures: selectedData[0].measures,
+          dimension: selectedData.dimension,
+          measures: selectedData.measures,
           filters: []
         }
-        if (selectedData[0].dimension[1]) {
-          bodyRequest.differential = selectedData[0].dimension[1]
+        if (selectedData.differential) {
+          bodyRequest.differential = selectedData.differential
         }
 
         const result = await fetchElementDataBasicQuery(databaseParam, schemaParam, tableParam, bodyRequest)
-        setResult(result.data)
+        setResult(checkDifferential(result.data))
+      } catch (err) {
+        toast.error('Sending query failed')
       }
-
-      fetchDataQuery()
-    } catch (err) {
-      toast.error('Sending query failed')
     }
+
+    fetchDataQuery()
   }
 
   useEffect(() => {
@@ -376,7 +392,7 @@ export function ChartBuilder() {
               editedChartElement.table,
               bodyRequest
             )
-            setResult(responseOfChartData.data)
+            setResult(checkDifferential(responseOfChartData.data))
             setDatabaseParam(editedChartElement.dbname)
             setTableParam(editedChartElement.table)
             setSchemaParam(editedChartElement.schema)
@@ -392,11 +408,12 @@ export function ChartBuilder() {
             setDataExplorer(modifiedResponse)
             setChartTitle(editedChartElement.title)
             setChartType(editedChartElement.visType)
-            setSelectedData([{
+            setSelectedData({
               table: editedChartElement.table,
-              dimension: [ editedChartElement.dimension ],
+              dimension: editedChartElement.dimension,
+              differential: editedChartElement.differential,
               measures: editedChartElement.measures,
-            }])
+            })
           } catch (err) {
             toast.error('Loading Explorer failed')
           }
@@ -412,29 +429,28 @@ export function ChartBuilder() {
   ])
 
   const checkDimensionColumn = (table, column) => {
-    const filteredData = selectedData.filter(item => item.table === table)
-    if (filteredData && filteredData.length > 0) {
-      if (filteredData[0]?.dimension) {
-        const verifiedDimensions = filteredData[0]?.dimension.filter(item => item === column)
-        if (verifiedDimensions.length > 0) {
-          return true
-        }
+    if (selectedData?.table === table) {
+      if (selectedData?.dimension === column) {
 
-        return false
-      } else {
-        return false
+        return 'dimension'
       }
+
+      if (selectedData?.differential === column) {
+
+        return 'differential'
+      }
+
+      return null
     } else {
-      return false
+      return null
     }
   }
 
   const checkMeasureColumn = (table, column) => {
 
-    const filteredData = selectedData.filter(item => item.table === table)
-    if (filteredData && filteredData.length > 0) {
-      if (filteredData[0]?.measures) {
-        const verifiedMeasures = filteredData[0]?.measures.filter(item => item.columnName === column)
+    if (selectedData?.table === table) {
+      if (selectedData?.measures && selectedData?.measures?.length > 0) {
+        const verifiedMeasures = selectedData?.measures.filter(item => item.columnName === column)
         if (verifiedMeasures) {
           return verifiedMeasures[0]
         }
@@ -449,32 +465,29 @@ export function ChartBuilder() {
   }
 
   const calcSelectedItems = (tableName) => {
-    const tableToCalc = selectedData.filter(item => item.table === tableName)
 
-    function countIndexes(arr) {
-      let totalIndexes = 0;
+    function countIndexes() {
+      let totalIndexes = 0
+      if (selectedData?.table === tableName) {
+        totalIndexes += selectedData?.measures?.length || 0
+        if (selectedData?.differential) {
+          totalIndexes += 2
+        } else {
+          totalIndexes += 1
+        }
+      }
   
-      arr.forEach(obj => {
-          if (Array.isArray(obj.dimension)) {
-              totalIndexes += obj.dimension.length;
-          }
-  
-          if (Array.isArray(obj.measures)) {
-              totalIndexes += obj.measures.length;
-          }
-      });
-  
-      return totalIndexes;
+      return totalIndexes
     }
 
-    const result = countIndexes(tableToCalc)
+    const result = countIndexes()
 
     return result === 0 ? '' : result
   }
 
   const resetBuilder = () => {
     setResult()
-    setSelectedData([])
+    setSelectedData()
   }
 
   return (
@@ -492,162 +505,29 @@ export function ChartBuilder() {
         schemaParam={schemaParam}
       />
       <div className={Style['builder-container']}>
-        <div className={Style['list']}>
-          <ul className={Style['list-of-databases']}>
-              {databasesData.length > 0 && (
-                databasesData.map((database, index) => (
-                  <li
-                    className={Style['database-list-item']}
-                    key={`${database?.datname} ${index}`}
-                  >
-                    <div
-                      className={Style['database-title-container']}
-                      onClickCapture={(e) => handleTable(e)}
-                      data-value={database.datname}
-                    >
-                      <p className={Style['database-title']}>
-                        {database.datname}
-                      </p>
-                    </div>
-                    {database.isExpanded && (
-                      <ul className={Style['list-of-tables']}>
-                        {dataExplorer.length === 0 && (
-                          <li>
-                            <p className={Style['information-text']}>
-                              No data
-                            </p>
-                          </li>
-                        )}
-                        {dataExplorer.length > 0 && (
-                          dataExplorer.map((table, index) => (
-                            <li
-                              className={Style['table-list-item']}
-                              key={`${table?.table_name} ${index}`}
-                            >
-                              <div
-                                className={selectedData.some(obj => obj?.table === table?.table_name) ? `${Style['table-title-container']} ${Style['table-title-frame']}` : Style['table-title-container']}
-                                onClickCapture={(e) => handlePosition(e)}
-                                data-value={table.table_name}
-                                data-schema={table.table_schema}
-                                data-database={database.datname}
-                              >
-                                <p className={selectedData.some(obj => obj?.table === table?.table_name) ? Style['table-title-active'] : Style['table-title']}>
-                                  {table.table_name}
-                                </p>
-                                <p className={Style['table-selected-value']}>
-                                  {calcSelectedItems(table.table_name)}
-                                </p>
-                              </div>
-                              {table.isExpanded && (
-                                <>
-                                  <p className={Style['list-description']}>
-                                    Dimensions:
-                                    <span className={Style['additional-text']}>
-                                      &nbsp; (X Axis)
-                                    </span>
-                                  </p>
-                                  <ul className={Style['list-of-columns']}>
-                                    {!table.columns.some(item => item.isDimension === true) && (
-                                      <li>
-                                        <p className={`${Style['information-text']} ${Style['column-title']}`}>
-                                          No data
-                                        </p>
-                                      </li>
-                                    )}
-                                    {table.columns.map(item => {
-                                      if (item.isDimension) {
-                                        return (
-                                          <li
-                                            className={checkDimensionColumn(table.table_name, item.column_name) ? `${Style['active-dimension']} ${Style['column-list-item']}` : Style['column-list-item']}
-                                            key={item.column_name}
-                                            onClick={() => handleDimension(table.table_name, item.column_name)}
-                                          >
-                                            <p className={Style['column-title']}>{item.column_name}</p>
-                                          </li>
-                                        )
-                                      }
-                                    })}
-                                  </ul>
-                                </>
-                              )}
-                              {table.isExpanded && (
-                                <>
-                                  <p className={Style['list-description']}>
-                                    Measures:
-                                    <span className={Style['additional-text']}>
-                                      &nbsp; (Y Axis)
-                                    </span>
-                                  </p>
-                                  <ul className={Style['list-of-columns']}>
-                                    {!table.columns.some(item => item.isMeasure === true) && (
-                                      <li>
-                                        <p className={`${Style['information-text']} ${Style['column-title']}`}>
-                                          No data
-                                        </p>
-                                      </li>
-                                    )}
-                                    {table.columns.map(item => {
-                                      if (item.isMeasure) {
-                                        const selectedOption = checkMeasureColumn(table.table_name, item.column_name)
-                                        return (
-                                          <li
-                                            className={selectedOption ? 
-                                              `${Style['active-measure']} ${Style['column-list-item']}` 
-                                              : Style['column-list-item']
-                                            }
-                                            key={item.column_name}
-                                            onClick={() => setIsAgregateOptionsVisible(!isAgregateOptionsVisible)}
-                                          >
-                                            <Dropdown
-                                              title="Agregate"
-                                              options={agregateOptions.map(option => {
-                                                return (
-                                                  {
-                                                    ...option,
-                                                    type: selectedOption?.operator === option.value ? 'selected' : null,
-                                                    action: () => handleMeasure(table.table_name, item.column_name, option.value)
-                                                  }
-                                                )
-                                              })}
-                                              id={item.column_name}
-                                              position="bottom"
-                                            >
-                                              <div className={Style['measure-text-container']}>
-                                                <p className={Style['column-title']}>
-                                                  {item.column_name}
-                                                </p>
-                                                  {selectedOption && (
-                                                    <div className={Style['measure-icon-frame']}>
-                                                      <Icon name={selectedOption.operator} width="12" height="12" />
-                                                    </div>
-                                                  )}
-                                              </div>
-                                            </Dropdown>
-                                          </li>
-                                        )
-                                      }
-                                    })}
-                                  </ul>
-                                </>
-                              )}
-                            </li>
-                          ))
-                        )}
-                      </ul>
-                    )}
-                  </li>
-                ))
-              )}
-            </ul>
-        </div>
+        <ListOfData
+          databasesData={databasesData}
+          handlePosition={handlePosition}
+          calcSelectedItems={calcSelectedItems}
+          selectedData={selectedData}
+          handleColumn={handleColumn}
+          checkDimensionColumn={checkDimensionColumn}
+          handleTable={handleTable}
+          checkMeasureColumn={checkMeasureColumn}
+          setIsAgregateOptionsVisible={setIsAgregateOptionsVisible}
+          isAgregateOptionsVisible={isAgregateOptionsVisible}
+          dataExplorer={dataExplorer}
+          dimensionValidText={dimensionValidText}
+          measuresValidText={measuresValidText}
+        />
         <div className={Style['preview']}>
-          {selectedData.length > 0 && !result && (
+          {selectedData?.dimension && selectedData?.measures?.length > 0 && !result && (
             <div className={Style['prevew-content-container']}>
               <p className={Style['preview-paragraph']}>Run the query to display a visualization</p>
               <Button onClick={() => handleQuery()}>Run Query</Button>
             </div>
           )}
-          {!selectedData || selectedData.length === 0 && !result && (
+          {!selectedData && !result && (
             <div className={Style['prevew-content-container']}>
               <p className={Style['preview-paragraph']}>Select an explore to continue</p>
             </div>
